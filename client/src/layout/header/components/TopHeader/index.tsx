@@ -6,14 +6,14 @@ export const TopHeader = () => {
 	return (
 		<Navbar bg="light" expand="lg">
 			<Container fluid>
-				<Navbar.Brand href="#home">My Home Expense</Navbar.Brand>
+				<Navbar.Brand href="/">My Home Expense</Navbar.Brand>
 				<Navbar.Toggle aria-controls="basic-navbar-nav" />
 				<Navbar.Collapse id="basic-navbar-nav">
 					<Nav className="me-auto">
-						<Nav.Link href="#home">Home</Nav.Link>
-						<Nav.Link href="#summary">Year End Summary</Nav.Link>
-						<Nav.Link href="#mapping">Transactions</Nav.Link>
-						<Nav.Link href="#link">Link</Nav.Link>
+						<Nav.Link href="/">Home</Nav.Link>
+						<Nav.Link href="/summary">Year End Summary</Nav.Link>
+						<Nav.Link href="/manage">Transactions</Nav.Link>
+						<Nav.Link href="/settings">Settings</Nav.Link>
 					</Nav>
 				</Navbar.Collapse>
 			</Container>
