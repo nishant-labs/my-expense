@@ -14,5 +14,5 @@ export const accountExpenseCategories = [
 
 export enum TransactionSourceEnum {
 	ACCOUNT,
-	CREDIT_CARD
+	CREDIT_CARD,
 }

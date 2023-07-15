@@ -8,7 +8,7 @@ export const AsyncDataLoader: FC<ErrorBoundaryProps> = ({
 	children,
 }) => {
 	return (
-		<Suspense fallback={fallback || <Spinner animation="border"/>}>
+		<Suspense fallback={fallback || <Spinner animation="border" />}>
 			<ErrorBoundary fallback={errorFallback}>{children}</ErrorBoundary>
 		</Suspense>
 	);

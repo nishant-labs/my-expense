@@ -15,40 +15,36 @@ export const Home = () => {
 	return (
 		<>
 			<h2>Monthly Expense Report</h2>
-		<Tabs
-			id="controlled-tab-example"
-			activeKey={key}
-			onSelect={(k) => setKey(k)}
-			className="mb-3"
-		>
-			{MONTH_NAMES.map((month, index) => (
-				<Tab
-					key={month.toLowerCase()}
-					eventKey={month.toLowerCase()}
-					title={month}
-					disabled={index > monthIndex}
-				>
-					<Alert variant="primary">You have saved &pound;200 this month</Alert>
-					<Row>
-						<Col>
-							<TransactionHighlights
-								title="Money In Account"
-							/>
-						</Col>
-						<Col>
-							<TransactionHighlights
-								title="Debit Card Expense"
-							/>
-						</Col>
-						<Col>
-							<TransactionHighlights
-								title="Credit Card Expense"
-							/>
-						</Col>
-					</Row>
-				</Tab>
-			))}
+			<Tabs
+				id="controlled-tab-example"
+				activeKey={key}
+				onSelect={(k) => setKey(k)}
+				className="mb-3"
+			>
+				{MONTH_NAMES.map((month, index) => (
+					<Tab
+						key={month.toLowerCase()}
+						eventKey={month.toLowerCase()}
+						title={month}
+						disabled={index > monthIndex}
+					>
+						<Alert variant="primary">
+							You have saved &pound;200 this month
+						</Alert>
+						<Row>
+							<Col>
+								<TransactionHighlights title="Money In Account" />
+							</Col>
+							<Col>
+								<TransactionHighlights title="Debit Card Expense" />
+							</Col>
+							<Col>
+								<TransactionHighlights title="Credit Card Expense" />
+							</Col>
+						</Row>
+					</Tab>
+				))}
 			</Tabs>
-			</>
+		</>
 	);
 };

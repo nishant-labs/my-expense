@@ -1,153 +1,74 @@
-import 'ag-grid-community/styles/ag-grid.css';
-import 'ag-grid-community/styles/ag-theme-alpine.css';
-
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useRecoilState } from 'recoil';
-import { AgGridReact } from 'ag-grid-react';
-import { GridReadyEvent } from 'ag-grid-community';
+import { useCallback, useMemo, useState } from 'react';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import InputGroup from 'react-bootstrap/InputGroup';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { sourceSettingsColDefs } from '../../../../../constants/grid/source-settings-col-defs';
-import { ApiError } from '../../../../../api/types';
-import { ITransactionSource } from '../../../../../state/settings/source/types';
-import { transactionSourceState } from '../../../../../state/settings/source/state';
-import {
-	deleteSourceById,
-	fetchAllSources,
-	insertNewSource,
-	updateSourceById,
-} from '../../../../../api/settings-api';
 import { settingsGridComponents } from '../../../components/GridCellRenderers';
+import { GridBase } from '../../../components/GridBase';
+import { TransactionSelectorInput } from '../../../components/TransactionSelectorInput';
+import { ColorChooser } from '../../../components/ColorChooser';
+import { useSourceSettings } from '../../../../../hooks/useSourceSettings';
 
 export const TransactionSource = () => {
-	const [transactionSources, setTransactionSource] = useRecoilState(
-		transactionSourceState
-	);
-	const [newIdentifier, setNewIdentifier] = useState('');
+	const { error, sourceList, onDelete, onSave, onToggleStatus } =
+		useSourceSettings();
+	const [newMatchers, setNewMatchers] = useState<Array<string>>([]);
+	const [color, setColor] = useState('');
 	const [newLabel, setNewLabel] = useState('');
-	const [error, setError] = useState('');
-
-	const loadData = useCallback(async () => {
-		const latestSources = await fetchAllSources();
-		if ((latestSources as ApiError).error) {
-			setError('Failed to create new source');
-		} else {
-			setTransactionSource(latestSources as ITransactionSource[]);
-		}
-	}, [setTransactionSource]);
-
-	const onSave = useCallback(
-		(identifier: string, name: string) => {
-			setError('');
-			insertNewSource({ identifier, name }).then((response) => {
-				if ((response as ApiError).error) {
-					setError('Failed to create new source');
-				} else {
-					loadData();
-					setNewIdentifier('');
-					setNewLabel('');
-				}
-			});
-		},
-		[loadData]
-	);
-
-	const onDelete = useCallback(
-		(source: ITransactionSource) => {
-			setError('');
-			deleteSourceById(source.id).then((response) => {
-				if ((response as ApiError).error) {
-					setError(`Failed to delete source with id ${source.id}`);
-				} else {
-					loadData();
-				}
-			});
-		},
-		[loadData]
-	);
-
-	const onToggleStatus = useCallback(
-		(source: ITransactionSource) => {
-			updateSourceById(source.id, {
-				isEnabled: !source.isEnabled,
-			}).then((response) => {
-				if ((response as ApiError).error) {
-					setError(`Failed to update source ${source.identifier}`);
-				} else {
-					loadData();
-				}
-			});
-		},
-		[loadData]
-	);
 
 	const handleSave = useCallback(() => {
-		onSave(newIdentifier, newLabel);
-	}, [newIdentifier, newLabel, onSave]);
-
-	const handleGridReady = useCallback((gridEvent: GridReadyEvent) => {
-		gridEvent.api.sizeColumnsToFit();
-	}, []);
+		onSave(newMatchers, newLabel, color).then(() => {
+			setNewLabel('');
+			setNewMatchers([]);
+			setColor('');
+		});
+	}, [onSave, newMatchers, newLabel, color]);
 
 	const colDefs = useMemo(
 		() => sourceSettingsColDefs(onDelete, onToggleStatus),
 		[onDelete, onToggleStatus]
 	);
 
-	useEffect(() => {
-		loadData();
-	}, [loadData]);
-
 	return (
 		<>
-			<Row>
+			<Row className="mb-2">
 				<Col>
-					<InputGroup className="mb-3">
-						<Form.Control
-							placeholder="Enter Identifier"
-							value={newIdentifier}
-							onChange={(event) => setNewIdentifier(event.target.value)}
-						/>
-						<Form.Control
-							placeholder="Enter Label"
-							value={newLabel}
-							onChange={(event) => setNewLabel(event.target.value)}
-						/>
-						<Button
-							variant="outline-secondary"
-							disabled={!newLabel || !newIdentifier}
-							onClick={handleSave}
-						>
-							Add Source
-						</Button>
-					</InputGroup>
+					<Form.Control
+						placeholder="Enter Label"
+						value={newLabel}
+						onChange={(event) => setNewLabel(event.target.value)}
+					/>
+				</Col>
+				<Col>
+					<TransactionSelectorInput
+						selected={newMatchers}
+						onChange={setNewMatchers}
+					/>
+				</Col>
+				<Col>
+					<ColorChooser onChange={setColor} color={color} />
+				</Col>
+			</Row>
+			<Row>
+				<Col className="text-end">
+					<Button
+						variant="outline-secondary"
+						disabled={!newLabel || newMatchers.length === 0 || !color}
+						onClick={handleSave}
+					>
+						Add Source
+					</Button>
 				</Col>
 			</Row>
 			<Row>
 				<Col>
 					<p>{error}</p>
-					<div
-						className="ag-theme-alpine"
-						style={{
-							height: 'calc(100vh - 222px)',
-							width: '100%',
-						}}
-					>
-						<AgGridReact
-							rowHeight={40}
-							suppressRowClickSelection
-							suppressCellFocus
-							columnDefs={colDefs}
-							rowData={transactionSources ?? []}
-							onGridReady={handleGridReady}
-							components={settingsGridComponents}
-							pagination
-							paginationAutoPageSize
-						/>
-					</div>
+					<GridBase
+						colDefs={colDefs}
+						rowData={sourceList}
+						components={settingsGridComponents}
+					/>
 				</Col>
 			</Row>
 		</>

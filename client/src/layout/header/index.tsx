@@ -1,9 +1,7 @@
 import { TopHeader } from './components/TopHeader';
 
 const Header = () => {
-	return (
-		<TopHeader />
-	);
+	return <TopHeader />;
 };
 
 export default Header;

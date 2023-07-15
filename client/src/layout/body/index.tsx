@@ -1,10 +1,10 @@
 import Container from 'react-bootstrap/Container';
-import { AppRouter } from './router';
+import { Outlet } from 'react-router-dom';
 
 const Body = () => {
 	return (
 		<Container className="mt-4" fluid>
-			<AppRouter />
+			<Outlet />
 		</Container>
 	);
 };

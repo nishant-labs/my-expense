@@ -34,7 +34,7 @@ export function useAsyncApiData<T>(
 				data: response as T,
 			}));
 		}
-	// eslint-disable-next-line react-hooks/exhaustive-deps
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	useEffect(() => {

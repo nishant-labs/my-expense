@@ -3,8 +3,9 @@ import mongoose from 'mongoose';
 const { Schema, model } = mongoose;
 
 const sourceReferenceDataSchema = new Schema({
-	sourceId: String,
-	value: String,
+	sourceName: String,
+	transactionMatchers: Array<String>,
+	chartColor: String,
 	isEnabled: Boolean,
 });
 

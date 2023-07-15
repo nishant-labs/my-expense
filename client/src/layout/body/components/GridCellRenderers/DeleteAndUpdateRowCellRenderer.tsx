@@ -34,7 +34,7 @@ export const DeleteAndUpdateRowCellRenderer: FC<
 	);
 
 	if (deleteApiState.loading || toggleApiState.loading) {
-		return <Spinner animation='border' />;
+		return <Spinner animation="border" />;
 	}
 
 	return (

@@ -4,10 +4,13 @@ import Stack from 'react-bootstrap/Stack';
 import { IExpenseCategory } from '../../../../state/expense-details.types';
 
 interface ExpenseCategoryProps extends IExpenseCategory {
-	className?: string
+	className?: string;
 }
 
-export const ExpenseCategory: FC<ExpenseCategoryProps> = ({ label, amount }) => (
+export const ExpenseCategory: FC<ExpenseCategoryProps> = ({
+	label,
+	amount,
+}) => (
 	<ListGroup.Item>
 		<Stack direction="horizontal">
 			<div>{label}</div>

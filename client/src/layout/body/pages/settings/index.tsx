@@ -3,9 +3,8 @@ import Nav from 'react-bootstrap/Nav';
 import Row from 'react-bootstrap/Row';
 import Tab from 'react-bootstrap/Tab';
 
-import { TransactionSource } from './components/TransactionSource';
 import { AsyncDataLoader } from '../../components/AsyncDataLoader';
-import { TransactionGroup } from './components/TransactionGroup';
+import { settingsComponentMapping } from './componentMapping';
 
 export const Settings = () => {
 	return (
@@ -14,26 +13,29 @@ export const Settings = () => {
 				<Row className="h-100">
 					<Col sm={2} className="border-end">
 						<Nav variant="tabs" className="flex-column">
-							<Nav.Item>
-								<Nav.Link eventKey="source">Source Settings</Nav.Link>
-							</Nav.Item>
-							<Nav.Item>
-								<Nav.Link eventKey="group">Group Settings</Nav.Link>
-							</Nav.Item>
+							{settingsComponentMapping.map(({ eventKey, title }, index) => (
+								<Nav.Item key={`nav-menu-${index}`}>
+									<Nav.Link eventKey={eventKey}>{title}</Nav.Link>
+								</Nav.Item>
+							))}
 						</Nav>
 					</Col>
 					<Col sm={10}>
 						<Tab.Content>
-							<Tab.Pane eventKey="source">
-								<AsyncDataLoader errorFallback="Something went wrong!">
-									<TransactionSource />
-								</AsyncDataLoader>
-							</Tab.Pane>
-							<Tab.Pane eventKey="group">
-								<AsyncDataLoader errorFallback="Something went wrong!">
-									<TransactionGroup />
-								</AsyncDataLoader>
-							</Tab.Pane>
+							{settingsComponentMapping.map(
+								({ eventKey, component }, index) => (
+									<Tab.Pane
+										key={`nav-content-${index}`}
+										eventKey={eventKey}
+										unmountOnExit
+										mountOnEnter
+									>
+										<AsyncDataLoader errorFallback="Something went wrong!">
+											{component}
+										</AsyncDataLoader>
+									</Tab.Pane>
+								)
+							)}
 						</Tab.Content>
 					</Col>
 				</Row>

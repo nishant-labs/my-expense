@@ -1,7 +1,10 @@
 import { atom } from 'recoil';
-import { ITransactionSource } from './types';
+import { ITransactionSourceState } from './types';
 
-export const transactionSourceState = atom<Array<ITransactionSource>>({
+export const transactionSourceState = atom<ITransactionSourceState>({
 	key: 'transactionSource',
-	default: [],
+	default: {
+		sourceList: [],
+		fetchAgain: false,
+	},
 });

@@ -1,15 +1,18 @@
 import { selector } from 'recoil';
-import { fetchAllSources } from '../../../api/settings-api';
-import { ApiError } from '../../../api/types';
-import { ITransactionSource } from './types';
+import { transactionSourceState } from './state';
 
-export const fetchSourcesSelector = selector<Array<ITransactionSource>>({
-	key: 'fetchSourcesSelector',
-	get: async () => {
-		const response = await fetchAllSources();
-		if ((response as ApiError).error) {
-			return [];
-		}
-		return response as unknown as ITransactionSource[];
+export const toggleSourceFetchAgainFlag = selector<boolean>({
+	key: 'toggleSourceFetchAgainFlag',
+	get: ({ get }) => get(transactionSourceState).fetchAgain,
+	set: ({ set }, fetchAgain) => {
+		set(transactionSourceState, (currentState) => ({
+			...currentState,
+			fetchAgain: fetchAgain as boolean,
+		}));
 	},
+});
+
+export const selectSources = selector({
+	key: 'selectSources',
+	get: ({ get }) => get(transactionSourceState).sourceList,
 });
