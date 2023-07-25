@@ -5,6 +5,7 @@ import { ITransactionSource } from '../../state/settings/source/types';
 export const groupSettingsColDefs = (
 	onDelete: (group: ITransactionGroup) => void,
 	onToggleStatus: (group: ITransactionGroup) => void,
+	onUpdateTransactions: (group: ITransactionGroup, matchers: Array<string>) => void,
 	sourceList: Array<ITransactionSource>
 ): Array<ColDef> => [
 	{
@@ -14,14 +15,28 @@ export const groupSettingsColDefs = (
 	{
 		headerName: 'Transactions',
 		field: 'matchers',
+		cellRenderer: 'listItemWithEditCellRenderer',
+		cellRendererParams: {
+			updateItem: onUpdateTransactions,
+		},
+		autoHeight: true,
 	},
 	{
 		headerName: 'Budget',
 		field: 'budget',
+		width: 100,
+		valueFormatter: (params) =>
+			Number(params.value ?? 0).toLocaleString('en-GB', {
+				style: 'currency',
+				currency: 'GBP',
+				minimumFractionDigits: 0,
+				maximumFractionDigits: 0,
+			}),
 	},
 	{
 		headerName: 'Chart Color',
 		field: 'chartColor',
+		width: 140,
 		cellStyle: (params: CellClassParams) => ({
 			backgroundColor: params.value,
 			color: 'white',
@@ -37,6 +52,7 @@ export const groupSettingsColDefs = (
 	{
 		headerName: 'Action',
 		type: 'rightAligned',
+		width: 200,
 		cellRenderer: 'deleteAndUpdateRowCellRenderer',
 		cellRendererParams: {
 			deleteItem: onDelete,

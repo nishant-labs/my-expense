@@ -3,7 +3,7 @@ import {
 	HttpRequest,
 	RouteConfigItem,
 } from 'node-rest-server';
-import { GroupReferenceDataModel } from '../database/models/group-reference-data.js';
+import { GroupReferenceDataModel } from '../database/models/GroupReferenceModel.js';
 
 const getGroupListHandler = async (
 	requestData: HttpRequest,
@@ -52,9 +52,16 @@ const updateGroupHandler = async (
 ) => {
 	const payload = requestData.body;
 	await getDatabaseConnection!(requestData);
+
+	const { matchers,  ...restPayload } = payload;
+	const updatePayload = {
+		...restPayload,
+		...(matchers ? { transactionMatchers: matchers } : {})
+	}
+
 	const data = await GroupReferenceDataModel.findByIdAndUpdate(
 		requestData.pathParams.id,
-		payload
+		updatePayload
 	);
 	return {
 		data,

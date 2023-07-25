@@ -11,8 +11,7 @@ import {
 	deleteGroupById,
 	insertNewGroup,
 	updateGroupById,
-} from '../api/group-settings-api';
-
+} from '../api/GroupSettingsApi';
 
 export function useGroupSettings() {
 	const triggerToggle = useSetRecoilState(toggleGroupFetchAgainFlag);
@@ -34,7 +33,7 @@ export function useGroupSettings() {
 				matchers,
 				chartColor,
 				sourceId,
-				budget
+				budget,
 			});
 			if ((response as ApiError).error) {
 				setError('Failed to create new group');
@@ -66,7 +65,20 @@ export function useGroupSettings() {
 				isEnabled: !group.isEnabled,
 			}).then((response) => {
 				if ((response as ApiError).error) {
-					setError(`Failed to update group ${group.name}`);
+					setError(`Failed to toggle status for ${group.name}`);
+				} else {
+					triggerToggle(true);
+				}
+			});
+		},
+		[triggerToggle]
+	);
+
+	const onUpdateTransactions = useCallback(
+		(group: ITransactionGroup, matchers: Array<string>) => {
+			updateGroupById(group.id, { matchers }).then((response) => {
+				if ((response as ApiError).error) {
+					setError(`Failed to update transaction for ${group.name}`);
 				} else {
 					triggerToggle(true);
 				}
@@ -82,5 +94,6 @@ export function useGroupSettings() {
 		onSave,
 		onDelete,
 		onToggleStatus,
+		onUpdateTransactions
 	};
 }

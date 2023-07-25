@@ -6,24 +6,20 @@ import Button from 'react-bootstrap/Button';
 import { sourceSettingsColDefs } from '../../../../../constants/grid/source-settings-col-defs';
 import { settingsGridComponents } from '../../../components/GridCellRenderers';
 import { GridBase } from '../../../components/GridBase';
-import { TransactionSelectorInput } from '../../../components/TransactionSelectorInput';
-import { ColorChooser } from '../../../components/ColorChooser';
 import { useSourceSettings } from '../../../../../hooks/useSourceSettings';
 
 export const TransactionSource = () => {
-	const { error, sourceList, onDelete, onSave, onToggleStatus } =
-		useSourceSettings();
-	const [newMatchers, setNewMatchers] = useState<Array<string>>([]);
-	const [color, setColor] = useState('');
+	const { error, sourceList, onDelete, onSave, onToggleStatus } = useSourceSettings();
+	const [color, setColor] = useState('#000000');
 	const [newLabel, setNewLabel] = useState('');
+	const [expenseFlag, setExpenseFlag] = useState<boolean | null>(null);
 
 	const handleSave = useCallback(() => {
-		onSave(newMatchers, newLabel, color).then(() => {
+		onSave(newLabel, color, expenseFlag!).then(() => {
 			setNewLabel('');
-			setNewMatchers([]);
 			setColor('');
 		});
-	}, [onSave, newMatchers, newLabel, color]);
+	}, [onSave, newLabel, color, expenseFlag]);
 
 	const colDefs = useMemo(
 		() => sourceSettingsColDefs(onDelete, onToggleStatus),
@@ -33,28 +29,36 @@ export const TransactionSource = () => {
 	return (
 		<>
 			<Row className="mb-2">
-				<Col>
+				<Col sm={4}>
 					<Form.Control
 						placeholder="Enter Label"
 						value={newLabel}
 						onChange={(event) => setNewLabel(event.target.value)}
 					/>
 				</Col>
-				<Col>
-					<TransactionSelectorInput
-						selected={newMatchers}
-						onChange={setNewMatchers}
+				<Col sm={1}>
+					<Form.Check
+						// inline
+						onChange={(event) => setExpenseFlag(event.target.checked)}
+						checked={expenseFlag!}
+						label="Expense"
+						type="checkbox"
 					/>
 				</Col>
-				<Col>
-					<ColorChooser onChange={setColor} color={color} />
+				<Col sm={1}>
+					<Form.Control
+						type="color"
+						value={color}
+						onChange={(event) => setColor(event.target.value)}
+						title="Choose your color"
+					/>
 				</Col>
 			</Row>
 			<Row>
 				<Col className="text-end">
 					<Button
 						variant="outline-secondary"
-						disabled={!newLabel || newMatchers.length === 0 || !color}
+						disabled={!newLabel || !color}
 						onClick={handleSave}
 					>
 						Add Source

@@ -1,10 +1,11 @@
 import { FC } from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Stack from 'react-bootstrap/Stack';
-import { IExpenseCategory } from '../../../../state/expense-details.types';
 
-interface ExpenseCategoryProps extends IExpenseCategory {
+interface ExpenseCategoryProps {
 	className?: string;
+	label: string,
+	amount: number
 }
 
 export const ExpenseCategory: FC<ExpenseCategoryProps> = ({

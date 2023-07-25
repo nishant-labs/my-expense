@@ -3,7 +3,7 @@ import {
 	handleGetCall,
 	handlePostCall,
 	handlePutCall,
-} from './api-base';
+} from './ApiBase';
 import {
 	ITransactionGroup,
 	ITransactionGroupPayload,

@@ -12,7 +12,7 @@ export const transactionColDefs = (): Array<ColDef> => [
 	},
 	{
 		headerName: 'Transaction',
-		field: 'transactionOf',
+		field: 'transactionSource',
 	},
 	{
 		headerName: 'Amount',
@@ -21,10 +21,10 @@ export const transactionColDefs = (): Array<ColDef> => [
 	},
 	{
 		headerName: 'Group',
-		field: 'group',
+		field: 'groupName',
 	},
 	{
 		headerName: 'Source',
-		field: 'source',
+		field: 'sourceName',
 	},
 ];

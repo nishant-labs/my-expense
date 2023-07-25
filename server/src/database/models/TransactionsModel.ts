@@ -4,11 +4,9 @@ const { Schema, model } = mongoose;
 
 const transactionSchema = new Schema({
   date: Date,
-  groupId: String,
-  sourceId: String,
-  expenseFlag: Boolean,
   transactionOf: String,
 	amount: Number,
 });
 
-export const TransactionModel = model('Transaction', transactionSchema);
+
+export const TransactionModel = model('Transactions', transactionSchema);

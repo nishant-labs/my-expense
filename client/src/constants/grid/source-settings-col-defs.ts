@@ -10,12 +10,13 @@ export const sourceSettingsColDefs = (
 		field: 'name',
 	},
 	{
-		headerName: 'Transactions',
-		field: 'matchers',
+		headerName: 'Expense flag',
+		field: 'isExpense',
 	},
 	{
 		headerName: 'Chart Color',
 		field: 'chartColor',
+		width: 100,
 		cellStyle: (params: CellClassParams) => ({
 			backgroundColor: params.value,
 			color: 'white',
@@ -24,6 +25,7 @@ export const sourceSettingsColDefs = (
 	{
 		headerName: 'Action',
 		type: 'rightAligned',
+		width: 140,
 		cellRenderer: 'deleteAndUpdateRowCellRenderer',
 		cellRendererParams: {
 			deleteItem: onDelete,

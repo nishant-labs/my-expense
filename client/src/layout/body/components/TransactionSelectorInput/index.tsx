@@ -6,16 +6,18 @@ import { Option } from 'react-bootstrap-typeahead/types/types';
 
 interface TransactionSelectorInputProps {
 	selected: Array<string>;
+	options?: Array<string>;
 	onChange: (selectedTransactions: Array<string>) => void;
 }
 
 export const TransactionSelectorInput: FC<TransactionSelectorInputProps> = ({
+	options,
 	selected,
 	onChange,
 }) => {
 	const [selectedTransactions, setSelectedTransactions] = useState<
 		Array<Option>
-	>([]);
+	>(selected ?? []);
 
 	useEffect(() => {
 		const matcherList = selectedTransactions.map<string>((selectedInput) => {
@@ -39,7 +41,7 @@ export const TransactionSelectorInput: FC<TransactionSelectorInputProps> = ({
 			labelKey="matcher"
 			multiple
 			onChange={setSelectedTransactions}
-			options={[]}
+			options={options ?? []}
 			placeholder="Select transactions"
 			selected={selectedTransactions}
 			allowNew

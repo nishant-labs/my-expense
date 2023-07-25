@@ -5,27 +5,47 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { groupSettingsColDefs } from '../../../../../constants/grid/group-settings-col-defs';
 import { settingsGridComponents } from '../../../components/GridCellRenderers';
-import { ColorChooser } from '../../../components/ColorChooser';
 import { GridBase } from '../../../components/GridBase';
 import { TransactionSelectorInput } from '../../../components/TransactionSelectorInput';
 import { useGroupSettings } from '../../../../../hooks/useGroupSettings';
 
 export const TransactionGroup = () => {
-	const { groupList, sourceList, error, onDelete, onSave, onToggleStatus } =
-		useGroupSettings();
+	const {
+		groupList,
+		sourceList,
+		error,
+		onDelete,
+		onSave,
+		onToggleStatus,
+		onUpdateTransactions,
+	} = useGroupSettings();
 	const [newMatchers, setNewMatchers] = useState<Array<string>>([]);
-	const [color, setColor] = useState('');
+	const [color, setColor] = useState('#000000');
 	const [newLabel, setNewLabel] = useState('');
 	const [sourceId, setSourceId] = useState('');
 	const [budget, setBudget] = useState('');
 
 	const handleSave = useCallback(() => {
-		onSave(newMatchers, newLabel, color, sourceId, parseInt(budget));
+		onSave(newMatchers, newLabel, color, sourceId, parseInt(budget)).then(
+			() => {
+				setNewMatchers([]);
+				setNewLabel('');
+				setColor('');
+				setSourceId('');
+				setBudget('');
+			}
+		);
 	}, [onSave, newMatchers, newLabel, color, sourceId, budget]);
 
 	const colDefs = useMemo(
-		() => groupSettingsColDefs(onDelete, onToggleStatus, sourceList),
-		[onDelete, onToggleStatus, sourceList]
+		() =>
+			groupSettingsColDefs(
+				onDelete,
+				onToggleStatus,
+				onUpdateTransactions,
+				sourceList
+			),
+		[onDelete, onToggleStatus, onUpdateTransactions, sourceList]
 	);
 
 	return (
@@ -44,18 +64,23 @@ export const TransactionGroup = () => {
 						onChange={setNewMatchers}
 					/>
 				</Col>
-				<Col>
+				<Col sm={2}>
 					<Form.Control
 						placeholder="Enter Budget"
-						type='number'
+						type="number"
 						step="any"
 						min="1"
 						value={budget}
 						onChange={(event) => setBudget(event.target.value)}
 					/>
 				</Col>
-				<Col md={2}>
-					<ColorChooser onChange={setColor} color={color} />
+				<Col sm={1}>
+					<Form.Control
+						type="color"
+						value={color}
+						onChange={(event) => setColor(event.target.value)}
+						title="Choose your color"
+					/>
 				</Col>
 				<Col>
 					<Form.Select
@@ -75,7 +100,9 @@ export const TransactionGroup = () => {
 				<Col className="text-end">
 					<Button
 						variant="outline-secondary"
-						disabled={!newLabel || newMatchers.length === 0}
+						disabled={
+							!newLabel || newMatchers.length === 0 || !color || !sourceId
+						}
 						onClick={handleSave}
 					>
 						Add Group

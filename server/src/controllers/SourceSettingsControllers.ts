@@ -1,5 +1,5 @@
 import { ControllerOptions, HttpRequest, RouteConfigItem } from 'node-rest-server';
-import { SourceReferenceDataModel } from '../database/models/source-reference-data.js';
+import { SourceReferenceDataModel } from '../database/models/SourceReferenceModel.js';
 
 const getSourceListHandler = async (
 	requestData: HttpRequest,
@@ -12,8 +12,8 @@ const getSourceListHandler = async (
 		data: response.map((source) => ({
 			id: source['_id'],
 			name: source.sourceName,
-			matchers: source.transactionMatchers,
 			chartColor: source.chartColor,
+			isExpense: source.isExpense,
 			isEnabled: source.isEnabled,
 		})),
 		status: 200,
@@ -27,9 +27,9 @@ const insertSourceHandler = async (
 	const payload = requestData.body;
 	await getDatabaseConnection!(requestData);
 	const data = await SourceReferenceDataModel.create({
-		transactionMatchers: payload.matchers,
 		sourceName: payload.name,
 		chartColor: payload.chartColor,
+		isExpense: payload.isExpense,
 		isEnabled: true,
 	});
 	return {

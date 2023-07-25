@@ -6,7 +6,7 @@ interface ModalBaseProps {
 	buttonText: string;
 	modalTitle: string;
 	children: ReactNode;
-	onPrimaryAction: () => void;
+	onPrimaryAction: (close: () => void) => void;
 	primaryButtonText: string;
 }
 
@@ -21,6 +21,9 @@ export const BaseModal: FC<ModalBaseProps> = ({
 
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
+	const handlePrimaryAction = () => {
+		onPrimaryAction(handleClose);
+	};
 
 	return (
 		<>
@@ -43,7 +46,7 @@ export const BaseModal: FC<ModalBaseProps> = ({
 					<Button variant="secondary" onClick={handleClose}>
 						Close
 					</Button>
-					<Button variant="primary" onClick={onPrimaryAction}>
+					<Button variant="primary" onClick={handlePrimaryAction}>
 						{primaryButtonText}
 					</Button>
 				</Modal.Footer>

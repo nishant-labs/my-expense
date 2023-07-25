@@ -4,9 +4,9 @@ const { Schema, model } = mongoose;
 
 const sourceReferenceDataSchema = new Schema({
 	sourceName: String,
-	transactionMatchers: Array<String>,
 	chartColor: String,
 	isEnabled: Boolean,
+	isExpense: Boolean,
 });
 
 export const SourceReferenceDataModel = model(

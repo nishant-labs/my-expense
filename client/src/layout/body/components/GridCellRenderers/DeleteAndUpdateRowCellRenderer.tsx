@@ -38,18 +38,21 @@ export const DeleteAndUpdateRowCellRenderer: FC<
 	}
 
 	return (
-		<Form>
-			<Form.Check
-				inline
-				type="switch"
-				label={data.isEnabled ? 'Disable' : 'Enable'}
-				checked={data.isEnabled}
-				onChange={handleToggle}
-			/>
+		<div>
+			<Form>
+				<Form.Check
+					inline
+					type="switch"
+					name={`group-${data.id}`}
+					label={data.isEnabled ? 'Disable' : 'Enable'}
+					checked={data.isEnabled}
+					onChange={handleToggle}
+				/>
 
-			<Button variant="link" onClick={handleDelete}>
-				<Trash />
-			</Button>
-		</Form>
+				<Button variant="link" size="sm" onClick={handleDelete}>
+					<Trash />
+				</Button>
+			</Form>
+		</div>
 	);
 };

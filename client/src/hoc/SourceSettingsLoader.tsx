@@ -1,12 +1,12 @@
 import { memo, useEffect } from 'react';
 import { useRecoilState } from 'recoil';
-import { fetchAllSources } from '../api/source-settings-api';
+import { fetchAllSources } from '../api/SourceSettingsApi';
 import { ApiError } from '../api/types';
 import { ITransactionSource } from '../state/settings/source/types';
 import { transactionSourceState } from '../state/settings/source/state';
 
 export const SourceSettingsLoader = memo(() => {
-	const [{ fetchAgain, sourceList }, setSourceState] = useRecoilState(
+	const [{ fetchAgain }, setSourceState] = useRecoilState(
 		transactionSourceState
 	);
 	useEffect(() => {
@@ -22,7 +22,7 @@ export const SourceSettingsLoader = memo(() => {
 	}, []);
 
 	useEffect(() => {
-		if (fetchAgain && sourceList.length !== 0) {
+		if (fetchAgain) {
 			fetchAllSources().then((res) => {
 				if (!(res as ApiError).error) {
 					setSourceState({
@@ -32,7 +32,7 @@ export const SourceSettingsLoader = memo(() => {
 				}
 			});
 		}
-	}, [fetchAgain, setSourceState, sourceList.length]);
+	}, [fetchAgain, setSourceState]);
 
 	return <></>;
 });

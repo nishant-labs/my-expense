@@ -10,7 +10,7 @@ import {
 	deleteSourceById,
 	insertNewSource,
 	updateSourceById,
-} from '../api/source-settings-api';
+} from '../api/SourceSettingsApi';
 
 export function useSourceSettings() {
 	const triggerToggle = useSetRecoilState(toggleSourceFetchAgainFlag);
@@ -18,9 +18,9 @@ export function useSourceSettings() {
 	const [error, setError] = useState('');
 
 	const onSave = useCallback(
-		async (matchers: Array<string>, name: string, chartColor: string) => {
+		async (name: string, chartColor: string, isExpense: boolean) => {
 			setError('');
-			const response = await insertNewSource({ matchers, name, chartColor });
+			const response = await insertNewSource({ name, chartColor, isExpense });
 			if ((response as ApiError).error) {
 				setError('Failed to create new source');
 			} else {

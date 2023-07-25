@@ -32,7 +32,7 @@ export const GridBase: FC<GridBaseProps> = ({
 		<div
 			className="ag-theme-alpine"
 			style={{
-				height: 'calc(100vh - 235px)',
+				height: 'calc(100vh - 240px)',
 				width: '100%',
 				...styles,
 			}}

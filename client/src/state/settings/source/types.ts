@@ -5,8 +5,8 @@ export interface ITransactionSource extends ITransactionSourcePayload {
 
 export interface ITransactionSourcePayload {
 	name: string;
-	matchers: Array<string>;
 	chartColor: string;
+	isExpense: boolean;
 }
 
 export interface ITransactionSourceState {
