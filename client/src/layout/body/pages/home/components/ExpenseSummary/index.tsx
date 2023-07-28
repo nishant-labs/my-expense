@@ -5,7 +5,11 @@ import Col from 'react-bootstrap/Col';
 import { TransactionHighlights } from '../../../../components/TransactionHighlights';
 import { useTransactions } from '../../../../../../hooks/useTransactions';
 import { useSourceSettings } from '../../../../../../hooks/useSourceSettings';
-import { ITransactionsEnhanced } from '../../../../../../state/transactions/types';
+import { IExpenseSummaryTransaction } from '../../../../../../state/transactions/types';
+import {
+	transformTransactionBySource,
+	transformedTransactionAggregator,
+} from '../../../../../../utils/TransactionUtils';
 
 interface ExpenseSummaryProps {
 	month: string;
@@ -16,52 +20,51 @@ export const ExpenseSummary: FC<ExpenseSummaryProps> = ({ year, month }) => {
 	const { transactions } = useTransactions(year, month);
 	const { sourceList } = useSourceSettings();
 
-	const income = useMemo(() => {
+	const income = useMemo<Array<IExpenseSummaryTransaction>>(() => {
 		const incomeSource = sourceList.filter((source) => !source.isExpense);
-		const incomeTransactions = transactions.filter((tran) =>
-			incomeSource.some((income) => income.name === tran.sourceName)
-		);
-
-		const transactionBySource = incomeTransactions.reduce((res, curTran) => {
-			(res[curTran.sourceName!] = res[curTran.sourceName!] || []).push(curTran);
-			return res;
-		}, {} as Record<string, Array<ITransactionsEnhanced>>);
-
-		return Object.keys(transactionBySource).map((key) => ({
-			title: key,
-			transactions: transactionBySource[key],
-			total: transactionBySource[key].reduce((res, tran) => {
-				res = res + tran.amount;
-				return res;
-			}, 0),
-		}));
+		return transformTransactionBySource(transactions, incomeSource, 'account');
 	}, [sourceList, transactions]);
 
-	const expense = useMemo(() => {
+	const accountExpense = useMemo<Array<IExpenseSummaryTransaction>>(() => {
 		const expenseSource = sourceList.filter((source) => source.isExpense);
-		const expenseTransactions = transactions.filter((tran) =>
-			expenseSource.some((expense) => expense.name === tran.sourceName)
-		);
-
-		const transactionBySource = expenseTransactions.reduce((res, curTran) => {
-			(res[curTran.sourceName!] = res[curTran.sourceName!] || []).push(curTran);
-			return res;
-		}, {} as Record<string, Array<ITransactionsEnhanced>>);
-
-		return Object.keys(transactionBySource).map((key) => ({
-			title: key,
-			transactions: transactionBySource[key],
-			total: transactionBySource[key].reduce((res, tran) => {
-				res = res + tran.amount;
-				return res;
-			}, 0),
-		}));
+		return transformTransactionBySource(transactions, expenseSource, 'account');
 	}, [sourceList, transactions]);
 
+	const creditCardExpense = useMemo<Array<IExpenseSummaryTransaction>>(() => {
+		const expenseSource = sourceList.filter((source) => source.isExpense);
+		return transformTransactionBySource(
+			transactions,
+			expenseSource,
+			'creditCard'
+		);
+	}, [sourceList, transactions]);
+
+	const savedAmount = useMemo(() => {
+		const totalIncome = transformedTransactionAggregator(income);
+		const totalExpense = transformedTransactionAggregator(accountExpense);
+		return totalIncome - totalExpense;
+	}, [accountExpense, income]);
+
+	if (transactions.length === 0) {
+		return (
+			<Alert variant="warning">
+				Transaction Missing, please upload for the month
+			</Alert>
+		);
+	}
+
+	const credit = `You have saved £${savedAmount} this month`;
+	const deficit = `You have spend £${Math.abs(
+		savedAmount
+	)} more than you income`;
 	return (
 		<>
-			<Alert variant="primary">You have saved &pound;200 this month</Alert>
-			<Row>
+			{
+				<Alert variant={savedAmount > 0 ? 'primary' : 'warning'}>
+					{savedAmount > 0 ? credit : deficit}
+				</Alert>
+			}
+			<Row className='row-cols-3'>
 				{income.map(({ title, total, transactions }) => (
 					<Col>
 						<TransactionHighlights
@@ -72,7 +75,7 @@ export const ExpenseSummary: FC<ExpenseSummaryProps> = ({ year, month }) => {
 					</Col>
 				))}
 
-				{expense.map(({ title, total, transactions }) => (
+				{accountExpense.map(({ title, total, transactions }) => (
 					<Col>
 						<TransactionHighlights
 							title={title}
@@ -82,12 +85,15 @@ export const ExpenseSummary: FC<ExpenseSummaryProps> = ({ year, month }) => {
 					</Col>
 				))}
 
-				{/* <Col>
-					<TransactionHighlights title="Debit Card Expense" />
-				</Col>
-				<Col>
-					<TransactionHighlights title="Credit Card Expense" />
-				</Col> */}
+				{creditCardExpense.map(({ title, total, transactions }) => (
+					<Col>
+						<TransactionHighlights
+							title={title}
+							total={total}
+							transactions={transactions}
+						/>
+					</Col>
+				))}
 			</Row>
 		</>
 	);

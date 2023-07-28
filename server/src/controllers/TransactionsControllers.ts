@@ -10,19 +10,32 @@ const getTransactionsHandler = async (
 	{ getDatabaseConnection }: ControllerOptions
 ) => {
 	await getDatabaseConnection!(requestData);
+
 	const startDate = new Date(`${requestData.pathParams.monthAndYear}-01`);
-	var lastDay = new Date(startDate.getFullYear(), startDate.getMonth() + 1, 0);
-	const response = await TransactionModel.find({
+	const lastDay = new Date(
+		startDate.getFullYear(),
+		startDate.getMonth() + 1,
+		0
+	);
+
+	const searchQuery: any = {
 		date: {
 			$gte: startDate,
 			$lte: lastDay,
 		},
-	});
+	};
+
+	if (requestData.pathParams.accountType !== 'consolidated') {
+		searchQuery.accountType = requestData.pathParams.accountType;
+	}
+
+	const response = await TransactionModel.find(searchQuery);
 
 	return {
 		data: response.map((transaction) => ({
 			id: transaction['_id'],
 			date: transaction.date,
+			accountType: transaction.accountType,
 			transactionSource: transaction.transactionOf,
 			amount: transaction.amount,
 		})),
@@ -34,9 +47,13 @@ const insertTransactionHandler = async (
 	requestData: HttpRequest,
 	{ getDatabaseConnection }: ControllerOptions
 ) => {
-	const payload = requestData.body as Array<any>;
+	const payload = requestData.body;
+	const { accountType, transactions } = payload;
+
 	await getDatabaseConnection!(requestData);
-	const dbData = payload.map((row) => ({
+
+	const dbData = (transactions as Array<any>).map((row) => ({
+		accountType,
 		date: row.date,
 		transactionOf: row.transactionSource,
 		amount: row.amount,

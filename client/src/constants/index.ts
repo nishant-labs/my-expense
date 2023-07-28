@@ -11,7 +11,7 @@ export const MONTH_NAMES: Array<SelectOption> = Array(13)
 		}
 		const date = new Date(0, index - 1);
 		return {
-			label: date.toLocaleString('en-US', { month: 'long' }),
+			label: date.toLocaleString('en-GB', { month: 'long' }),
 			value: (date.getMonth() + 1).toLocaleString('en-GB', {
 				minimumIntegerDigits: 2,
 				maximumFractionDigits: 0,
@@ -32,3 +32,9 @@ export const LAST_5_YEARS: Array<SelectOption> = Array(6)
 		const value = year - (index - 1);
 		return { label: value.toString(), value };
 	});
+
+export const ACCOUNT_TYPE = [
+	{ label: 'Select Account Type', value: '' },
+	{ label: 'Savings/Current Account', value: 'account' },
+	{ label: 'Credit Card', value: 'creditCard' },
+];

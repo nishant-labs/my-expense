@@ -1,11 +1,15 @@
 import { CellClassParams, ColDef } from 'ag-grid-community';
 import { ITransactionGroup } from '../../state/settings/group/types';
 import { ITransactionSource } from '../../state/settings/source/types';
+import { formatNumberAsCurrency } from '../../utils/NumberUtils';
 
 export const groupSettingsColDefs = (
 	onDelete: (group: ITransactionGroup) => void,
 	onToggleStatus: (group: ITransactionGroup) => void,
-	onUpdateTransactions: (group: ITransactionGroup, matchers: Array<string>) => void,
+	onUpdateTransactions: (
+		group: ITransactionGroup,
+		matchers: Array<string>
+	) => void,
 	sourceList: Array<ITransactionSource>
 ): Array<ColDef> => [
 	{
@@ -26,12 +30,7 @@ export const groupSettingsColDefs = (
 		field: 'budget',
 		width: 100,
 		valueFormatter: (params) =>
-			Number(params.value ?? 0).toLocaleString('en-GB', {
-				style: 'currency',
-				currency: 'GBP',
-				minimumFractionDigits: 0,
-				maximumFractionDigits: 0,
-			}),
+			formatNumberAsCurrency(Number(params.value ?? 0), true, 0),
 	},
 	{
 		headerName: 'Chart Color',

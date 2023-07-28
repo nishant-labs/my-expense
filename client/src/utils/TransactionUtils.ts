@@ -1,45 +1,50 @@
 import { parse } from 'date-fns';
-import { ITransactions } from '../state/transactions/types';
+import {
+	IExpenseSummaryTransaction,
+	ITransactionsPayload,
+	ITransactionsEnhanced,
+} from '../state/transactions/types';
+import { ITransactionSource } from '../state/settings/source/types';
 
 export const transformCSVToTransactionPayload = (
 	csvData: Array<Array<string>>
-): Array<ITransactions> => {
-	const transformedData: Array<ITransactions> = [];
-	const fieldMap = {
-		date: -1,
-		transactionSource: -1,
-		amount: -1,
-	};
-	const [header, ...rowData] = csvData;
+): Array<ITransactionsPayload> =>
+	csvData.map((curValue) => ({
+		date: parse(curValue[0], 'dd/MM/yyyy', new Date()),
+		transactionSource: curValue[1],
+		amount: Number(curValue[2].replaceAll(',', '')),
+	}));
 
-	header.map((headerValue, index) => {
-		if (headerValue === 'date') {
-			fieldMap.date = index;
-		}
-		if (headerValue === 'source') {
-			fieldMap.transactionSource = index;
-		}
-		if (headerValue === 'amount') {
-			fieldMap.amount = index;
-		}
-	});
+export const transformTransactionBySource = (
+	transactions: ITransactionsEnhanced[],
+	sourceList: ITransactionSource[],
+	accountType: string
+) => {
+	const filteredTransactions = transactions.filter(
+		(tran) =>
+			tran.accountType === accountType &&
+			sourceList.some((source) => source.name === tran.sourceName)
+	);
 
-	if (
-		fieldMap.date === -1 ||
-		fieldMap.transactionSource === -1 ||
-		fieldMap.amount === -1
-	) {
-		return transformedData;
-	}
+	const transactionBySource = filteredTransactions.reduce((res, curTran) => {
+		(res[curTran.sourceName!] = res[curTran.sourceName!] || []).push(curTran);
+		return res;
+	}, {} as Record<string, Array<ITransactionsEnhanced>>);
 
-	rowData.forEach((curValue) => {
-		const data: ITransactions = {
-			date: parse(curValue[fieldMap.date], 'dd/MM/yyyy', new Date()),
-			transactionSource: curValue[fieldMap.transactionSource],
-			amount: Number(curValue[fieldMap.amount].replaceAll('"', '')),
-		};
-		transformedData.push(data);
-	});
-
-	return transformedData;
+	return Object.keys(transactionBySource).map((key) => ({
+		title: key,
+		transactions: transactionBySource[key],
+		total: transactionBySource[key].reduce((res, tran) => {
+			res = res + tran.amount;
+			return res;
+		}, 0),
+	}));
 };
+
+export const transformedTransactionAggregator = (
+	transaction: Array<IExpenseSummaryTransaction>
+) =>
+	transaction.reduce((res, inc) => {
+		res += inc.total;
+		return res;
+	}, 0);

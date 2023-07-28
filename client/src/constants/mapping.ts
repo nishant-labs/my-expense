@@ -1,5 +1,3 @@
-export const incomeCategories = ['Salary in hand', 'Additional income'];
-
 export const accountExpenseCategories = [
 	'Council Tax',
 	'Water Bill',
@@ -12,7 +10,3 @@ export const accountExpenseCategories = [
 	'Miscellaneous',
 ];
 
-export enum TransactionSourceEnum {
-	ACCOUNT,
-	CREDIT_CARD,
-}

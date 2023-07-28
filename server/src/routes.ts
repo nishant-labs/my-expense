@@ -18,7 +18,7 @@ const routes: RouteConfiguration = {
 		},
 	},
 
-	'/transactions/:monthAndYear?': transactionsApiHandlers,
+	'/transactions/:accountType/:monthAndYear?': transactionsApiHandlers,
 
 	// Settings API
 	'/settings/sources/:id?': sourceApiHandlers,

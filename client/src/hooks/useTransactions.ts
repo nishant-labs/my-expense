@@ -10,7 +10,7 @@ import {
 import { selectGroups } from '../state/settings/group/selector';
 import { selectSources } from '../state/settings/source/selector';
 
-export function useTransactions(year: string, month: string) {
+export function useTransactions(year: string, month: string, accountType?: string) {
 	const [transactionList, setTransactions] = useRecoilState(
 		transactionByMonthSelector({ year, month })
 	);
@@ -23,7 +23,7 @@ export function useTransactions(year: string, month: string) {
 
 	const fetchTransactions = useCallback(() => {
 		setIsLoading(true);
-		fetchTransactionsByMonth(year, month).then((res) => {
+		fetchTransactionsByMonth(year, month, accountType).then((res) => {
 			if ((res as ApiError).error) {
 				setError('Failed to retrieve transactions');
 			} else {
@@ -32,7 +32,7 @@ export function useTransactions(year: string, month: string) {
 			firstLoadPendingRef.current = false;
 			setIsLoading(false);
 		});
-	}, [month, year, setTransactions]);
+	}, [year, month, accountType, setTransactions]);
 
 	const transactions = useMemo<Array<ITransactionsEnhanced>>(
 		() =>
