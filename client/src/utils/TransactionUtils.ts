@@ -1,14 +1,8 @@
 import { parse } from 'date-fns';
-import {
-	IExpenseSummaryTransaction,
-	ITransactionsPayload,
-	ITransactionsEnhanced,
-} from '../state/transactions/types';
+import { IExpenseSummaryTransaction, ITransactionsPayload, ITransactionsEnhanced } from '../state/transactions/types';
 import { ITransactionSource } from '../state/settings/source/types';
 
-export const transformCSVToTransactionPayload = (
-	csvData: Array<Array<string>>
-): Array<ITransactionsPayload> =>
+export const transformCSVToTransactionPayload = (csvData: Array<Array<string>>): Array<ITransactionsPayload> =>
 	csvData.map((curValue) => ({
 		date: parse(curValue[0], 'dd/MM/yyyy', new Date()),
 		transactionSource: curValue[1],
@@ -18,18 +12,19 @@ export const transformCSVToTransactionPayload = (
 export const transformTransactionBySource = (
 	transactions: ITransactionsEnhanced[],
 	sourceList: ITransactionSource[],
-	accountType: string
+	accountType: string,
 ) => {
 	const filteredTransactions = transactions.filter(
-		(tran) =>
-			tran.accountType === accountType &&
-			sourceList.some((source) => source.name === tran.sourceName)
+		(tran) => tran.accountType === accountType && sourceList.some((source) => source.name === tran.sourceName),
 	);
 
-	const transactionBySource = filteredTransactions.reduce((res, curTran) => {
-		(res[curTran.sourceName!] = res[curTran.sourceName!] || []).push(curTran);
-		return res;
-	}, {} as Record<string, Array<ITransactionsEnhanced>>);
+	const transactionBySource = filteredTransactions.reduce(
+		(res, curTran) => {
+			(res[curTran.sourceName!] = res[curTran.sourceName!] || []).push(curTran);
+			return res;
+		},
+		{} as Record<string, Array<ITransactionsEnhanced>>,
+	);
 
 	return Object.keys(transactionBySource).map((key) => ({
 		title: key,
@@ -41,9 +36,7 @@ export const transformTransactionBySource = (
 	}));
 };
 
-export const transformedTransactionAggregator = (
-	transaction: Array<IExpenseSummaryTransaction>
-) =>
+export const transformedTransactionAggregator = (transaction: Array<IExpenseSummaryTransaction>) =>
 	transaction.reduce((res, inc) => {
 		res += inc.total;
 		return res;

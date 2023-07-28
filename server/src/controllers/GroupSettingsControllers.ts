@@ -1,14 +1,7 @@
-import {
-	ControllerOptions,
-	HttpRequest,
-	RouteConfigItem,
-} from 'node-rest-server';
+import { ControllerOptions, HttpRequest, RouteConfigItem } from 'node-rest-server';
 import { GroupReferenceDataModel } from '../database/models/GroupReferenceModel.js';
 
-const getGroupListHandler = async (
-	requestData: HttpRequest,
-	{ getDatabaseConnection }: ControllerOptions
-) => {
+const getGroupListHandler = async (requestData: HttpRequest, { getDatabaseConnection }: ControllerOptions) => {
 	await getDatabaseConnection!(requestData);
 	const response = await GroupReferenceDataModel.find();
 
@@ -26,10 +19,7 @@ const getGroupListHandler = async (
 	};
 };
 
-const insertGroupHandler = async (
-	requestData: HttpRequest,
-	{ getDatabaseConnection }: ControllerOptions
-) => {
+const insertGroupHandler = async (requestData: HttpRequest, { getDatabaseConnection }: ControllerOptions) => {
 	const payload = requestData.body;
 	await getDatabaseConnection!(requestData);
 	await GroupReferenceDataModel.create({
@@ -46,33 +36,24 @@ const insertGroupHandler = async (
 	};
 };
 
-const updateGroupHandler = async (
-	requestData: HttpRequest,
-	{ getDatabaseConnection }: ControllerOptions
-) => {
+const updateGroupHandler = async (requestData: HttpRequest, { getDatabaseConnection }: ControllerOptions) => {
 	const payload = requestData.body;
 	await getDatabaseConnection!(requestData);
 
-	const { matchers,  ...restPayload } = payload;
+	const { matchers, ...restPayload } = payload;
 	const updatePayload = {
 		...restPayload,
-		...(matchers ? { transactionMatchers: matchers } : {})
-	}
+		...(matchers ? { transactionMatchers: matchers } : {}),
+	};
 
-	const data = await GroupReferenceDataModel.findByIdAndUpdate(
-		requestData.pathParams.id,
-		updatePayload
-	);
+	const data = await GroupReferenceDataModel.findByIdAndUpdate(requestData.pathParams.id, updatePayload);
 	return {
 		data,
 		status: 200,
 	};
 };
 
-const deleteGroupHandler = async (
-	requestData: HttpRequest,
-	{ getDatabaseConnection }: ControllerOptions
-) => {
+const deleteGroupHandler = async (requestData: HttpRequest, { getDatabaseConnection }: ControllerOptions) => {
 	let deleteCount = 0;
 	if (requestData.pathParams.id) {
 		await getDatabaseConnection!(requestData);

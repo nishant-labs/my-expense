@@ -31,13 +31,7 @@ export const BaseModal: FC<ModalBaseProps> = ({
 				{buttonText}
 			</Button>
 
-			<Modal
-				size="lg"
-				backdrop="static"
-				show={show}
-				onHide={handleClose}
-				keyboard={false}
-			>
+			<Modal size="lg" backdrop="static" show={show} onHide={handleClose} keyboard={false}>
 				<Modal.Header closeButton>
 					<Modal.Title>{modalTitle}</Modal.Title>
 				</Modal.Header>

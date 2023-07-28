@@ -14,18 +14,13 @@ interface GridBaseProps {
 	styles?: CSSProperties;
 }
 
-export const GridBase: FC<GridBaseProps> = ({
-	rowData,
-	colDefs,
-	components,
-	styles = {},
-}) => {
+export const GridBase: FC<GridBaseProps> = ({ rowData, colDefs, components, styles = {} }) => {
 	const [gridEvent, setGridEvent] = useState<GridReadyEvent | null>(null);
 
 	useEffect(() => {
 		setTimeout(() => {
-      gridEvent?.api.sizeColumnsToFit();
-    }, 100);
+			gridEvent?.api.sizeColumnsToFit();
+		}, 100);
 	}, [gridEvent]);
 
 	return (

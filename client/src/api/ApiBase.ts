@@ -7,15 +7,9 @@ interface ApiSuccess<T> {
 	data: T;
 }
 
-export async function handlePostCall<T>(
-	path: string,
-	payload: unknown
-): ApiResponse<T> {
+export async function handlePostCall<T>(path: string, payload: unknown): ApiResponse<T> {
 	try {
-		const response = await axios.post<ApiSuccess<T>>(
-			`${basePath}${path}`,
-			payload
-		);
+		const response = await axios.post<ApiSuccess<T>>(`${basePath}${path}`, payload);
 		return response.data?.data;
 	} catch (error) {
 		return { error } as ApiError;
@@ -40,15 +34,9 @@ export async function handleDeleteCall<T>(path: string): ApiResponse<T> {
 	}
 }
 
-export async function handlePutCall<T>(
-	path: string,
-	payload: unknown
-): ApiResponse<T> {
+export async function handlePutCall<T>(path: string, payload: unknown): ApiResponse<T> {
 	try {
-		const response = await axios.put<ApiSuccess<T>>(
-			`${basePath}${path}`,
-			payload
-		);
+		const response = await axios.put<ApiSuccess<T>>(`${basePath}${path}`, payload);
 		return response.data?.data;
 	} catch (error) {
 		return { error } as ApiError;

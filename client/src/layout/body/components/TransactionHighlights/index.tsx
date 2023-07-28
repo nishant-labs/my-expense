@@ -11,19 +11,13 @@ interface TransactionHighlightsProps {
 	transactions: Array<ITransactionsEnhanced>;
 }
 
-export const TransactionHighlights: FC<TransactionHighlightsProps> = ({
-	title,
-	total,
-	transactions,
-}) => {
+export const TransactionHighlights: FC<TransactionHighlightsProps> = ({ title, total, transactions }) => {
 	const formattedTotal = formatNumberAsCurrency(total, false);
 	return (
 		<Card className="text-center">
 			<Card.Body>
 				<Card.Title className="text-black-50">{title}</Card.Title>
-				<Card.Body className="p-1 display-6">
-					{formattedTotal}
-				</Card.Body>
+				<Card.Body className="p-1 display-6">{formattedTotal}</Card.Body>
 				<ExpenseDetails transactionList={transactions} />
 			</Card.Body>
 		</Card>

@@ -3,10 +3,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { LAST_5_YEARS, MONTH_NAMES } from '../../../../constants';
 import { TransactionGridByMonth } from './transactionGrid';
-import {
-	FormSelectBase,
-	OptionValueType,
-} from '../../components/FormSelectBase';
+import { FormSelectBase, OptionValueType } from '../../components/FormSelectBase';
 import { UploadTransaction } from './components/UploadTransaction';
 
 export const Transactions = () => {
@@ -44,9 +41,7 @@ export const Transactions = () => {
 			</Row>
 			<Row>
 				<Col>
-					{selectedYear && selectedMonth && (
-						<TransactionGridByMonth month={selectedMonth} year={selectedYear} />
-					)}
+					{selectedYear && selectedMonth && <TransactionGridByMonth month={selectedMonth} year={selectedYear} />}
 				</Col>
 			</Row>
 		</>

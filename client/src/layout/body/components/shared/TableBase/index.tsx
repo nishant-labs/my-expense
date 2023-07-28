@@ -1,10 +1,7 @@
 import { FC, ReactElement, memo } from 'react';
 import Table from 'react-bootstrap/Table';
 
-export type TableColumnType =
-	| string
-	| number
-	| ((currentRow: Array<TableColumnType>) => ReactElement);
+export type TableColumnType = string | number | ((currentRow: Array<TableColumnType>) => ReactElement);
 
 interface TableBaseProps {
 	headers: Array<string>;

@@ -10,15 +10,7 @@ import { TransactionSelectorInput } from '../../../components/TransactionSelecto
 import { useGroupSettings } from '../../../../../hooks/useGroupSettings';
 
 export const TransactionGroup = () => {
-	const {
-		groupList,
-		sourceList,
-		error,
-		onDelete,
-		onSave,
-		onToggleStatus,
-		onUpdateTransactions,
-	} = useGroupSettings();
+	const { groupList, sourceList, error, onDelete, onSave, onToggleStatus, onUpdateTransactions } = useGroupSettings();
 	const [newMatchers, setNewMatchers] = useState<Array<string>>([]);
 	const [color, setColor] = useState('#000000');
 	const [newLabel, setNewLabel] = useState('');
@@ -26,26 +18,18 @@ export const TransactionGroup = () => {
 	const [budget, setBudget] = useState('');
 
 	const handleSave = useCallback(() => {
-		onSave(newMatchers, newLabel, color, sourceId, parseInt(budget)).then(
-			() => {
-				setNewMatchers([]);
-				setNewLabel('');
-				setColor('');
-				setSourceId('');
-				setBudget('');
-			}
-		);
+		onSave(newMatchers, newLabel, color, sourceId, parseInt(budget)).then(() => {
+			setNewMatchers([]);
+			setNewLabel('');
+			setColor('');
+			setSourceId('');
+			setBudget('');
+		});
 	}, [onSave, newMatchers, newLabel, color, sourceId, budget]);
 
 	const colDefs = useMemo(
-		() =>
-			groupSettingsColDefs(
-				onDelete,
-				onToggleStatus,
-				onUpdateTransactions,
-				sourceList
-			),
-		[onDelete, onToggleStatus, onUpdateTransactions, sourceList]
+		() => groupSettingsColDefs(onDelete, onToggleStatus, onUpdateTransactions, sourceList),
+		[onDelete, onToggleStatus, onUpdateTransactions, sourceList],
 	);
 
 	return (
@@ -59,10 +43,7 @@ export const TransactionGroup = () => {
 					/>
 				</Col>
 				<Col>
-					<TransactionSelectorInput
-						selected={newMatchers}
-						onChange={setNewMatchers}
-					/>
+					<TransactionSelectorInput selected={newMatchers} onChange={setNewMatchers} />
 				</Col>
 				<Col sm={2}>
 					<Form.Control
@@ -83,10 +64,7 @@ export const TransactionGroup = () => {
 					/>
 				</Col>
 				<Col>
-					<Form.Select
-						aria-label="Source Selector"
-						onChange={(event) => setSourceId(event.target.value)}
-					>
+					<Form.Select aria-label="Source Selector" onChange={(event) => setSourceId(event.target.value)}>
 						<option>Select Source</option>
 						{sourceList.map((source, index) => (
 							<option key={`source-${index}`} value={source.id}>
@@ -100,9 +78,7 @@ export const TransactionGroup = () => {
 				<Col className="text-end">
 					<Button
 						variant="outline-secondary"
-						disabled={
-							!newLabel || newMatchers.length === 0 || !color || !sourceId
-						}
+						disabled={!newLabel || newMatchers.length === 0 || !color || !sourceId}
 						onClick={handleSave}
 					>
 						Add Group
@@ -112,11 +88,7 @@ export const TransactionGroup = () => {
 			<Row>
 				<Col>
 					<p>{error}</p>
-					<GridBase
-						colDefs={colDefs}
-						rowData={groupList}
-						components={settingsGridComponents}
-					/>
+					<GridBase colDefs={colDefs} rowData={groupList} components={settingsGridComponents} />
 				</Col>
 			</Row>
 		</>

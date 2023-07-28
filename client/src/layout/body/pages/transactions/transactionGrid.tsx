@@ -8,17 +8,14 @@ interface TransactionGridByMonthProps {
 	year: string;
 }
 
-export const TransactionGridByMonth: FC<TransactionGridByMonthProps> = ({
-	month,
-	year,
-}) => {
+export const TransactionGridByMonth: FC<TransactionGridByMonthProps> = ({ month, year }) => {
 	const { transactions, fetchTransactions, firstLoadPendingRef } = useTransactions(year, month);
 
 	useEffect(() => {
 		if (!firstLoadPendingRef.current) {
 			fetchTransactions();
 		}
-	// eslint-disable-next-line react-hooks/exhaustive-deps
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [year, month]);
 
 	const colDefs = useMemo(() => transactionColDefs(), []);

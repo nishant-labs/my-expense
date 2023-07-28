@@ -14,7 +14,4 @@ const GroupReferenceDataSchema = new Schema({
 	},
 });
 
-export const GroupReferenceDataModel = model(
-	'TransactionGroupReference',
-	GroupReferenceDataSchema
-);
+export const GroupReferenceDataModel = model('TransactionGroupReference', GroupReferenceDataSchema);

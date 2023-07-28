@@ -12,15 +12,12 @@ export const UploadTransaction = () => {
 	const [selectedFile, setSelectedFile] = useState<File | null>(null);
 	const [accountType, setAccountType] = useState('');
 
-	const handleFileSelection = useCallback(
-		(event: ChangeEvent<HTMLInputElement>) => {
-			const fileList = event.currentTarget.files!;
-			if (fileList.length > 0) {
-				setSelectedFile(fileList.item(0));
-			}
-		},
-		[]
-	);
+	const handleFileSelection = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+		const fileList = event.currentTarget.files!;
+		if (fileList.length > 0) {
+			setSelectedFile(fileList.item(0));
+		}
+	}, []);
 
 	const handleTransactionUpload = useCallback(
 		(close: () => void) => {
@@ -34,7 +31,7 @@ export const UploadTransaction = () => {
 				alert('Please select file to upload');
 			}
 		},
-		[selectedFile, accountType]
+		[selectedFile, accountType],
 	);
 
 	return (
@@ -61,11 +58,7 @@ export const UploadTransaction = () => {
 				<Col>
 					<Form.Group controlId="formFile" className="mb-3">
 						<Form.Label>Select CSV file</Form.Label>
-						<Form.Control
-							type="file"
-							accept="text/csv"
-							onChange={handleFileSelection}
-						/>
+						<Form.Control type="file" accept="text/csv" onChange={handleFileSelection} />
 					</Form.Group>
 				</Col>
 			</Row>

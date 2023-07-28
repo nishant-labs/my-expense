@@ -12,26 +12,16 @@ interface DeleteAndUpdateRowCellRendererProps extends ICellRendererParams {
 	toggleItem: (params: ICellRendererParams) => Promise<ApiResponse<unknown>>;
 }
 
-export const DeleteAndUpdateRowCellRenderer: FC<
-	DeleteAndUpdateRowCellRendererProps
-> = ({ deleteItem, toggleItem, data }) => {
-	const deleteAsyncCaller = useCallback(
-		() => deleteItem(data),
-		[data, deleteItem]
-	);
-	const toggleAsyncCaller = useCallback(
-		() => toggleItem(data),
-		[data, toggleItem]
-	);
+export const DeleteAndUpdateRowCellRenderer: FC<DeleteAndUpdateRowCellRendererProps> = ({
+	deleteItem,
+	toggleItem,
+	data,
+}) => {
+	const deleteAsyncCaller = useCallback(() => deleteItem(data), [data, deleteItem]);
+	const toggleAsyncCaller = useCallback(() => toggleItem(data), [data, toggleItem]);
 
-	const [deleteApiState, handleDelete] = useAsyncApiData(
-		deleteAsyncCaller,
-		true
-	);
-	const [toggleApiState, handleToggle] = useAsyncApiData(
-		toggleAsyncCaller,
-		true
-	);
+	const [deleteApiState, handleDelete] = useAsyncApiData(deleteAsyncCaller, true);
+	const [toggleApiState, handleToggle] = useAsyncApiData(toggleAsyncCaller, true);
 
 	if (deleteApiState.loading || toggleApiState.loading) {
 		return <Spinner animation="border" />;

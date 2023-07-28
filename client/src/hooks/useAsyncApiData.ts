@@ -9,7 +9,7 @@ interface IAsyncApiData<T> {
 
 export function useAsyncApiData<T>(
 	apiCaller: () => Promise<ApiResponse<T>>,
-	onDemandOnly = false
+	onDemandOnly = false,
 ): [IAsyncApiData<T>, () => Promise<void>] {
 	const [apiState, setApiState] = useState<IAsyncApiData<T>>({
 		data: null,

@@ -2,9 +2,7 @@ import Papa from 'papaparse';
 import { transformCSVToTransactionPayload } from './TransactionUtils';
 import { ITransactionsPayload } from '../state/transactions/types';
 
-export const parseCSVFileToTransaction = (
-	csvFile: File
-): Promise<Array<ITransactionsPayload>> =>
+export const parseCSVFileToTransaction = (csvFile: File): Promise<Array<ITransactionsPayload>> =>
 	new Promise((resolve, reject) => {
 		Papa.parse<string[]>(csvFile, {
 			skipEmptyLines: true,

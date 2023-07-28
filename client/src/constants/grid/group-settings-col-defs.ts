@@ -6,11 +6,8 @@ import { formatNumberAsCurrency } from '../../utils/NumberUtils';
 export const groupSettingsColDefs = (
 	onDelete: (group: ITransactionGroup) => void,
 	onToggleStatus: (group: ITransactionGroup) => void,
-	onUpdateTransactions: (
-		group: ITransactionGroup,
-		matchers: Array<string>
-	) => void,
-	sourceList: Array<ITransactionSource>
+	onUpdateTransactions: (group: ITransactionGroup, matchers: Array<string>) => void,
+	sourceList: Array<ITransactionSource>,
 ): Array<ColDef> => [
 	{
 		headerName: 'Name',
@@ -29,8 +26,7 @@ export const groupSettingsColDefs = (
 		headerName: 'Budget',
 		field: 'budget',
 		width: 100,
-		valueFormatter: (params) =>
-			formatNumberAsCurrency(Number(params.value ?? 0), true, 0),
+		valueFormatter: (params) => formatNumberAsCurrency(Number(params.value ?? 0), true, 0),
 	},
 	{
 		headerName: 'Chart Color',
@@ -44,9 +40,7 @@ export const groupSettingsColDefs = (
 	{
 		headerName: 'Transaction Source',
 		field: 'sourceId',
-		valueFormatter: (params) =>
-			sourceList.find((source) => source.id === params.value)?.name ??
-			'Source Not Found',
+		valueFormatter: (params) => sourceList.find((source) => source.id === params.value)?.name ?? 'Source Not Found',
 	},
 	{
 		headerName: 'Action',

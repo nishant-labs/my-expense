@@ -3,17 +3,12 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { fetchTransactionsByMonth } from '../api/TransactionsApi';
 import { transactionByMonthSelector } from '../state/transactions/selectors';
 import { ApiError } from '../api/types';
-import {
-	ITransactions,
-	ITransactionsEnhanced,
-} from '../state/transactions/types';
+import { ITransactions, ITransactionsEnhanced } from '../state/transactions/types';
 import { selectGroups } from '../state/settings/group/selector';
 import { selectSources } from '../state/settings/source/selector';
 
 export function useTransactions(year: string, month: string, accountType?: string) {
-	const [transactionList, setTransactions] = useRecoilState(
-		transactionByMonthSelector({ year, month })
-	);
+	const [transactionList, setTransactions] = useRecoilState(transactionByMonthSelector({ year, month }));
 	const groupList = useRecoilValue(selectGroups);
 	const sourceList = useRecoilValue(selectSources);
 
@@ -37,12 +32,8 @@ export function useTransactions(year: string, month: string, accountType?: strin
 	const transactions = useMemo<Array<ITransactionsEnhanced>>(
 		() =>
 			transactionList.map((transaction) => {
-				const group = groupList.find((value) =>
-					value.matchers.includes(transaction.transactionSource)
-				);
-				const source = sourceList.find(
-					(source) => source.id === group?.sourceId
-				);
+				const group = groupList.find((value) => value.matchers.includes(transaction.transactionSource));
+				const source = sourceList.find((source) => source.id === group?.sourceId);
 
 				return {
 					...transaction,
@@ -50,7 +41,7 @@ export function useTransactions(year: string, month: string, accountType?: strin
 					sourceName: source?.name,
 				};
 			}),
-		[groupList, sourceList, transactionList]
+		[groupList, sourceList, transactionList],
 	);
 
 	useEffect(() => {
