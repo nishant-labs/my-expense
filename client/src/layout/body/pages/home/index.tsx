@@ -13,18 +13,13 @@ export const Home = () => {
 		const todaysDate = new Date();
 		return {
 			month: todaysDate.getMonth(),
-			year: todaysDate.getFullYear().toString()
-		}
+			year: todaysDate.getFullYear().toString(),
+		};
 	}, []);
 	return (
 		<>
 			<h2>Monthly Expense Report</h2>
-			<Tabs
-				id="controlled-tab-example"
-				activeKey={key}
-				onSelect={(k) => setKey(k!)}
-				className="mb-3"
-			>
+			<Tabs id="controlled-tab-example" activeKey={key} onSelect={(k) => setKey(k!)} className="mb-3">
 				{monthNames.map(({ label, value }, index) => (
 					<Tab
 						key={value as string}

@@ -6,9 +6,7 @@ import { ITransactionGroup } from '../state/settings/group/types';
 import { transactionGroupState } from '../state/settings/group/state';
 
 export const GroupSettingsLoader = memo(() => {
-	const [{ fetchAgain }, setGroupState] = useRecoilState(
-		transactionGroupState
-	);
+	const [{ fetchAgain }, setGroupState] = useRecoilState(transactionGroupState);
 	useEffect(() => {
 		fetchAllGroups().then((res) => {
 			if (!(res as ApiError).error) {

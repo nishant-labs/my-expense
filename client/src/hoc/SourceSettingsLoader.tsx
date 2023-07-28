@@ -6,9 +6,7 @@ import { ITransactionSource } from '../state/settings/source/types';
 import { transactionSourceState } from '../state/settings/source/state';
 
 export const SourceSettingsLoader = memo(() => {
-	const [{ fetchAgain }, setSourceState] = useRecoilState(
-		transactionSourceState
-	);
+	const [{ fetchAgain }, setSourceState] = useRecoilState(transactionSourceState);
 	useEffect(() => {
 		fetchAllSources().then((res) => {
 			if (!(res as ApiError).error) {

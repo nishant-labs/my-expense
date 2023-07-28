@@ -1,8 +1,4 @@
-export const formatNumberAsCurrency = (
-	numberData: number,
-	displaySign = true,
-	fractionalDigits = 2,
-) =>
+export const formatNumberAsCurrency = (numberData: number, displaySign = true, fractionalDigits = 2) =>
 	numberData.toLocaleString('en-GB', {
 		minimumFractionDigits: fractionalDigits,
 		maximumFractionDigits: fractionalDigits,

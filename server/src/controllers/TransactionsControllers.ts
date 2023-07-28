@@ -1,22 +1,11 @@
-import {
-	ControllerOptions,
-	HttpRequest,
-	RouteConfigItem,
-} from 'node-rest-server';
+import { ControllerOptions, HttpRequest, RouteConfigItem } from 'node-rest-server';
 import { TransactionModel } from '../database/models/TransactionsModel.js';
 
-const getTransactionsHandler = async (
-	requestData: HttpRequest,
-	{ getDatabaseConnection }: ControllerOptions
-) => {
+const getTransactionsHandler = async (requestData: HttpRequest, { getDatabaseConnection }: ControllerOptions) => {
 	await getDatabaseConnection!(requestData);
 
 	const startDate = new Date(`${requestData.pathParams.monthAndYear}-01`);
-	const lastDay = new Date(
-		startDate.getFullYear(),
-		startDate.getMonth() + 1,
-		0
-	);
+	const lastDay = new Date(startDate.getFullYear(), startDate.getMonth() + 1, 0);
 
 	const searchQuery: any = {
 		date: {
@@ -43,10 +32,7 @@ const getTransactionsHandler = async (
 	};
 };
 
-const insertTransactionHandler = async (
-	requestData: HttpRequest,
-	{ getDatabaseConnection }: ControllerOptions
-) => {
+const insertTransactionHandler = async (requestData: HttpRequest, { getDatabaseConnection }: ControllerOptions) => {
 	const payload = requestData.body;
 	const { accountType, transactions } = payload;
 

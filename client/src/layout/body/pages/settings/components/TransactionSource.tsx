@@ -21,10 +21,7 @@ export const TransactionSource = () => {
 		});
 	}, [onSave, newLabel, color, expenseFlag]);
 
-	const colDefs = useMemo(
-		() => sourceSettingsColDefs(onDelete, onToggleStatus),
-		[onDelete, onToggleStatus]
-	);
+	const colDefs = useMemo(() => sourceSettingsColDefs(onDelete, onToggleStatus), [onDelete, onToggleStatus]);
 
 	return (
 		<>
@@ -56,11 +53,7 @@ export const TransactionSource = () => {
 			</Row>
 			<Row>
 				<Col className="text-end">
-					<Button
-						variant="outline-secondary"
-						disabled={!newLabel || !color}
-						onClick={handleSave}
-					>
+					<Button variant="outline-secondary" disabled={!newLabel || !color} onClick={handleSave}>
 						Add Source
 					</Button>
 				</Col>
@@ -68,11 +61,7 @@ export const TransactionSource = () => {
 			<Row>
 				<Col>
 					<p>{error}</p>
-					<GridBase
-						colDefs={colDefs}
-						rowData={sourceList}
-						components={settingsGridComponents}
-					/>
+					<GridBase colDefs={colDefs} rowData={sourceList} components={settingsGridComponents} />
 				</Col>
 			</Row>
 		</>

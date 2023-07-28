@@ -2,10 +2,7 @@ import { selectorFamily } from 'recoil';
 import { transactionState } from './state';
 import { ISelectorPayload, ITransactions } from './types';
 
-export const transactionByMonthSelector = selectorFamily<
-	Array<ITransactions>,
-	ISelectorPayload
->({
+export const transactionByMonthSelector = selectorFamily<Array<ITransactions>, ISelectorPayload>({
 	key: 'transactionByMonthSelector',
 	get:
 		({ year, month }) =>

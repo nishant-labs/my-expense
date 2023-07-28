@@ -5,11 +5,7 @@ import { BACKGROUND_COLORS } from '../../../../constants/chart-options';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const generateChartData = (
-	label: string,
-	labels: Array<string>,
-	data: Array<number>
-) => ({
+const generateChartData = (label: string, labels: Array<string>, data: Array<number>) => ({
 	labels,
 	datasets: [
 		{
@@ -27,14 +23,7 @@ interface DoughnutChartProps {
 	values: Array<number>;
 }
 
-export const DoughnutChart: FC<DoughnutChartProps> = ({
-	messagePrefix,
-	labels,
-	values,
-}) => {
-	const chartData = useMemo(
-		() => generateChartData(messagePrefix, labels, values),
-		[messagePrefix, labels, values]
-	);
+export const DoughnutChart: FC<DoughnutChartProps> = ({ messagePrefix, labels, values }) => {
+	const chartData = useMemo(() => generateChartData(messagePrefix, labels, values), [messagePrefix, labels, values]);
 	return <Doughnut data={chartData} />;
 };

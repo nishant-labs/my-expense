@@ -2,15 +2,8 @@ import { useCallback, useState } from 'react';
 import { ApiError } from '../api/types';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { ITransactionSource } from '../state/settings/source/types';
-import {
-	selectSources,
-	toggleSourceFetchAgainFlag,
-} from '../state/settings/source/selector';
-import {
-	deleteSourceById,
-	insertNewSource,
-	updateSourceById,
-} from '../api/SourceSettingsApi';
+import { selectSources, toggleSourceFetchAgainFlag } from '../state/settings/source/selector';
+import { deleteSourceById, insertNewSource, updateSourceById } from '../api/SourceSettingsApi';
 
 export function useSourceSettings() {
 	const triggerToggle = useSetRecoilState(toggleSourceFetchAgainFlag);
@@ -28,7 +21,7 @@ export function useSourceSettings() {
 			}
 			return response;
 		},
-		[triggerToggle]
+		[triggerToggle],
 	);
 
 	const onDelete = useCallback(
@@ -42,7 +35,7 @@ export function useSourceSettings() {
 				}
 			});
 		},
-		[triggerToggle]
+		[triggerToggle],
 	);
 
 	const onToggleStatus = useCallback(
@@ -57,7 +50,7 @@ export function useSourceSettings() {
 				}
 			});
 		},
-		[triggerToggle]
+		[triggerToggle],
 	);
 
 	return {

@@ -10,9 +10,7 @@ import { AppRouter } from './router.tsx';
 import { SourceSettingsLoader } from './hoc/SourceSettingsLoader';
 import { GroupSettingsLoader } from './hoc/GroupSettingsLoader.tsx';
 
-const root = ReactDOM.createRoot(
-	document.getElementById('root') as HTMLElement
-);
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
 	<React.StrictMode>
 		<RecoilRoot>
@@ -23,5 +21,5 @@ root.render(
 				<GroupSettingsLoader />
 			</ThemeProvider>
 		</RecoilRoot>
-	</React.StrictMode>
+	</React.StrictMode>,
 );

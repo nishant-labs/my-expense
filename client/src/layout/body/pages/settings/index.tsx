@@ -22,20 +22,11 @@ export const Settings = () => {
 					</Col>
 					<Col sm={10}>
 						<Tab.Content>
-							{settingsComponentMapping.map(
-								({ eventKey, component }, index) => (
-									<Tab.Pane
-										key={`nav-content-${index}`}
-										eventKey={eventKey}
-										unmountOnExit
-										mountOnEnter
-									>
-										<AsyncDataLoader errorFallback="Something went wrong!">
-											{component}
-										</AsyncDataLoader>
-									</Tab.Pane>
-								)
-							)}
+							{settingsComponentMapping.map(({ eventKey, component }, index) => (
+								<Tab.Pane key={`nav-content-${index}`} eventKey={eventKey} unmountOnExit mountOnEnter>
+									<AsyncDataLoader errorFallback="Something went wrong!">{component}</AsyncDataLoader>
+								</Tab.Pane>
+							))}
 						</Tab.Content>
 					</Col>
 				</Row>

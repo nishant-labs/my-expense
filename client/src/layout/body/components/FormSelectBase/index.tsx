@@ -15,25 +15,16 @@ interface FormSelectBaseProps {
 	ariaLabel: string;
 }
 
-export const FormSelectBase: FC<FormSelectBaseProps> = ({
-	options,
-	selected,
-	onSelect,
-	ariaLabel,
-}) => {
+export const FormSelectBase: FC<FormSelectBaseProps> = ({ options, selected, onSelect, ariaLabel }) => {
 	const handleChange = useCallback(
 		(event: SyntheticEvent<HTMLSelectElement, Event>) => {
 			onSelect(event.currentTarget.value);
 		},
-		[onSelect]
+		[onSelect],
 	);
 
 	return (
-		<Form.Select
-			value={selected}
-			aria-label={ariaLabel}
-			onChange={handleChange}
-		>
+		<Form.Select value={selected} aria-label={ariaLabel} onChange={handleChange}>
 			{options.map(({ value, label }, index) => (
 				<option key={`${value}${index}`} value={value}>
 					{label}

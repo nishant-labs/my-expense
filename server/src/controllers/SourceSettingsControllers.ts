@@ -1,10 +1,7 @@
 import { ControllerOptions, HttpRequest, RouteConfigItem } from 'node-rest-server';
 import { SourceReferenceDataModel } from '../database/models/SourceReferenceModel.js';
 
-const getSourceListHandler = async (
-	requestData: HttpRequest,
-	{ getDatabaseConnection }: ControllerOptions
-) => {
+const getSourceListHandler = async (requestData: HttpRequest, { getDatabaseConnection }: ControllerOptions) => {
 	await getDatabaseConnection!(requestData);
 	const response = await SourceReferenceDataModel.find();
 
@@ -20,10 +17,7 @@ const getSourceListHandler = async (
 	};
 };
 
-const insertSourceHandler = async (
-	requestData: HttpRequest,
-	{ getDatabaseConnection }: ControllerOptions
-) => {
+const insertSourceHandler = async (requestData: HttpRequest, { getDatabaseConnection }: ControllerOptions) => {
 	const payload = requestData.body;
 	await getDatabaseConnection!(requestData);
 	const data = await SourceReferenceDataModel.create({
@@ -38,26 +32,17 @@ const insertSourceHandler = async (
 	};
 };
 
-const updateSourceHandler = async (
-	requestData: HttpRequest,
-	{ getDatabaseConnection }: ControllerOptions
-) => {
+const updateSourceHandler = async (requestData: HttpRequest, { getDatabaseConnection }: ControllerOptions) => {
 	const payload = requestData.body;
 	await getDatabaseConnection!(requestData);
-	const data = await SourceReferenceDataModel.findByIdAndUpdate(
-		requestData.pathParams.id,
-		payload
-	);
+	const data = await SourceReferenceDataModel.findByIdAndUpdate(requestData.pathParams.id, payload);
 	return {
 		data,
 		status: 200,
 	};
 };
 
-const deleteSourceHandler = async (
-	requestData: HttpRequest,
-	{ getDatabaseConnection }: ControllerOptions
-) => {
+const deleteSourceHandler = async (requestData: HttpRequest, { getDatabaseConnection }: ControllerOptions) => {
 	let deleteCount = 0;
 	if (requestData.pathParams.id) {
 		await getDatabaseConnection!(requestData);

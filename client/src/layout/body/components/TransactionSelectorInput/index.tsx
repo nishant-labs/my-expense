@@ -10,14 +10,8 @@ interface TransactionSelectorInputProps {
 	onChange: (selectedTransactions: Array<string>) => void;
 }
 
-export const TransactionSelectorInput: FC<TransactionSelectorInputProps> = ({
-	options,
-	selected,
-	onChange,
-}) => {
-	const [selectedTransactions, setSelectedTransactions] = useState<
-		Array<Option>
-	>(selected ?? []);
+export const TransactionSelectorInput: FC<TransactionSelectorInputProps> = ({ options, selected, onChange }) => {
+	const [selectedTransactions, setSelectedTransactions] = useState<Array<Option>>(selected ?? []);
 
 	useEffect(() => {
 		const matcherList = selectedTransactions.map<string>((selectedInput) => {

@@ -3,15 +3,8 @@ import { ApiError } from '../api/types';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { ITransactionGroup } from '../state/settings/group/types';
 import { selectSources } from '../state/settings/source/selector';
-import {
-	selectGroups,
-	toggleGroupFetchAgainFlag,
-} from '../state/settings/group/selector';
-import {
-	deleteGroupById,
-	insertNewGroup,
-	updateGroupById,
-} from '../api/GroupSettingsApi';
+import { selectGroups, toggleGroupFetchAgainFlag } from '../state/settings/group/selector';
+import { deleteGroupById, insertNewGroup, updateGroupById } from '../api/GroupSettingsApi';
 
 export function useGroupSettings() {
 	const triggerToggle = useSetRecoilState(toggleGroupFetchAgainFlag);
@@ -20,13 +13,7 @@ export function useGroupSettings() {
 	const [error, setError] = useState('');
 
 	const onSave = useCallback(
-		async (
-			matchers: Array<string>,
-			name: string,
-			chartColor: string,
-			sourceId: string,
-			budget: number
-		) => {
+		async (matchers: Array<string>, name: string, chartColor: string, sourceId: string, budget: number) => {
 			setError('');
 			const response = await insertNewGroup({
 				name,
@@ -42,7 +29,7 @@ export function useGroupSettings() {
 			}
 			return response;
 		},
-		[triggerToggle]
+		[triggerToggle],
 	);
 
 	const onDelete = useCallback(
@@ -56,7 +43,7 @@ export function useGroupSettings() {
 				}
 			});
 		},
-		[triggerToggle]
+		[triggerToggle],
 	);
 
 	const onToggleStatus = useCallback(
@@ -71,7 +58,7 @@ export function useGroupSettings() {
 				}
 			});
 		},
-		[triggerToggle]
+		[triggerToggle],
 	);
 
 	const onUpdateTransactions = useCallback(
@@ -84,7 +71,7 @@ export function useGroupSettings() {
 				}
 			});
 		},
-		[triggerToggle]
+		[triggerToggle],
 	);
 
 	return {
@@ -94,6 +81,6 @@ export function useGroupSettings() {
 		onSave,
 		onDelete,
 		onToggleStatus,
-		onUpdateTransactions
+		onUpdateTransactions,
 	};
 }

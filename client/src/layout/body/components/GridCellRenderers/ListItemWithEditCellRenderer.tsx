@@ -6,14 +6,15 @@ import { TransactionSelectorInput } from '../TransactionSelectorInput';
 
 import './styles.css';
 
-interface ListItemWithEditCellRendererProps<T>
-	extends ICellRendererParams<T, Array<string>, unknown> {
+interface ListItemWithEditCellRendererProps<T> extends ICellRendererParams<T, Array<string>, unknown> {
 	updateItem: (data: T, list: Array<string>) => void;
 }
 
-export const ListItemWithEditCellRenderer: FC<
-	ListItemWithEditCellRendererProps<Record<string, string>>
-> = ({ value, data, updateItem }) => {
+export const ListItemWithEditCellRenderer: FC<ListItemWithEditCellRendererProps<Record<string, string>>> = ({
+	value,
+	data,
+	updateItem,
+}) => {
 	const [show, setShow] = useState(false);
 	const [updatedList, setUpdatedList] = useState<Array<string>>(value!);
 
@@ -40,19 +41,13 @@ export const ListItemWithEditCellRenderer: FC<
 				</div>
 			)}
 
-			<PencilSquare
-				style={{ float: 'right', cursor: 'pointer', marginBottom: '5px' }}
-				onClick={handleShow}
-			/>
+			<PencilSquare style={{ float: 'right', cursor: 'pointer', marginBottom: '5px' }} onClick={handleShow} />
 			<Modal show={show} onHide={handleClose}>
 				<Modal.Header closeButton>
 					<Modal.Title>Edit Transactions</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
-					<TransactionSelectorInput
-						selected={updatedList}
-						onChange={setUpdatedList}
-					/>
+					<TransactionSelectorInput selected={updatedList} onChange={setUpdatedList} />
 				</Modal.Body>
 				<Modal.Footer>
 					<Button variant="secondary" onClick={handleClose}>

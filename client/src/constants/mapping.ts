@@ -9,4 +9,3 @@ export const accountExpenseCategories = [
 	'Saving Account Deposit',
 	'Miscellaneous',
 ];
-
