@@ -1,0 +1,43 @@
+import { useMemo, useState } from 'react';
+import Tab from 'react-bootstrap/Tab';
+import Tabs from 'react-bootstrap/Tabs';
+import { MONTH_NAMES } from '../../../../constants';
+import { ExpenseSummary } from './components/ExpenseSummary';
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const [_, ...monthNames] = MONTH_NAMES;
+
+export const Home = () => {
+	const [key, setKey] = useState(monthNames[0].label.toLowerCase());
+	const { month, year } = useMemo(() => {
+		const todaysDate = new Date();
+		return {
+			month: todaysDate.getMonth(),
+			year: todaysDate.getFullYear().toString()
+		}
+	}, []);
+	return (
+		<>
+			<h2>Monthly Expense Report</h2>
+			<Tabs
+				id="controlled-tab-example"
+				activeKey={key}
+				onSelect={(k) => setKey(k!)}
+				className="mb-3"
+			>
+				{monthNames.map(({ label, value }, index) => (
+					<Tab
+						key={value as string}
+						eventKey={label.toLowerCase()}
+						title={label}
+						disabled={index > month}
+						mountOnEnter
+						unmountOnExit
+					>
+						<ExpenseSummary month={value as string} year={year} />
+					</Tab>
+				))}
+			</Tabs>
+		</>
+	);
+};
