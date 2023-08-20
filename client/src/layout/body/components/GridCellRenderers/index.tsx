@@ -1,4 +1,4 @@
-import { DeleteAndUpdateRowCellRenderer } from './DeleteAndUpdateRowCellRenderer';
+import { RowActionCellRenderer } from './RowActionCellRenderer';
 import { FormSelectCellRenderer } from './FormSelectCellRenderer';
 import { ListItemWithEditCellRenderer } from './ListItemWithEditCellRenderer';
 
@@ -7,6 +7,6 @@ export const transactionGridComponents = {
 };
 
 export const settingsGridComponents = {
-	deleteAndUpdateRowCellRenderer: DeleteAndUpdateRowCellRenderer,
+	rowActionCellRenderer: RowActionCellRenderer,
 	listItemWithEditCellRenderer: ListItemWithEditCellRenderer,
 };

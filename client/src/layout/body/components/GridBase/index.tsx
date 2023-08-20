@@ -7,6 +7,7 @@ import { ColDef, GridReadyEvent } from 'ag-grid-community';
 
 interface GridBaseProps {
 	rowData: Array<unknown>;
+	defaultColDef?: ColDef;
 	colDefs: Array<ColDef>;
 	components?: {
 		[p: string]: unknown;
@@ -14,7 +15,7 @@ interface GridBaseProps {
 	styles?: CSSProperties;
 }
 
-export const GridBase: FC<GridBaseProps> = ({ rowData, colDefs, components, styles = {} }) => {
+export const GridBase: FC<GridBaseProps> = ({ rowData, defaultColDef, colDefs, components, styles = {} }) => {
 	const [gridEvent, setGridEvent] = useState<GridReadyEvent | null>(null);
 
 	useEffect(() => {
@@ -37,6 +38,7 @@ export const GridBase: FC<GridBaseProps> = ({ rowData, colDefs, components, styl
 				suppressRowClickSelection
 				suppressCellFocus
 				enableCellTextSelection
+				defaultColDef={defaultColDef}
 				columnDefs={colDefs}
 				rowData={rowData ?? []}
 				onGridReady={(gEvent) => setGridEvent(gEvent)}

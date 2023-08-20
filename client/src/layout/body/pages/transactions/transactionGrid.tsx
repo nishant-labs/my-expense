@@ -1,5 +1,5 @@
 import { FC, useEffect, useMemo } from 'react';
-import { transactionColDefs } from '../../../../constants/grid/transaction-grid-col-defs';
+import { defaultTransactionColDefs, transactionColDefs } from '../../../../constants/grid/transactionGridColDefs';
 import { GridBase } from '../../components/GridBase';
 import { useTransactions } from '../../../../hooks/useTransactions';
 
@@ -19,5 +19,5 @@ export const TransactionGridByMonth: FC<TransactionGridByMonthProps> = ({ month,
 	}, [year, month]);
 
 	const colDefs = useMemo(() => transactionColDefs(), []);
-	return <GridBase colDefs={colDefs} rowData={transactions} />;
+	return <GridBase defaultColDef={defaultTransactionColDefs} colDefs={colDefs} rowData={transactions} />;
 };

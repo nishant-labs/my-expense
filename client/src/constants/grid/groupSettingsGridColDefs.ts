@@ -46,7 +46,7 @@ export const groupSettingsColDefs = (
 		headerName: 'Action',
 		type: 'rightAligned',
 		width: 200,
-		cellRenderer: 'deleteAndUpdateRowCellRenderer',
+		cellRenderer: 'rowActionCellRenderer',
 		cellRendererParams: {
 			deleteItem: onDelete,
 			toggleItem: onToggleStatus,

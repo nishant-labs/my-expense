@@ -26,7 +26,7 @@ export const sourceSettingsColDefs = (
 		headerName: 'Action',
 		type: 'rightAligned',
 		width: 140,
-		cellRenderer: 'deleteAndUpdateRowCellRenderer',
+		cellRenderer: 'rowActionCellRenderer',
 		cellRendererParams: {
 			deleteItem: onDelete,
 			toggleItem: onToggleStatus,
