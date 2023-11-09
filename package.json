@@ -8,6 +8,7 @@
     "start:server": "npm run dev --prefix ./server",
     "start:client": "npm run dev --prefix ./client",
     "format": "prettier --write --ignore-unknown ./",
+    "format:verify": "prettier --check --ignore-unknown ./",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepare": "husky install"
   },

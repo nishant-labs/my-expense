@@ -3,12 +3,12 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import { sourceSettingsColDefs } from '../../../../../constants/grid/source-settings-col-defs';
+import { sourceSettingsColDefs } from '../../../../../constants/grid/sourceSettingGridColDefs';
 import { settingsGridComponents } from '../../../components/GridCellRenderers';
 import { GridBase } from '../../../components/GridBase';
 import { useSourceSettings } from '../../../../../hooks/useSourceSettings';
 
-export const TransactionSource = () => {
+export const SourceSettings = () => {
 	const { error, sourceList, onDelete, onSave, onToggleStatus } = useSourceSettings();
 	const [color, setColor] = useState('#000000');
 	const [newLabel, setNewLabel] = useState('');

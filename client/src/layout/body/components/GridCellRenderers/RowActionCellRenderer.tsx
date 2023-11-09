@@ -7,16 +7,12 @@ import { useAsyncApiData } from '../../../../hooks/useAsyncApiData';
 import { FC, useCallback } from 'react';
 import { ApiResponse } from '../../../../api/types';
 
-interface DeleteAndUpdateRowCellRendererProps extends ICellRendererParams {
+interface RowActionCellRendererProps extends ICellRendererParams {
 	deleteItem: (params: ICellRendererParams) => Promise<ApiResponse<unknown>>;
 	toggleItem: (params: ICellRendererParams) => Promise<ApiResponse<unknown>>;
 }
 
-export const DeleteAndUpdateRowCellRenderer: FC<DeleteAndUpdateRowCellRendererProps> = ({
-	deleteItem,
-	toggleItem,
-	data,
-}) => {
+export const RowActionCellRenderer: FC<RowActionCellRendererProps> = ({ deleteItem, toggleItem, data }) => {
 	const deleteAsyncCaller = useCallback(() => deleteItem(data), [data, deleteItem]);
 	const toggleAsyncCaller = useCallback(() => toggleItem(data), [data, toggleItem]);
 

@@ -10,6 +10,7 @@ import {
 	transformTransactionBySource,
 	transformedTransactionAggregator,
 } from '../../../../../../utils/TransactionUtils';
+import { formatNumberAsCurrency } from '../../../../../../utils/NumberUtils';
 
 interface ExpenseSummaryProps {
 	month: string;
@@ -45,26 +46,30 @@ export const ExpenseSummary: FC<ExpenseSummaryProps> = ({ year, month }) => {
 		return <Alert variant="warning">Transaction Missing, please upload for the month</Alert>;
 	}
 
-	const credit = `You have saved £${savedAmount} this month`;
-	const deficit = `You have spend £${Math.abs(savedAmount)} more than you income`;
+	const credit = `You have saved ${formatNumberAsCurrency(savedAmount)} this month`;
+	const deficit = `You have spend ${formatNumberAsCurrency(savedAmount)} more than you income`;
 	return (
 		<>
-			{<Alert variant={savedAmount > 0 ? 'primary' : 'warning'}>{savedAmount > 0 ? credit : deficit}</Alert>}
+			{
+				<Alert variant={savedAmount > 0 ? 'primary' : 'warning'}>
+					<h5>{savedAmount > 0 ? credit : deficit}</h5>
+				</Alert>
+			}
 			<Row className="row-cols-3">
-				{income.map(({ title, total, transactions }) => (
-					<Col>
+				{income.map(({ title, total, transactions }, index) => (
+					<Col key={`income-${index}`}>
 						<TransactionHighlights title={title} total={total} transactions={transactions} />
 					</Col>
 				))}
 
-				{accountExpense.map(({ title, total, transactions }) => (
-					<Col>
+				{accountExpense.map(({ title, total, transactions }, index) => (
+					<Col key={`acc-exp-${index}`}>
 						<TransactionHighlights title={title} total={total} transactions={transactions} />
 					</Col>
 				))}
 
-				{creditCardExpense.map(({ title, total, transactions }) => (
-					<Col>
+				{creditCardExpense.map(({ title, total, transactions }, index) => (
+					<Col key={`card-exp-${index}`}>
 						<TransactionHighlights title={title} total={total} transactions={transactions} />
 					</Col>
 				))}

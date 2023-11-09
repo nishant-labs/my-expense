@@ -1,15 +1,15 @@
-import { TransactionGroup } from './components/TransactionGroup';
-import { TransactionSource } from './components/TransactionSource';
+import { GroupSettings } from './components/GroupSettings';
+import { SourceSettings } from './components/SourceSettings';
 
 export const settingsComponentMapping = [
 	{
 		eventKey: 'source',
 		title: 'Source Settings',
-		component: <TransactionSource />,
+		component: <SourceSettings />,
 	},
 	{
 		eventKey: 'group',
 		title: 'Group Settings',
-		component: <TransactionGroup />,
+		component: <GroupSettings />,
 	},
 ];
