@@ -1,7 +1,7 @@
 import { FC, useMemo } from 'react';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
-import { BACKGROUND_COLORS } from '../../../../constants/chartOptions';
+import { BACKGROUND_COLORS } from '../../constants/chartOptions';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 

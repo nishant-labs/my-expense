@@ -2,15 +2,12 @@ import { FC, useMemo } from 'react';
 import Alert from 'react-bootstrap/Alert';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { TransactionHighlights } from '../../../../components/TransactionHighlights';
-import { useTransactions } from '../../../../../../hooks/useTransactions';
-import { useSourceSettings } from '../../../../../../hooks/useSourceSettings';
-import { IExpenseSummaryTransaction } from '../../../../../../state/transactions/types';
-import {
-	transformTransactionBySource,
-	transformedTransactionAggregator,
-} from '../../../../../../utils/TransactionUtils';
-import { formatNumberAsCurrency } from '../../../../../../utils/NumberUtils';
+import { TransactionHighlights } from '../../../components/TransactionHighlights';
+import { useTransactions } from '../../../hooks/useTransactions';
+import { useSourceSettings } from '../../../hooks/useSourceSettings';
+import { IExpenseSummaryTransaction } from '../../../state/transactions/types';
+import { transformTransactionBySource, transformedTransactionAggregator } from '../../../utils/TransactionUtils';
+import { formatNumberAsCurrency } from '../../../utils/NumberUtils';
 
 interface ExpenseSummaryProps {
 	month: string;

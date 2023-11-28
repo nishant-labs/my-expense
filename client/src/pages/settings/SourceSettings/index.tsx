@@ -3,10 +3,10 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import { sourceSettingsColDefs } from '../../../../../constants/grid/sourceSettingGridColDefs';
+import { sourceSettingsColDefs } from '../../../constants/grid/sourceSettingGridColDefs';
 import { settingsGridComponents } from '../../../components/GridCellRenderers';
 import { GridBase } from '../../../components/GridBase';
-import { useSourceSettings } from '../../../../../hooks/useSourceSettings';
+import { useSourceSettings } from '../../../hooks/useSourceSettings';
 
 export const SourceSettings = () => {
 	const { error, sourceList, onDelete, onSave, onToggleStatus } = useSourceSettings();

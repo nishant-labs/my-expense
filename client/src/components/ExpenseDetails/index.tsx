@@ -1,7 +1,7 @@
 import ListGroup from 'react-bootstrap/ListGroup';
 import { ExpenseCategory } from './ExpenseCategory';
 import { FC } from 'react';
-import { ITransactionsEnhanced } from '../../../../state/transactions/types';
+import { ITransactionsEnhanced } from '../../state/transactions/types';
 
 interface ExpenseDetailsProps {
 	transactionList: Array<ITransactionsEnhanced>;

@@ -1,5 +1,5 @@
-import { GroupSettings } from './components/GroupSettings';
-import { SourceSettings } from './components/SourceSettings';
+import { GroupSettings } from './GroupSettings';
+import { SourceSettings } from './SourceSettings';
 
 export const settingsComponentMapping = [
 	{

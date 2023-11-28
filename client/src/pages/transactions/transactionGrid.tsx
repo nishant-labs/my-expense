@@ -1,7 +1,7 @@
 import { FC, useEffect, useMemo } from 'react';
-import { defaultTransactionColDefs, transactionColDefs } from '../../../../constants/grid/transactionGridColDefs';
+import { defaultTransactionColDefs, transactionColDefs } from '../../constants/grid/transactionGridColDefs';
 import { GridBase } from '../../components/GridBase';
-import { useTransactions } from '../../../../hooks/useTransactions';
+import { useTransactions } from '../../hooks/useTransactions';
 
 interface TransactionGridByMonthProps {
 	month: string;

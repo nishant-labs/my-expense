@@ -31,11 +31,12 @@ export const groupSettingsColDefs = (
 	{
 		headerName: 'Chart Color',
 		field: 'chartColor',
-		width: 140,
+		width: 120,
 		cellStyle: (params: CellClassParams) => ({
 			backgroundColor: params.value,
 			color: 'white',
 		}),
+		valueFormatter: () => ' ',
 	},
 	{
 		headerName: 'Transaction Source',

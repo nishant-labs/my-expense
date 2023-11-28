@@ -3,10 +3,10 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import { BaseModal } from '../../../../components/BaseModal';
-import { parseCSVFileToTransaction } from '../../../../../../utils/FileHandler';
-import { insertTransactions } from '../../../../../../api/TransactionsApi';
+import { parseCSVFileToTransaction } from '../../../../utils/FileHandler';
+import { insertTransactions } from '../../../../api/TransactionsApi';
 import { FormSelectBase } from '../../../../components/FormSelectBase';
-import { ACCOUNT_TYPE } from '../../../../../../constants';
+import { ACCOUNT_TYPE } from '../../../../constants';
 
 export const UploadTransaction = () => {
 	const [selectedFile, setSelectedFile] = useState<File | null>(null);

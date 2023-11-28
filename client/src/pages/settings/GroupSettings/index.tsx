@@ -3,11 +3,11 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import { groupSettingsColDefs } from '../../../../../constants/grid/groupSettingsGridColDefs';
+import { groupSettingsColDefs } from '../../../constants/grid/groupSettingsGridColDefs';
 import { settingsGridComponents } from '../../../components/GridCellRenderers';
 import { GridBase } from '../../../components/GridBase';
 import { TransactionSelectorInput } from '../../../components/TransactionSelectorInput';
-import { useGroupSettings } from '../../../../../hooks/useGroupSettings';
+import { useGroupSettings } from '../../../hooks/useGroupSettings';
 
 export const GroupSettings = () => {
 	const { groupList, sourceList, error, onDelete, onSave, onToggleStatus, onUpdateTransactions } = useGroupSettings();

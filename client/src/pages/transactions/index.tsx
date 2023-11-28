@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { LAST_5_YEARS, MONTH_NAMES } from '../../../../constants';
+import { LAST_5_YEARS, MONTH_NAMES } from '../../constants';
 import { TransactionGridByMonth } from './transactionGrid';
 import { FormSelectBase, OptionValueType } from '../../components/FormSelectBase';
 import { UploadTransaction } from './components/UploadTransaction';

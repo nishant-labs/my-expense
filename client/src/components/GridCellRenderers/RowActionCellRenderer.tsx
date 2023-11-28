@@ -3,9 +3,9 @@ import Form from 'react-bootstrap/Form';
 import Spinner from 'react-bootstrap/Spinner';
 import { Trash } from 'react-bootstrap-icons';
 import { ICellRendererParams } from 'ag-grid-community';
-import { useAsyncApiData } from '../../../../hooks/useAsyncApiData';
+import { useAsyncApiData } from '../../hooks/useAsyncApiData';
 import { FC, useCallback } from 'react';
-import { ApiResponse } from '../../../../api/types';
+import { ApiResponse } from '../../api/types';
 
 interface RowActionCellRendererProps extends ICellRendererParams {
 	deleteItem: (params: ICellRendererParams) => Promise<ApiResponse<unknown>>;
@@ -27,15 +27,14 @@ export const RowActionCellRenderer: FC<RowActionCellRendererProps> = ({ deleteIt
 		<div>
 			<Form>
 				<Form.Check
-					inline
+					style={{ display: 'inline-grid' }}
 					type="switch"
 					name={`group-${data.id}`}
-					label={data.isEnabled ? 'Disable' : 'Enable'}
 					checked={data.isEnabled}
 					onChange={handleToggle}
 				/>
 
-				<Button variant="link" size="sm" onClick={handleDelete}>
+				<Button variant="link" onClick={handleDelete}>
 					<Trash />
 				</Button>
 			</Form>

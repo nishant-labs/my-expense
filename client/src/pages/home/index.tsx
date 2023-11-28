@@ -1,8 +1,8 @@
 import { useMemo, useState } from 'react';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
-import { MONTH_NAMES } from '../../../../constants';
-import { ExpenseSummary } from './components/ExpenseSummary';
+import { MONTH_NAMES } from '../../constants';
+import { ExpenseSummary } from './ExpenseSummary';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const [_, ...monthNames] = MONTH_NAMES;

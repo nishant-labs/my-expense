@@ -1,9 +1,9 @@
 import { FC } from 'react';
 
 import Card from 'react-bootstrap/Card';
-import { ExpenseDetails } from '../../components/ExpenseDetails';
-import { ITransactionsEnhanced } from '../../../../state/transactions/types';
-import { formatNumberAsCurrency } from '../../../../utils/NumberUtils';
+import { ExpenseDetails } from '../ExpenseDetails';
+import { ITransactionsEnhanced } from '../../state/transactions/types';
+import { formatNumberAsCurrency } from '../../utils/NumberUtils';
 
 interface TransactionHighlightsProps {
 	title: string;

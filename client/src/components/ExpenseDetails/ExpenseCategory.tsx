@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Stack from 'react-bootstrap/Stack';
-import { ITransactionsEnhanced } from '../../../../state/transactions/types';
-import { formatNumberAsCurrency } from '../../../../utils/NumberUtils';
+import { ITransactionsEnhanced } from '../../state/transactions/types';
+import { formatNumberAsCurrency } from '../../utils/NumberUtils';
 
 interface ExpenseCategoryProps {
 	className?: string;
