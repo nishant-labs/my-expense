@@ -1,6 +1,17 @@
 import { ControllerOptions, HttpRequest, RouteConfigItem } from 'node-rest-server';
 import { TransactionModel } from '../database/models/TransactionsModel.js';
 
+interface TransactionPayloadItem {
+	date: string;
+	transactionSource: string;
+	amount: number;
+}
+
+interface InsertTransactionPayload {
+	accountType: string;
+	transactions: Array<TransactionPayloadItem>;
+}
+
 const getTransactionsHandler = async (requestData: HttpRequest, { getDatabaseConnection }: ControllerOptions) => {
 	await getDatabaseConnection!(requestData);
 
@@ -33,16 +44,16 @@ const getTransactionsHandler = async (requestData: HttpRequest, { getDatabaseCon
 };
 
 const insertTransactionHandler = async (requestData: HttpRequest, { getDatabaseConnection }: ControllerOptions) => {
-	const payload = requestData.body;
+	const payload = requestData.body as InsertTransactionPayload;
 	const { accountType, transactions } = payload;
 
 	await getDatabaseConnection!(requestData);
 
-	const dbData = (transactions as Array<any>).map((row) => ({
+	const dbData = transactions.map(({ amount, date, transactionSource }) => ({
 		accountType,
-		date: row.date,
-		transactionOf: row.transactionSource,
-		amount: row.amount,
+		transactionOf: transactionSource,
+		date,
+		amount,
 	}));
 
 	await TransactionModel.create(dbData);

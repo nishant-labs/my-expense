@@ -1,6 +1,14 @@
 import { ControllerOptions, HttpRequest, RouteConfigItem } from 'node-rest-server';
 import { GroupReferenceDataModel } from '../database/models/GroupReferenceModel.js';
 
+interface InsertGroupPayload {
+	matchers: string;
+	name: string;
+	chartColor: string;
+	budget: string;
+	sourceId: string;
+}
+
 const getGroupListHandler = async (requestData: HttpRequest, { getDatabaseConnection }: ControllerOptions) => {
 	await getDatabaseConnection!(requestData);
 	const response = await GroupReferenceDataModel.find();
@@ -20,15 +28,15 @@ const getGroupListHandler = async (requestData: HttpRequest, { getDatabaseConnec
 };
 
 const insertGroupHandler = async (requestData: HttpRequest, { getDatabaseConnection }: ControllerOptions) => {
-	const payload = requestData.body;
+	const { budget, chartColor, matchers, name, sourceId } = requestData.body as InsertGroupPayload;
 	await getDatabaseConnection!(requestData);
 	await GroupReferenceDataModel.create({
-		transactionMatchers: payload.matchers,
-		groupName: payload.name,
-		chartColor: payload.chartColor,
-		budget: payload.budget,
-		sourceId: payload.sourceId,
+		transactionMatchers: matchers,
+		groupName: name,
+		chartColor: chartColor,
 		isEnabled: true,
+		sourceId,
+		budget,
 	});
 	return {
 		data: 'Successfully inserted data',
@@ -37,10 +45,9 @@ const insertGroupHandler = async (requestData: HttpRequest, { getDatabaseConnect
 };
 
 const updateGroupHandler = async (requestData: HttpRequest, { getDatabaseConnection }: ControllerOptions) => {
-	const payload = requestData.body;
+	const { matchers, ...restPayload } = requestData.body as InsertGroupPayload;
 	await getDatabaseConnection!(requestData);
 
-	const { matchers, ...restPayload } = payload;
 	const updatePayload = {
 		...restPayload,
 		...(matchers ? { transactionMatchers: matchers } : {}),
