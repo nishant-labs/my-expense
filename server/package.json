@@ -13,7 +13,7 @@
 	"license": "ISC",
 	"dependencies": {
 		"mongoose": "^7.3.0",
-		"node-rest-server": "^4.0.0-1"
+		"node-rest-server": "4.0.0"
 	},
 	"devDependencies": {
 		"@types/node": "^20.3.1",
