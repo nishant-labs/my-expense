@@ -1,4 +1,4 @@
-import { TopHeader } from './components/TopHeader';
+import { TopHeader } from './TopHeader';
 
 const Header = () => {
 	return <TopHeader />;

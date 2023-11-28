@@ -1,4 +1,4 @@
-import { SelectOption } from '../layout/body/components/FormSelectBase';
+import { SelectOption } from '../components/FormSelectBase';
 
 export const MONTH_NAMES: Array<SelectOption> = Array(13)
 	.fill('')

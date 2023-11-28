@@ -1,14 +1,14 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { Home } from './layout/body/pages/home';
-import { Summary } from './layout/body/pages/summary';
-import { Transactions } from './layout/body/pages/transactions';
-import { Settings } from './layout/body/pages/settings';
-import App from './App';
+import { Home } from './pages/home';
+import { Summary } from './pages/summary';
+import { Transactions } from './pages/transactions';
+import { Settings } from './pages/settings';
+import RootLayout from './layout';
 
 const router = createBrowserRouter([
 	{
 		path: '/',
-		element: <App />,
+		element: <RootLayout />,
 		// errorElement: <ErrorPage />,
 		// loader: rootLoader,
 		children: [
@@ -33,6 +33,4 @@ const router = createBrowserRouter([
 	},
 ]);
 
-export const AppRouter = () => {
-	return <RouterProvider router={router} />;
-};
+export const AppRouter = () => <RouterProvider router={router} />;
