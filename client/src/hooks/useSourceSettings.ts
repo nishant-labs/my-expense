@@ -14,8 +14,30 @@ export function useSourceSettings() {
 		async (name: string, chartColor: string, isExpense: boolean) => {
 			setError('');
 			const response = await insertNewSource({ name, chartColor, isExpense });
+
 			if ((response as ApiError).error) {
 				setError('Failed to create new source');
+			} else {
+				triggerToggle(true);
+			}
+
+			return response;
+		},
+		[triggerToggle],
+	);
+
+	const onUpdate = useCallback(
+		async (id: string, name: string, chartColor: string, isExpense: boolean) => {
+			setError('');
+
+			const response = await updateSourceById(id, {
+				name,
+				chartColor,
+				isExpense,
+			});
+
+			if ((response as ApiError).error) {
+				setError(`Failed to update source ${name}`);
 			} else {
 				triggerToggle(true);
 			}
@@ -25,30 +47,34 @@ export function useSourceSettings() {
 	);
 
 	const onDelete = useCallback(
-		(source: ITransactionSource) => {
+		async (source: ITransactionSource) => {
 			setError('');
-			deleteSourceById(source.id).then((response) => {
-				if ((response as ApiError).error) {
-					setError(`Failed to delete source with id ${source.id}`);
-				} else {
-					triggerToggle(true);
-				}
-			});
+			const response = await deleteSourceById(source.id);
+
+			if ((response as ApiError).error) {
+				setError(`Failed to delete source with id ${source.id}`);
+			} else {
+				triggerToggle(true);
+			}
+
+			return response;
 		},
 		[triggerToggle],
 	);
 
 	const onToggleStatus = useCallback(
-		(source: ITransactionSource) => {
-			updateSourceById(source.id, {
+		async (source: ITransactionSource) => {
+			const response = await updateSourceById(source.id, {
 				isEnabled: !source.isEnabled,
-			}).then((response) => {
-				if ((response as ApiError).error) {
-					setError(`Failed to update source ${source.name}`);
-				} else {
-					triggerToggle(true);
-				}
 			});
+
+			if ((response as ApiError).error) {
+				setError(`Failed to update source ${source.name}`);
+			} else {
+				triggerToggle(true);
+			}
+
+			return response;
 		},
 		[triggerToggle],
 	);
@@ -57,6 +83,7 @@ export function useSourceSettings() {
 		sourceList,
 		error,
 		onSave,
+		onUpdate,
 		onDelete,
 		onToggleStatus,
 	};

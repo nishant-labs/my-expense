@@ -11,8 +11,8 @@ export const Settings = () => {
 		<div style={{ height: 'calc(100vh - 150px)' }}>
 			<Tab.Container defaultActiveKey="source">
 				<Row className="h-100">
-					<Col sm={2} className="border-end">
-						<Nav variant="tabs" className="flex-column">
+					<Col sm={2} className="border-end ">
+						<Nav className="flex-column h-100">
 							{settingsComponentMapping.map(({ eventKey, title }, index) => (
 								<Nav.Item key={`nav-menu-${index}`}>
 									<Nav.Link eventKey={eventKey}>{title}</Nav.Link>

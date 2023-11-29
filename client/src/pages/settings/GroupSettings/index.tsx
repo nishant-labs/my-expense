@@ -8,28 +8,51 @@ import { settingsGridComponents } from '../../../components/GridCellRenderers';
 import { GridBase } from '../../../components/GridBase';
 import { TransactionSelectorInput } from '../../../components/TransactionSelectorInput';
 import { useGroupSettings } from '../../../hooks/useGroupSettings';
+import { ITransactionGroup } from '../../../state/settings/group/types';
 
 export const GroupSettings = () => {
-	const { groupList, sourceList, error, onDelete, onSave, onToggleStatus, onUpdateTransactions } = useGroupSettings();
+	const { groupList, sourceList, error, onDelete, onSave, onUpdate, onToggleStatus, onUpdateTransactions } =
+		useGroupSettings();
+	const [editId, setEditId] = useState<string | null>(null);
 	const [newMatchers, setNewMatchers] = useState<Array<string>>([]);
 	const [color, setColor] = useState('#000000');
 	const [newLabel, setNewLabel] = useState('');
 	const [sourceId, setSourceId] = useState('');
 	const [budget, setBudget] = useState('');
 
+	const handleClear = useCallback(() => {
+		setEditId(null);
+		setNewMatchers([]);
+		setNewLabel('');
+		setColor('');
+		setSourceId('');
+		setBudget('');
+	}, []);
+
 	const handleSave = useCallback(() => {
 		onSave(newMatchers, newLabel, color, sourceId, parseInt(budget)).then(() => {
-			setNewMatchers([]);
-			setNewLabel('');
-			setColor('');
-			setSourceId('');
-			setBudget('');
+			handleClear();
 		});
-	}, [onSave, newMatchers, newLabel, color, sourceId, budget]);
+	}, [onSave, newMatchers, newLabel, color, sourceId, budget, handleClear]);
+
+	const handleUpdate = useCallback(() => {
+		onUpdate(editId!, newMatchers, newLabel, color, sourceId, parseInt(budget)).then(() => {
+			handleClear();
+		});
+	}, [onUpdate, editId, newMatchers, newLabel, color, sourceId, budget, handleClear]);
+
+	const handleEdit = useCallback((group: ITransactionGroup) => {
+		setEditId(group.id);
+		setNewMatchers(group.matchers);
+		setNewLabel(group.name);
+		setColor(group.chartColor);
+		setSourceId(group.sourceId);
+		setBudget(group.budget?.toString() || '');
+	}, []);
 
 	const colDefs = useMemo(
-		() => groupSettingsColDefs(onDelete, onToggleStatus, onUpdateTransactions, sourceList),
-		[onDelete, onToggleStatus, onUpdateTransactions, sourceList],
+		() => groupSettingsColDefs(onDelete, onToggleStatus, onUpdateTransactions, handleEdit, sourceList),
+		[handleEdit, onDelete, onToggleStatus, onUpdateTransactions, sourceList],
 	);
 
 	return (
@@ -43,7 +66,7 @@ export const GroupSettings = () => {
 					/>
 				</Col>
 				<Col>
-					<TransactionSelectorInput selected={newMatchers} onChange={setNewMatchers} />
+					<TransactionSelectorInput selected={newMatchers} options={newMatchers} onChange={setNewMatchers} />
 				</Col>
 				<Col sm={2}>
 					<Form.Control
@@ -64,7 +87,11 @@ export const GroupSettings = () => {
 					/>
 				</Col>
 				<Col>
-					<Form.Select aria-label="Source Selector" onChange={(event) => setSourceId(event.target.value)}>
+					<Form.Select
+						aria-label="Source Selector"
+						value={sourceId}
+						onChange={(event) => setSourceId(event.target.value)}
+					>
 						<option>Select Source</option>
 						{sourceList.map((source, index) => (
 							<option key={`source-${index}`} value={source.id}>
@@ -77,11 +104,14 @@ export const GroupSettings = () => {
 			<Row>
 				<Col className="text-end">
 					<Button
-						variant="outline-secondary"
+						className="mx-2"
 						disabled={!newLabel || newMatchers.length === 0 || !color || !sourceId}
-						onClick={handleSave}
+						onClick={editId ? handleUpdate : handleSave}
 					>
-						Add Group
+						{editId ? 'Update' : 'Add Group'}
+					</Button>
+					<Button variant="outline-secondary" onClick={handleClear}>
+						Clear
 					</Button>
 				</Col>
 			</Row>

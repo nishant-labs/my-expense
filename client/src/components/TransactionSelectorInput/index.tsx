@@ -1,6 +1,6 @@
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 
-import { FC, useEffect, useState } from 'react';
+import { FC, useCallback } from 'react';
 import { Typeahead } from 'react-bootstrap-typeahead';
 import { Option } from 'react-bootstrap-typeahead/types/types';
 
@@ -11,33 +11,28 @@ interface TransactionSelectorInputProps {
 }
 
 export const TransactionSelectorInput: FC<TransactionSelectorInputProps> = ({ options, selected, onChange }) => {
-	const [selectedTransactions, setSelectedTransactions] = useState<Array<Option>>(selected ?? []);
-
-	useEffect(() => {
-		const matcherList = selectedTransactions.map<string>((selectedInput) => {
-			if (typeof selectedInput === 'string') {
-				return selectedInput;
-			}
-			return selectedInput?.matcher;
-		});
-		onChange(matcherList);
-	}, [selectedTransactions, onChange]);
-
-	useEffect(() => {
-		if (selected.length === 0) {
-			setSelectedTransactions([]);
-		}
-	}, [selected.length]);
+	const handleChange = useCallback(
+		(selectedTransactions: Array<Option>) => {
+			const matcherList = selectedTransactions.map<string>((selectedInput) => {
+				if (typeof selectedInput === 'string') {
+					return selectedInput;
+				}
+				return selectedInput?.matcher;
+			});
+			onChange(matcherList);
+		},
+		[onChange],
+	);
 
 	return (
 		<Typeahead
 			id="transactionSelector"
 			labelKey="matcher"
-			multiple
-			onChange={setSelectedTransactions}
+			onChange={handleChange}
 			options={options ?? []}
 			placeholder="Select transactions"
-			selected={selectedTransactions}
+			selected={selected}
+			multiple
 			allowNew
 		/>
 	);

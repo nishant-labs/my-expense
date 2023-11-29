@@ -1,10 +1,10 @@
-import { parse } from 'date-fns';
 import { IExpenseSummaryTransaction, ITransactionsPayload, ITransactionsEnhanced } from '../state/transactions/types';
 import { ITransactionSource } from '../state/settings/source/types';
+import { getNewFormattedDate } from './DateUtils';
 
 export const transformCSVToTransactionPayload = (csvData: Array<Array<string>>): Array<ITransactionsPayload> =>
 	csvData.map((curValue) => ({
-		date: parse(curValue[0], 'dd/MM/yyyy', new Date()),
+		date: getNewFormattedDate(curValue[0]),
 		transactionSource: curValue[1],
 		amount: Number(curValue[2].replaceAll(',', '')),
 	}));

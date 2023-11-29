@@ -4,6 +4,7 @@ import { ITransactionSource } from '../../state/settings/source/types';
 export const sourceSettingsColDefs = (
 	onDelete: (source: ITransactionSource) => void,
 	onToggleStatus: (source: ITransactionSource) => void,
+	onEdit: (source: ITransactionSource) => void,
 ): Array<ColDef> => [
 	{
 		headerName: 'Name',
@@ -30,6 +31,7 @@ export const sourceSettingsColDefs = (
 		cellRendererParams: {
 			deleteItem: onDelete,
 			toggleItem: onToggleStatus,
+			editItem: onEdit,
 		},
 	},
 ];

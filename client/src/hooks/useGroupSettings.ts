@@ -22,8 +22,24 @@ export function useGroupSettings() {
 				sourceId,
 				budget,
 			});
+
 			if ((response as ApiError).error) {
 				setError('Failed to create new group');
+			} else {
+				triggerToggle(true);
+			}
+
+			return response;
+		},
+		[triggerToggle],
+	);
+
+	const onDelete = useCallback(
+		async (group: ITransactionGroup) => {
+			setError('');
+			const response = await deleteGroupById(group.id);
+			if ((response as ApiError).error) {
+				setError(`Failed to delete group with id ${group.id}`);
 			} else {
 				triggerToggle(true);
 			}
@@ -32,44 +48,59 @@ export function useGroupSettings() {
 		[triggerToggle],
 	);
 
-	const onDelete = useCallback(
-		(group: ITransactionGroup) => {
+	const onToggleStatus = useCallback(
+		async (group: ITransactionGroup) => {
 			setError('');
-			deleteGroupById(group.id).then((response) => {
-				if ((response as ApiError).error) {
-					setError(`Failed to delete group with id ${group.id}`);
-				} else {
-					triggerToggle(true);
-				}
+			const response = await updateGroupById(group.id, {
+				isEnabled: !group.isEnabled,
 			});
+
+			if ((response as ApiError).error) {
+				setError(`Failed to toggle status for ${group.name}`);
+			} else {
+				triggerToggle(true);
+			}
+
+			return response;
 		},
 		[triggerToggle],
 	);
 
-	const onToggleStatus = useCallback(
-		(group: ITransactionGroup) => {
-			updateGroupById(group.id, {
-				isEnabled: !group.isEnabled,
-			}).then((response) => {
-				if ((response as ApiError).error) {
-					setError(`Failed to toggle status for ${group.name}`);
-				} else {
-					triggerToggle(true);
-				}
+	const onUpdate = useCallback(
+		async (id: string, matchers: Array<string>, name: string, chartColor: string, sourceId: string, budget: number) => {
+			setError('');
+			const response = await updateGroupById(id, {
+				name,
+				matchers,
+				chartColor,
+				sourceId,
+				budget,
 			});
+
+			if ((response as ApiError).error) {
+				setError(`Failed to update for ${name}`);
+			} else {
+				triggerToggle(true);
+			}
+
+			return response;
 		},
 		[triggerToggle],
 	);
 
 	const onUpdateTransactions = useCallback(
-		(group: ITransactionGroup, matchers: Array<string>) => {
-			updateGroupById(group.id, { matchers }).then((response) => {
-				if ((response as ApiError).error) {
-					setError(`Failed to update transaction for ${group.name}`);
-				} else {
-					triggerToggle(true);
-				}
-			});
+		async (group: ITransactionGroup, matchers: Array<string>) => {
+			setError('');
+
+			const response = await updateGroupById(group.id, { matchers });
+
+			if ((response as ApiError).error) {
+				setError(`Failed to update transaction for ${group.name}`);
+			} else {
+				triggerToggle(true);
+			}
+
+			return response;
 		},
 		[triggerToggle],
 	);
@@ -80,6 +111,7 @@ export function useGroupSettings() {
 		error,
 		onSave,
 		onDelete,
+		onUpdate,
 		onToggleStatus,
 		onUpdateTransactions,
 	};
