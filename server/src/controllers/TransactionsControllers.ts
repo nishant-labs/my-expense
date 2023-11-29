@@ -34,7 +34,7 @@ const getTransactionsHandler = async (requestData: HttpRequest, { getDatabaseCon
 	return {
 		data: response.map((transaction) => ({
 			id: transaction['_id'],
-			date: transaction.date,
+			date: transaction.date?.toISOString(),
 			accountType: transaction.accountType,
 			transactionSource: transaction.transactionOf,
 			amount: transaction.amount,

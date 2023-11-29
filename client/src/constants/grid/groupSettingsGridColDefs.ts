@@ -7,6 +7,7 @@ export const groupSettingsColDefs = (
 	onDelete: (group: ITransactionGroup) => void,
 	onToggleStatus: (group: ITransactionGroup) => void,
 	onUpdateTransactions: (group: ITransactionGroup, matchers: Array<string>) => void,
+	onEdit: (group: ITransactionGroup) => void,
 	sourceList: Array<ITransactionSource>,
 ): Array<ColDef> => [
 	{
@@ -20,6 +21,7 @@ export const groupSettingsColDefs = (
 		cellRendererParams: {
 			updateItem: onUpdateTransactions,
 		},
+		valueFormatter: (params) => params?.value?.join(''),
 		autoHeight: true,
 	},
 	{
@@ -41,7 +43,7 @@ export const groupSettingsColDefs = (
 	{
 		headerName: 'Transaction Source',
 		field: 'sourceId',
-		valueFormatter: (params) => sourceList.find((source) => source.id === params.value)?.name ?? 'Source Not Found',
+		valueFormatter: (params) => sourceList?.find((source) => source.id === params.value)?.name ?? 'Source Not Found',
 	},
 	{
 		headerName: 'Action',
@@ -51,6 +53,7 @@ export const groupSettingsColDefs = (
 		cellRendererParams: {
 			deleteItem: onDelete,
 			toggleItem: onToggleStatus,
+			editItem: onEdit,
 		},
 	},
 ];

@@ -36,7 +36,7 @@ export const ExpenseSummary: FC<ExpenseSummaryProps> = ({ year, month }) => {
 	const savedAmount = useMemo(() => {
 		const totalIncome = transformedTransactionAggregator(income);
 		const totalExpense = transformedTransactionAggregator(accountExpense);
-		return totalIncome - totalExpense;
+		return totalIncome + totalExpense;
 	}, [accountExpense, income]);
 
 	if (transactions.length === 0) {

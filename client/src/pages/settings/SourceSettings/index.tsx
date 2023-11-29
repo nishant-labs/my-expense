@@ -7,21 +7,45 @@ import { sourceSettingsColDefs } from '../../../constants/grid/sourceSettingGrid
 import { settingsGridComponents } from '../../../components/GridCellRenderers';
 import { GridBase } from '../../../components/GridBase';
 import { useSourceSettings } from '../../../hooks/useSourceSettings';
+import { ITransactionSource } from '../../../state/settings/source/types';
 
 export const SourceSettings = () => {
-	const { error, sourceList, onDelete, onSave, onToggleStatus } = useSourceSettings();
+	const { error, sourceList, onDelete, onSave, onToggleStatus, onUpdate } = useSourceSettings();
+	const [editId, setEditId] = useState<string | null>(null);
 	const [color, setColor] = useState('#000000');
 	const [newLabel, setNewLabel] = useState('');
 	const [expenseFlag, setExpenseFlag] = useState<boolean | null>(null);
 
+	const handleClear = useCallback(() => {
+		setEditId(null);
+		setNewLabel('');
+		setColor('');
+		setExpenseFlag(null);
+	}, []);
+
 	const handleSave = useCallback(() => {
 		onSave(newLabel, color, expenseFlag!).then(() => {
-			setNewLabel('');
-			setColor('');
+			handleClear();
 		});
-	}, [onSave, newLabel, color, expenseFlag]);
+	}, [onSave, newLabel, color, expenseFlag, handleClear]);
 
-	const colDefs = useMemo(() => sourceSettingsColDefs(onDelete, onToggleStatus), [onDelete, onToggleStatus]);
+	const handleUpdate = useCallback(() => {
+		onUpdate(editId!, newLabel, color, expenseFlag!).then(() => {
+			handleClear();
+		});
+	}, [onUpdate, editId, newLabel, color, expenseFlag, handleClear]);
+
+	const handleEdit = useCallback((source: ITransactionSource) => {
+		setEditId(source.id);
+		setNewLabel(source.name);
+		setColor(source.chartColor);
+		setExpenseFlag(source.isExpense);
+	}, []);
+
+	const colDefs = useMemo(
+		() => sourceSettingsColDefs(onDelete, onToggleStatus, handleEdit),
+		[onDelete, onToggleStatus, handleEdit],
+	);
 
 	return (
 		<>
@@ -53,8 +77,11 @@ export const SourceSettings = () => {
 			</Row>
 			<Row>
 				<Col className="text-end">
-					<Button variant="outline-secondary" disabled={!newLabel || !color} onClick={handleSave}>
-						Add Source
+					<Button className="mx-2" disabled={!newLabel || !color} onClick={editId ? handleUpdate : handleSave}>
+						{editId ? 'Update' : 'Add Source'}
+					</Button>
+					<Button variant="outline-secondary" onClick={handleClear}>
+						Clear
 					</Button>
 				</Col>
 			</Row>
