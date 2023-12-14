@@ -1,14 +1,12 @@
-name: Deploy my-expense
+name: Deploy Main
 
 on:
   push:
     branches:
       - main
-  pull_request:
-    types: [edited, synchronize]
 
 jobs:
-  deploy-gh-pages:
+  self-gh-pages:
     runs-on: ubuntu-latest
     env:
       EXAMPLE: example # environment variable
@@ -25,5 +23,6 @@ jobs:
         with:
           deploy_key: ${{ secrets.NISHANT_LAB_GH_PAGE_DEPLOY_KEY }}
           external_repository: nishant-labs/nishant-labs.github.io
+          publish_branch: main
           publish_dir: ./client/dist
           destination_dir: my-expense
