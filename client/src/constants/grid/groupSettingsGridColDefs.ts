@@ -22,6 +22,7 @@ export const groupSettingsColDefs = (
 			updateItem: onUpdateTransactions,
 		},
 		valueFormatter: (params) => params?.value?.join(''),
+		width: 350,
 		autoHeight: true,
 	},
 	{
@@ -33,7 +34,7 @@ export const groupSettingsColDefs = (
 	{
 		headerName: 'Chart Color',
 		field: 'chartColor',
-		width: 120,
+		width: 110,
 		cellStyle: (params: CellClassParams) => ({
 			backgroundColor: params.value,
 			color: 'white',
@@ -48,7 +49,7 @@ export const groupSettingsColDefs = (
 	{
 		headerName: 'Action',
 		type: 'rightAligned',
-		width: 200,
+		width: 140,
 		cellRenderer: 'rowActionCellRenderer',
 		cellRendererParams: {
 			deleteItem: onDelete,

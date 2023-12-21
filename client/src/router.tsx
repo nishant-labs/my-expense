@@ -1,9 +1,11 @@
+import { lazy } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { Home } from './pages/home';
-import { Summary } from './pages/summary';
-import { Transactions } from './pages/transactions';
-import { Settings } from './pages/settings';
 import RootLayout from './layout';
+
+const Home = lazy(() => import('./pages/home'));
+const Summary = lazy(() => import('./pages/summary'));
+const Transactions = lazy(() => import('./pages/transactions'));
+const Settings = lazy(() => import('./pages/settings'));
 
 const router = createBrowserRouter([
 	{

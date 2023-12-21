@@ -6,7 +6,7 @@ import Tab from 'react-bootstrap/Tab';
 import { AsyncDataLoader } from '../../components/AsyncDataLoader';
 import { settingsComponentMapping } from './componentMapping';
 
-export const Settings = () => {
+const Settings = () => {
 	return (
 		<div style={{ height: 'calc(100vh - 150px)' }}>
 			<Tab.Container defaultActiveKey="source">
@@ -34,3 +34,5 @@ export const Settings = () => {
 		</div>
 	);
 };
+
+export default Settings;

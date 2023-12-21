@@ -7,7 +7,7 @@ import { ExpenseSummary } from './ExpenseSummary';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const [_, ...monthNames] = MONTH_NAMES;
 
-export const Home = () => {
+const Home = () => {
 	const [key, setKey] = useState(monthNames[0].label.toLowerCase());
 	const { month, year } = useMemo(() => {
 		const todaysDate = new Date();
@@ -36,3 +36,5 @@ export const Home = () => {
 		</>
 	);
 };
+
+export default Home;

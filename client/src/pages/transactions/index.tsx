@@ -6,7 +6,7 @@ import { TransactionGridByMonth } from './transactionGrid';
 import { FormSelectBase, OptionValueType } from '../../components/FormSelectBase';
 import { UploadTransaction } from './components/UploadTransaction';
 
-export const Transactions = () => {
+const Transactions = () => {
 	const [selectedYear, setSelectedYear] = useState<string>('');
 	const [selectedMonth, setSelectedMonth] = useState<string>('');
 
@@ -47,3 +47,5 @@ export const Transactions = () => {
 		</>
 	);
 };
+
+export default Transactions;

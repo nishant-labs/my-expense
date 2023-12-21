@@ -2,9 +2,10 @@ import { ControllerOptions, HttpRequest, RouteConfigItem } from 'node-rest-serve
 import { SourceReferenceDataModel } from '../database/models/SourceReferenceModel.js';
 
 interface InsertSourcePayload {
-	name: string;
-	chartColor: string;
-	isExpense: string;
+	name?: string;
+	chartColor?: string;
+	isExpense?: string;
+	isEnabled?: boolean;
 }
 
 const getSourceListHandler = async (requestData: HttpRequest, { getDatabaseConnection }: ControllerOptions) => {
@@ -39,9 +40,11 @@ const insertSourceHandler = async (requestData: HttpRequest, { getDatabaseConnec
 };
 
 const updateSourceHandler = async (requestData: HttpRequest, { getDatabaseConnection }: ControllerOptions) => {
-	const payload = requestData.body as InsertSourcePayload;
+	const { name, ...restPayload } = requestData.body as InsertSourcePayload;
+	const sanitizedPayload = { ...restPayload, ...(name ? { sourceName: name } : {}) };
+
 	await getDatabaseConnection!(requestData);
-	const data = await SourceReferenceDataModel.findByIdAndUpdate(requestData.pathParams.id, payload);
+	const data = await SourceReferenceDataModel.findByIdAndUpdate(requestData.pathParams.id, sanitizedPayload);
 	return {
 		data,
 		status: 200,
