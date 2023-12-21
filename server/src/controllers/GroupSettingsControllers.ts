@@ -2,11 +2,11 @@ import { ControllerOptions, HttpRequest, RouteConfigItem } from 'node-rest-serve
 import { GroupReferenceDataModel } from '../database/models/GroupReferenceModel.js';
 
 interface InsertGroupPayload {
-	matchers: string;
-	name: string;
-	chartColor: string;
-	budget: string;
-	sourceId: string;
+	name?: string;
+	matchers?: string;
+	chartColor?: string;
+	budget?: string;
+	sourceId?: string;
 }
 
 const getGroupListHandler = async (requestData: HttpRequest, { getDatabaseConnection }: ControllerOptions) => {
@@ -48,12 +48,12 @@ const updateGroupHandler = async (requestData: HttpRequest, { getDatabaseConnect
 	const { matchers, ...restPayload } = requestData.body as InsertGroupPayload;
 	await getDatabaseConnection!(requestData);
 
-	const updatePayload = {
+	const sanitizedPayload = {
 		...restPayload,
 		...(matchers ? { transactionMatchers: matchers } : {}),
 	};
 
-	const data = await GroupReferenceDataModel.findByIdAndUpdate(requestData.pathParams.id, updatePayload);
+	const data = await GroupReferenceDataModel.findByIdAndUpdate(requestData.pathParams.id, sanitizedPayload);
 	return {
 		data,
 		status: 200,

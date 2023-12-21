@@ -5,7 +5,7 @@ import routes from './routes.js';
 const serverConfig: ServerConfiguration = {
 	basePath: '/api',
 	port: 7800,
-	logger: false,
+	logger: true,
 	getDatabaseConnection: () => {
 		return mongoose.connect('mongodb://localhost:27017/myexpense');
 	},

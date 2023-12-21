@@ -1,10 +1,11 @@
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Spinner from 'react-bootstrap/Spinner';
+import Modal from 'react-bootstrap/Modal';
 import { Trash, PencilSquare } from 'react-bootstrap-icons';
 import { ICellRendererParams } from 'ag-grid-community';
 import { useAsyncApiData } from '../../hooks/useAsyncApiData';
-import { FC, useCallback } from 'react';
+import { FC, useCallback, useState } from 'react';
 import { ApiResponse } from '../../api/types';
 
 interface RowActionCellRendererProps extends ICellRendererParams {
@@ -14,7 +15,13 @@ interface RowActionCellRendererProps extends ICellRendererParams {
 }
 
 export const RowActionCellRenderer: FC<RowActionCellRendererProps> = ({ deleteItem, toggleItem, editItem, data }) => {
-	const deleteAsyncCaller = useCallback(() => deleteItem(data), [data, deleteItem]);
+	const [isOpen, setIsOpen] = useState(false);
+
+	const deleteAsyncCaller = useCallback(() => {
+		setIsOpen(false);
+		return deleteItem(data);
+	}, [data, deleteItem]);
+
 	const toggleAsyncCaller = useCallback(() => toggleItem(data), [data, toggleItem]);
 
 	const handleEdit = useCallback(() => editItem(data), [data, editItem]);
@@ -40,10 +47,24 @@ export const RowActionCellRenderer: FC<RowActionCellRendererProps> = ({ deleteIt
 				<Button variant="link" onClick={handleEdit}>
 					<PencilSquare />
 				</Button>
-				<Button variant="link" onClick={handleDelete}>
+				<Button variant="link" onClick={() => setIsOpen(true)}>
 					<Trash />
 				</Button>
 			</Form>
+			<Modal show={isOpen} onHide={() => setIsOpen(false)} backdrop="static" keyboard={false}>
+				<Modal.Header closeButton>
+					<Modal.Title>Delete {data.name}</Modal.Title>
+				</Modal.Header>
+				<Modal.Body>Are you sure, want to delete?</Modal.Body>
+				<Modal.Footer>
+					<Button variant="secondary" onClick={() => setIsOpen(false)}>
+						Cancel
+					</Button>
+					<Button variant="primary" onClick={handleDelete}>
+						Delete
+					</Button>
+				</Modal.Footer>
+			</Modal>
 		</div>
 	);
 };
