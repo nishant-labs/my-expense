@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - task/gh-pages
 
 jobs:
   self-gh-pages:
