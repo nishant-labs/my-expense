@@ -1,5 +1,5 @@
 import { lazy } from 'react';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createHashRouter, RouterProvider } from 'react-router-dom';
 import RootLayout from './layout';
 
 const Home = lazy(() => import('./pages/home'));
@@ -7,7 +7,7 @@ const Summary = lazy(() => import('./pages/summary'));
 const Transactions = lazy(() => import('./pages/transactions'));
 const Settings = lazy(() => import('./pages/settings'));
 
-const router = createBrowserRouter([
+const router = createHashRouter([
 	{
 		path: '/',
 		element: <RootLayout />,
