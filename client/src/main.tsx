@@ -10,6 +10,11 @@ import { AppRouter } from './router.tsx';
 import { SourceSettingsLoader } from './hoc/SourceSettingsLoader';
 import { GroupSettingsLoader } from './hoc/GroupSettingsLoader.tsx';
 
+const response = prompt('Set API base url, defaults to http://localhost:7800');
+if (response && response.startsWith('https')) {
+	window.EXPENSE_API_HOST = response;
+}
+
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
 	<React.StrictMode>
