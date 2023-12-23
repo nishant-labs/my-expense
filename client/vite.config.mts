@@ -10,4 +10,8 @@ export default defineConfig(({ mode }) => ({
 		}),
 		splitVendorChunkPlugin(),
 	],
+	appType: 'spa',
+	build: {
+		minify: false,
+	},
 }));
