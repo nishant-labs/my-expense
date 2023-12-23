@@ -1,15 +1,13 @@
-import Header from './layout/header';
-import Body from './layout/body';
-import Footer from './layout/footer';
+import { AppRouter } from './router.tsx';
+import { SourceSettingsLoader } from './hoc/SourceSettingsLoader';
+import { GroupSettingsLoader } from './hoc/GroupSettingsLoader.tsx';
 
-function App() {
+export function MyExpenseApp() {
 	return (
 		<>
-			<Header />
-			<Body />
-			<Footer />
+			<AppRouter />
+			<SourceSettingsLoader />
+			<GroupSettingsLoader />
 		</>
 	);
 }
-
-export default App;
