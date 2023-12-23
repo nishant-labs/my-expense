@@ -13479,16 +13479,19 @@ var Action;
   Action2["Replace"] = "REPLACE";
 })(Action || (Action = {}));
 const PopStateEventType = "popstate";
-function createBrowserHistory(options) {
+function createHashHistory(options) {
   if (options === void 0) {
     options = {};
   }
-  function createBrowserLocation(window2, globalHistory) {
+  function createHashLocation(window2, globalHistory) {
     let {
-      pathname,
-      search,
-      hash: hash2
-    } = window2.location;
+      pathname = "/",
+      search = "",
+      hash: hash2 = ""
+    } = parsePath(window2.location.hash.substr(1));
+    if (!pathname.startsWith("/") && !pathname.startsWith(".")) {
+      pathname = "/" + pathname;
+    }
     return createLocation(
       "",
       {
@@ -13501,10 +13504,20 @@ function createBrowserHistory(options) {
       globalHistory.state && globalHistory.state.key || "default"
     );
   }
-  function createBrowserHref(window2, to) {
-    return typeof to === "string" ? to : createPath(to);
+  function createHashHref(window2, to) {
+    let base = window2.document.querySelector("base");
+    let href = "";
+    if (base && base.getAttribute("href")) {
+      let url = window2.location.href;
+      let hashIndex = url.indexOf("#");
+      href = hashIndex === -1 ? url : url.slice(0, hashIndex);
+    }
+    return href + "#" + (typeof to === "string" ? to : createPath(to));
   }
-  return getUrlBasedHistory(createBrowserLocation, createBrowserHref, null, options);
+  function validateHashLocation(location, to) {
+    warning$2(location.pathname.charAt(0) === "/", "relative pathnames are not supported in hash history.push(" + JSON.stringify(to) + ")");
+  }
+  return getUrlBasedHistory(createHashLocation, createHashHref, validateHashLocation, options);
 }
 function invariant$2(value, message) {
   if (value === false || value === null || typeof value === "undefined") {
@@ -16888,13 +16901,13 @@ function shouldProcessLinkClick(event, target) {
   !isModifiedEvent(event);
 }
 const _excluded$6 = ["onClick", "relative", "reloadDocument", "replace", "state", "target", "to", "preventScrollReset", "unstable_viewTransition"], _excluded2$1 = ["aria-current", "caseSensitive", "className", "end", "style", "to", "unstable_viewTransition", "children"];
-function createBrowserRouter(routes, opts) {
+function createHashRouter(routes, opts) {
   return createRouter({
     basename: opts == null ? void 0 : opts.basename,
     future: _extends$1({}, opts == null ? void 0 : opts.future, {
       v7_prependBasename: true
     }),
-    history: createBrowserHistory({
+    history: createHashHistory({
       window: opts == null ? void 0 : opts.window
     }),
     hydrationData: (opts == null ? void 0 : opts.hydrationData) || parseHydrationData(),
@@ -24847,7 +24860,7 @@ export {
   Recoil_index_9 as a5,
   _setPrototypeOf as a6,
   NavLink$2 as b,
-  createBrowserRouter as c,
+  createHashRouter as c,
   axios$1 as d,
   Recoil_index_8 as e,
   Recoil_index_22 as f,

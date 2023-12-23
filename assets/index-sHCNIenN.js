@@ -1,4 +1,4 @@
-import { j as jsxRuntimeExports, N as Navbar, C as Container, a as Nav, b as NavLink, r as reactExports, S as Spinner, O as Outlet, c as createBrowserRouter, R as RouterProvider, d as axios, e as Recoil_index_8, f as Recoil_index_22, g as client, h as React, i as Recoil_index_5, k as RecoilizeDebugger, T as ThemeProvider } from "./vendor-X32a2jhr.js";
+import { j as jsxRuntimeExports, N as Navbar, C as Container, a as Nav, b as NavLink, r as reactExports, S as Spinner, O as Outlet, c as createHashRouter, R as RouterProvider, d as axios, e as Recoil_index_8, f as Recoil_index_22, g as client, h as React, i as Recoil_index_5, k as RecoilizeDebugger, T as ThemeProvider } from "./vendor-5_Ts9y2q.js";
 (function polyfill() {
   const relList = document.createElement("link").relList;
   if (relList && relList.supports && relList.supports("modulepreload")) {
@@ -121,11 +121,11 @@ function Layout() {
     /* @__PURE__ */ jsxRuntimeExports.jsx(Footer, {})
   ] });
 }
-const Home = reactExports.lazy(() => __vitePreload(() => import("./index-WSu1sJlK.js"), true ? __vite__mapDeps([0,1,2,3,4]) : void 0));
-const Summary = reactExports.lazy(() => __vitePreload(() => import("./index-ZZUpGCAw.js"), true ? __vite__mapDeps([5,1]) : void 0));
-const Transactions = reactExports.lazy(() => __vitePreload(() => import("./index-bY_nws7E.js"), true ? __vite__mapDeps([6,1,2,3,7,8]) : void 0));
-const Settings = reactExports.lazy(() => __vitePreload(() => import("./index-gyW3sCPX.js"), true ? __vite__mapDeps([9,1,4,3,7,8,10]) : void 0));
-const router = createBrowserRouter([
+const Home = reactExports.lazy(() => __vitePreload(() => import("./index-hN4jBhxK.js"), true ? __vite__mapDeps([0,1,2,3,4]) : void 0));
+const Summary = reactExports.lazy(() => __vitePreload(() => import("./index-IbmQq6ou.js"), true ? __vite__mapDeps([5,1]) : void 0));
+const Transactions = reactExports.lazy(() => __vitePreload(() => import("./index-Tsuve5Hv.js"), true ? __vite__mapDeps([6,1,2,3,7,8]) : void 0));
+const Settings = reactExports.lazy(() => __vitePreload(() => import("./index-zJ4v2_s6.js"), true ? __vite__mapDeps([9,1,4,3,7,8,10]) : void 0));
+const router = createHashRouter([
   {
     path: "/",
     element: /* @__PURE__ */ jsxRuntimeExports.jsx(Layout, {}),
@@ -314,7 +314,7 @@ export {
 };
 function __vite__mapDeps(indexes) {
   if (!__vite__mapDeps.viteFileDeps) {
-    __vite__mapDeps.viteFileDeps = ["assets/index-WSu1sJlK.js","assets/vendor-X32a2jhr.js","assets/TransactionUtils-is_LkwWB.js","assets/defineProperty-h3pYhLyT.js","assets/useSourceSettings-45Zoo1-g.js","assets/index-ZZUpGCAw.js","assets/index-bY_nws7E.js","assets/index-9qzwaZf_.js","assets/index-IJb5hFQ_.css","assets/index-gyW3sCPX.js","assets/index-30OGQLav.css"]
+    __vite__mapDeps.viteFileDeps = ["assets/index-hN4jBhxK.js","assets/vendor-5_Ts9y2q.js","assets/TransactionUtils-kzmt8pfK.js","assets/defineProperty--9rtS8ml.js","assets/useSourceSettings-3hD7aP9K.js","assets/index-IbmQq6ou.js","assets/index-Tsuve5Hv.js","assets/index-GKlTsuxu.js","assets/index-IJb5hFQ_.css","assets/index-zJ4v2_s6.js","assets/index-30OGQLav.css"]
   }
   return indexes.map((i) => __vite__mapDeps.viteFileDeps[i])
 }
