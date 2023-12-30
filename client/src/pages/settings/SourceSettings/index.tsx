@@ -8,6 +8,7 @@ import { settingsGridComponents } from '../../../components/GridCellRenderers';
 import { GridBase } from '../../../components/GridBase';
 import { useSourceSettings } from '../../../hooks/useSourceSettings';
 import { ITransactionSource } from '../../../state/settings/source/types';
+import { withAsyncDataLoader } from '../../../hoc/withAsyncDataLoader/index';
 
 export const SourceSettings = () => {
 	const { error, sourceList, onDelete, onSave, onToggleStatus, onUpdate } = useSourceSettings();
@@ -49,6 +50,7 @@ export const SourceSettings = () => {
 
 	return (
 		<>
+			<h2>Source Settings</h2>
 			<Row className="mb-2">
 				<Col sm={4}>
 					<Form.Control
@@ -94,3 +96,6 @@ export const SourceSettings = () => {
 		</>
 	);
 };
+
+// eslint-disable-next-line react-refresh/only-export-components
+export default withAsyncDataLoader(SourceSettings);

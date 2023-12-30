@@ -1,7 +1,8 @@
+import { NavLink } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { NavLink } from 'react-router-dom';
+import NavDropdown from 'react-bootstrap/NavDropdown';
 
 export const TopHeader = () => {
 	return (
@@ -11,18 +12,23 @@ export const TopHeader = () => {
 				<Navbar.Toggle aria-controls="basic-navbar-nav" />
 				<Navbar.Collapse id="basic-navbar-nav">
 					<Nav className="me-auto">
-						<NavLink to="/" className="nav-link">
+						<Nav.Link as={NavLink} to="/">
 							Home
-						</NavLink>
-						<NavLink to="/summary" className="nav-link">
+						</Nav.Link>
+						<Nav.Link as={NavLink} to="/summary">
 							Year End Summary
-						</NavLink>
-						<NavLink to="/manage" className="nav-link">
+						</Nav.Link>
+						<Nav.Link as={NavLink} to="/manage">
 							Transactions
-						</NavLink>
-						<NavLink to="/settings" className="nav-link">
-							Settings
-						</NavLink>
+						</Nav.Link>
+						<NavDropdown title="Settings" id="basic-nav-dropdown">
+							<NavDropdown.Item as={NavLink} to="/settings/source">
+								Source
+							</NavDropdown.Item>
+							<NavDropdown.Item as={NavLink} to="/settings/group">
+								Group
+							</NavDropdown.Item>
+						</NavDropdown>
 					</Nav>
 				</Navbar.Collapse>
 			</Container>

@@ -1,17 +1,19 @@
 import { lazy } from 'react';
 import { createHashRouter, RouterProvider } from 'react-router-dom';
 import RootLayout from './layout';
+import { ErrorPage } from './pages/error/ErrorPage';
 
 const Home = lazy(() => import('./pages/home'));
 const Summary = lazy(() => import('./pages/summary'));
 const Transactions = lazy(() => import('./pages/transactions'));
-const Settings = lazy(() => import('./pages/settings'));
+const GroupSettings = lazy(() => import('./pages/settings/GroupSettings'));
+const SourceSettings = lazy(() => import('./pages/settings/SourceSettings'));
 
 const router = createHashRouter([
 	{
 		path: '/',
 		element: <RootLayout />,
-		// errorElement: <ErrorPage />,
+		errorElement: <ErrorPage />,
 		// loader: rootLoader,
 		children: [
 			{
@@ -28,8 +30,12 @@ const router = createHashRouter([
 				element: <Transactions />,
 			},
 			{
-				path: '/settings',
-				element: <Settings />,
+				path: '/settings/group',
+				element: <GroupSettings />,
+			},
+			{
+				path: '/settings/source',
+				element: <SourceSettings />,
 			},
 		],
 	},

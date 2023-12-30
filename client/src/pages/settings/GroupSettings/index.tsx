@@ -9,6 +9,7 @@ import { GridBase } from '../../../components/GridBase';
 import { TransactionSelectorInput } from '../../../components/TransactionSelectorInput';
 import { useGroupSettings } from '../../../hooks/useGroupSettings';
 import { ITransactionGroup } from '../../../state/settings/group/types';
+import { withAsyncDataLoader } from '../../../hoc/withAsyncDataLoader';
 
 export const GroupSettings = () => {
 	const { groupList, sourceList, error, onDelete, onSave, onUpdate, onToggleStatus, onUpdateTransactions } =
@@ -57,6 +58,7 @@ export const GroupSettings = () => {
 
 	return (
 		<>
+			<h2>Group Settings</h2>
 			<Row className="mb-2">
 				<Col>
 					<Form.Control
@@ -124,3 +126,6 @@ export const GroupSettings = () => {
 		</>
 	);
 };
+
+// eslint-disable-next-line react-refresh/only-export-components
+export default withAsyncDataLoader(GroupSettings);

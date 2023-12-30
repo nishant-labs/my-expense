@@ -13,9 +13,17 @@ interface GridBaseProps {
 		[p: string]: unknown;
 	};
 	styles?: CSSProperties;
+	pagination?: boolean;
 }
 
-export const GridBase: FC<GridBaseProps> = ({ rowData, defaultColDef, colDefs, components, styles = {} }) => {
+export const GridBase: FC<GridBaseProps> = ({
+	rowData,
+	defaultColDef,
+	colDefs,
+	components,
+	pagination,
+	styles = {},
+}) => {
 	const [gridEvent, setGridEvent] = useState<GridReadyEvent | null>(null);
 
 	useEffect(() => {
@@ -43,7 +51,7 @@ export const GridBase: FC<GridBaseProps> = ({ rowData, defaultColDef, colDefs, c
 				rowData={rowData ?? []}
 				onGridReady={(gEvent) => setGridEvent(gEvent)}
 				components={components}
-				pagination
+				pagination={pagination}
 				paginationAutoPageSize
 			/>
 		</div>

@@ -1,9 +1,9 @@
 import { memo, useEffect } from 'react';
 import { useRecoilState } from 'recoil';
-import { fetchAllGroups } from '../api/GroupSettingsApi';
-import { ApiError } from '../api/types';
-import { ITransactionGroup } from '../state/settings/group/types';
-import { transactionGroupState } from '../state/settings/group/state';
+import { fetchAllGroups } from '../../api/GroupSettingsApi';
+import { ApiError } from '../../api/types';
+import { ITransactionGroup } from '../../state/settings/group/types';
+import { transactionGroupState } from '../../state/settings/group/state';
 
 export const GroupSettingsLoader = memo(() => {
 	const [{ fetchAgain }, setGroupState] = useRecoilState(transactionGroupState);
