@@ -1,9 +1,9 @@
 import { memo, useEffect } from 'react';
 import { useRecoilState } from 'recoil';
-import { fetchAllSources } from '../api/SourceSettingsApi';
-import { ApiError } from '../api/types';
-import { ITransactionSource } from '../state/settings/source/types';
-import { transactionSourceState } from '../state/settings/source/state';
+import { fetchAllSources } from '../../api/SourceSettingsApi';
+import { ApiError } from '../../api/types';
+import { ITransactionSource } from '../../state/settings/source/types';
+import { transactionSourceState } from '../../state/settings/source/state';
 
 export const SourceSettingsLoader = memo(() => {
 	const [{ fetchAgain }, setSourceState] = useRecoilState(transactionSourceState);

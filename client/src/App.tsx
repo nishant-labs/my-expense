@@ -1,6 +1,5 @@
 import { AppRouter } from './router.tsx';
-import { SourceSettingsLoader } from './hoc/SourceSettingsLoader';
-import { GroupSettingsLoader } from './hoc/GroupSettingsLoader.tsx';
+import { SourceSettingsLoader, GroupSettingsLoader } from './components/ApiLoaders';
 
 export function MyExpenseApp() {
 	return (
