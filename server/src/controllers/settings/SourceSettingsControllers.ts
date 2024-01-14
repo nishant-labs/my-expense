@@ -1,5 +1,5 @@
 import { ControllerOptions, HttpRequest, RouteConfigItem } from 'node-rest-server';
-import { SourceReferenceDataModel } from '../database/models/SourceReferenceModel.js';
+import { SourceReferenceDataModel } from '../../database/models/SourceReferenceModel.js';
 
 interface InsertSourcePayload {
 	name?: string;

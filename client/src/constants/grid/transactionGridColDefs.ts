@@ -1,5 +1,8 @@
 import { ColDef, ValueFormatterParams } from 'ag-grid-community';
 import { formatDate } from '../../utils/DateUtils';
+import { ITransactionsEnhanced } from '../../state/transactions/types';
+import { ITransactionGroup } from '../../state/settings/group/types';
+import { ITransactionSource } from '../../state/settings/source/types';
 
 const ACCOUNT_TYPE_MAP: Record<string, string> = {
 	account: 'Account',
@@ -17,13 +20,13 @@ export const transactionColDefs = (): Array<ColDef> => [
 		field: 'date',
 		filter: 'agDateColumnFilter',
 		minWidth: 120,
-		valueFormatter: (params: ValueFormatterParams<object, string>) => formatDate(params.value!),
+		valueFormatter: (params: ValueFormatterParams<ITransactionsEnhanced, string>) => formatDate(params.value!),
 	},
 	{
 		headerName: 'From',
 		field: 'accountType',
 		minWidth: 120,
-		valueFormatter: (params: ValueFormatterParams<object, string>) => ACCOUNT_TYPE_MAP[params.value!],
+		valueFormatter: (params: ValueFormatterParams<ITransactionsEnhanced, string>) => ACCOUNT_TYPE_MAP[params.value!],
 	},
 	{
 		headerName: 'Transaction',
@@ -37,10 +40,14 @@ export const transactionColDefs = (): Array<ColDef> => [
 	},
 	{
 		headerName: 'Group',
-		field: 'groupName',
+		field: 'group',
+		valueFormatter: (params: ValueFormatterParams<ITransactionsEnhanced, ITransactionGroup>) =>
+			params.value?.name ?? '',
 	},
 	{
 		headerName: 'Source',
-		field: 'sourceName',
+		field: 'source',
+		valueFormatter: (params: ValueFormatterParams<ITransactionsEnhanced, ITransactionSource>) =>
+			params.value?.name ?? '',
 	},
 ];

@@ -1,15 +1,14 @@
 import { FC, useCallback, useState } from 'react';
-
-import Card from 'react-bootstrap/Card';
 import ReactCardFlip from 'react-card-flip';
 import { ExpenseDetails } from '../ExpenseDetails';
-import { ITransactionsEnhanced } from '../../state/transactions/types';
+import { IExpenseSummaryTransactionGroup } from '../../state/transactions/types';
 import { formatNumberAsCurrency } from '../../utils/NumberUtils';
+import { SummaryTile } from '../SummaryTile';
 
 interface TransactionHighlightsProps {
 	title: string;
 	total: number;
-	transactions: Array<ITransactionsEnhanced>;
+	transactions: Array<IExpenseSummaryTransactionGroup>;
 }
 
 export const TransactionHighlights: FC<TransactionHighlightsProps> = ({ title, total, transactions }) => {
@@ -23,18 +22,10 @@ export const TransactionHighlights: FC<TransactionHighlightsProps> = ({ title, t
 
 	return (
 		<ReactCardFlip isFlipped={isFlipped}>
-			<div style={{ height: '200px', boxShadow: '#3399F3 5px 5px 5px', cursor: 'pointer' }} onClick={handleClick}>
-				<Card className="text-center h-100">
-					<Card.Body>
-						<Card.Title className="text-black-50">{title}</Card.Title>
-						<Card.Text className="p-1 display-6">{formattedTotal}</Card.Text>
-					</Card.Body>
-				</Card>
-			</div>
-
-			<div style={{ height: '200px', boxShadow: '#3399F3 5px 5px 5px', cursor: 'pointer' }} onClick={handleClick}>
+			<SummaryTile body={{ title, text: formattedTotal }} actionText="Breakdown" onClick={handleClick} />
+			<SummaryTile actionText="Summary" onClick={handleClick}>
 				<ExpenseDetails transactionList={transactions} />
-			</div>
+			</SummaryTile>
 		</ReactCardFlip>
 	);
 };

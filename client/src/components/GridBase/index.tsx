@@ -14,6 +14,7 @@ interface GridBaseProps {
 	};
 	styles?: CSSProperties;
 	pagination?: boolean;
+	rowHeight?: number;
 }
 
 export const GridBase: FC<GridBaseProps> = ({
@@ -22,6 +23,7 @@ export const GridBase: FC<GridBaseProps> = ({
 	colDefs,
 	components,
 	pagination,
+	rowHeight = 40,
 	styles = {},
 }) => {
 	const [gridEvent, setGridEvent] = useState<GridReadyEvent | null>(null);
@@ -42,7 +44,7 @@ export const GridBase: FC<GridBaseProps> = ({
 			}}
 		>
 			<AgGridReact
-				rowHeight={40}
+				rowHeight={rowHeight}
 				suppressRowClickSelection
 				suppressCellFocus
 				enableCellTextSelection

@@ -8,18 +8,18 @@ export const TopHeader = () => {
 	return (
 		<Navbar bg="light" expand="lg">
 			<Container fluid>
-				<Navbar.Brand href="/">My Home Expense</Navbar.Brand>
+				<Navbar.Brand href="/">My Expense</Navbar.Brand>
 				<Navbar.Toggle aria-controls="basic-navbar-nav" />
 				<Navbar.Collapse id="basic-navbar-nav">
 					<Nav className="me-auto">
 						<Nav.Link as={NavLink} to="/">
 							Home
 						</Nav.Link>
-						<Nav.Link as={NavLink} to="/summary">
-							Year End Summary
-						</Nav.Link>
 						<Nav.Link as={NavLink} to="/manage">
 							Transactions
+						</Nav.Link>
+						<Nav.Link as={NavLink} to="/summary">
+							Year End Summary
 						</Nav.Link>
 						<NavDropdown title="Settings" id="basic-nav-dropdown">
 							<NavDropdown.Item as={NavLink} to="/settings/source">

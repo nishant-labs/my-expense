@@ -1,5 +1,5 @@
 import { ControllerOptions, HttpRequest, RouteConfigItem } from 'node-rest-server';
-import { GroupReferenceDataModel } from '../database/models/GroupReferenceModel.js';
+import { GroupReferenceDataModel } from '../../database/models/GroupReferenceModel.js';
 
 interface InsertGroupPayload {
 	name?: string;
