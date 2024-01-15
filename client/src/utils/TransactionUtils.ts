@@ -1,6 +1,11 @@
-import { IExpenseSummaryTransaction, ITransactionsPayload, ITransactionsEnhanced } from '../state/transactions/types';
-import { ITransactionSource } from '../state/settings/source/types';
+import { ITransactionsPayload, ITransactionsEnhanced } from '../state/transactions/types';
 import { getNewFormattedDate } from './DateUtils';
+
+export const totalReducer = (transactions: Array<{ amount: number } | number> = []): number =>
+	transactions.reduce<number>((sum, trans) => {
+		sum += typeof trans === 'number' ? trans : trans.amount;
+		return sum;
+	}, 0);
 
 export const transformCSVToTransactionPayload = (csvData: Array<Array<string>>): Array<ITransactionsPayload> =>
 	csvData.map((curValue) => ({
@@ -9,35 +14,29 @@ export const transformCSVToTransactionPayload = (csvData: Array<Array<string>>):
 		amount: Number(curValue[2].replaceAll(',', '')),
 	}));
 
-export const transformTransactionBySource = (
-	transactions: ITransactionsEnhanced[],
-	sourceList: ITransactionSource[],
-	accountType: string,
-) => {
-	const filteredTransactions = transactions.filter(
-		(tran) => tran.accountType === accountType && sourceList.some((source) => source.name === tran.sourceName),
-	);
+export const groupTransactionsByTiles = (transactions: ITransactionsEnhanced[]) => {
+	const sourceMap = Object.groupBy(transactions, (trans) => trans.source?.name ?? 'others');
 
-	const transactionBySource = filteredTransactions.reduce(
-		(res, curTran) => {
-			(res[curTran.sourceName!] = res[curTran.sourceName!] || []).push(curTran);
-			return res;
-		},
-		{} as Record<string, Array<ITransactionsEnhanced>>,
-	);
+	// Remove transaction which are not mapped, need change in implementation
+	delete sourceMap['others'];
 
-	return Object.keys(transactionBySource).map((key) => ({
-		title: key,
-		transactions: transactionBySource[key],
-		total: transactionBySource[key].reduce((res, tran) => {
-			res = res + tran.amount;
-			return res;
-		}, 0),
-	}));
+	return Object.keys(sourceMap).map((title) => {
+		const isExpense = sourceMap[title]?.[0].source?.isExpense;
+		const isAccount = sourceMap[title]?.[0].accountType === 'account';
+
+		const groupMap = Object.groupBy(sourceMap[title] ?? [], (trans) => trans.group?.name ?? 'misc');
+		const transactions = Object.keys(groupMap).map((groupName) => {
+			const total = totalReducer(groupMap[groupName]);
+			return { groupName, amount: total, budget: groupMap[groupName]?.[0].group?.budget };
+		});
+
+		const total = totalReducer(transactions);
+		return {
+			title,
+			isExpense,
+			isAccount,
+			total,
+			transactions,
+		};
+	});
 };
-
-export const transformedTransactionAggregator = (transaction: Array<IExpenseSummaryTransaction>) =>
-	transaction.reduce((res, inc) => {
-		res += inc.total;
-		return res;
-	}, 0);

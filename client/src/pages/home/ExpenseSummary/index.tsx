@@ -4,10 +4,10 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { TransactionHighlights } from '../../../components/TransactionHighlights';
 import { useTransactions } from '../../../hooks/useTransactions';
-import { useSourceSettings } from '../../../hooks/useSourceSettings';
-import { IExpenseSummaryTransaction } from '../../../state/transactions/types';
-import { transformTransactionBySource, transformedTransactionAggregator } from '../../../utils/TransactionUtils';
+import { IExpenseSummaryTiles } from '../../../state/transactions/types';
+import { groupTransactionsByTiles, totalReducer } from '../../../utils/TransactionUtils';
 import { formatNumberAsCurrency } from '../../../utils/NumberUtils';
+import { Badge } from 'react-bootstrap';
 
 interface ExpenseSummaryProps {
 	month: string;
@@ -16,57 +16,49 @@ interface ExpenseSummaryProps {
 
 export const ExpenseSummary: FC<ExpenseSummaryProps> = ({ year, month }) => {
 	const { transactions } = useTransactions(year, month);
-	const { sourceList } = useSourceSettings();
 
-	const income = useMemo<Array<IExpenseSummaryTransaction>>(() => {
-		const incomeSource = sourceList.filter((source) => !source.isExpense);
-		return transformTransactionBySource(transactions, incomeSource, 'account');
-	}, [sourceList, transactions]);
-
-	const accountExpense = useMemo<Array<IExpenseSummaryTransaction>>(() => {
-		const expenseSource = sourceList.filter((source) => source.isExpense);
-		return transformTransactionBySource(transactions, expenseSource, 'account');
-	}, [sourceList, transactions]);
-
-	const creditCardExpense = useMemo<Array<IExpenseSummaryTransaction>>(() => {
-		const expenseSource = sourceList.filter((source) => source.isExpense);
-		return transformTransactionBySource(transactions, expenseSource, 'creditCard');
-	}, [sourceList, transactions]);
+	const transactionGroups = useMemo<Array<IExpenseSummaryTiles>>(
+		() => groupTransactionsByTiles(transactions),
+		[transactions],
+	);
 
 	const savedAmount = useMemo(() => {
-		const totalIncome = transformedTransactionAggregator(income);
-		const totalExpense = transformedTransactionAggregator(accountExpense);
-		return totalIncome + totalExpense;
-	}, [accountExpense, income]);
+		const accountOnlyTransaction = transactionGroups.filter((transactionGroup) => transactionGroup.isAccount);
+		const { credit, debit } = Object.groupBy(accountOnlyTransaction, (trans) => (trans.isExpense ? 'debit' : 'credit'));
+		if (!credit || !debit) {
+			return 0;
+		}
+		const creditTotal = totalReducer(credit.map(({ transactions }) => totalReducer(transactions)));
+		const debitTotal = totalReducer(debit.map(({ transactions }) => totalReducer(transactions)));
+		return creditTotal - Math.abs(debitTotal);
+	}, [transactionGroups]);
 
 	if (transactions.length === 0) {
 		return <Alert variant="warning">Transaction Missing, please upload for the month</Alert>;
 	}
 
-	const credit = `You have saved ${formatNumberAsCurrency(savedAmount)} this month`;
-	const deficit = `You have spend ${formatNumberAsCurrency(savedAmount)} more than you income`;
+	const credit = (
+		<span>
+			You have saved <strong>{formatNumberAsCurrency(savedAmount)}</strong>
+		</span>
+	);
+	const deficit = (
+		<span>
+			You have spend <strong>{formatNumberAsCurrency(savedAmount)}</strong> more than you income
+		</span>
+	);
 	return (
 		<>
-			{
-				<Alert variant={savedAmount > 0 ? 'primary' : 'warning'}>
-					<h5>{savedAmount > 0 ? credit : deficit}</h5>
-				</Alert>
-			}
+			<Row className="mb-3">
+				<Col>
+					<h5>
+						<Badge bg={savedAmount > 0 ? 'info' : 'warning'}>{savedAmount > 0 ? credit : deficit}</Badge>
+					</h5>
+				</Col>
+			</Row>
 			<Row className="row-cols-3">
-				{income.map(({ title, total, transactions }, index) => (
-					<Col key={`income-${index}`}>
-						<TransactionHighlights title={title} total={total} transactions={transactions} />
-					</Col>
-				))}
-
-				{accountExpense.map(({ title, total, transactions }, index) => (
-					<Col key={`acc-exp-${index}`}>
-						<TransactionHighlights title={title} total={total} transactions={transactions} />
-					</Col>
-				))}
-
-				{creditCardExpense.map(({ title, total, transactions }, index) => (
-					<Col key={`card-exp-${index}`}>
+				{transactionGroups.map(({ title, total, transactions }, index) => (
+					<Col className="mb-4" key={`income-${index}`}>
 						<TransactionHighlights title={title} total={total} transactions={transactions} />
 					</Col>
 				))}

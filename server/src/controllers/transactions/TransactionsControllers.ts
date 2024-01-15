@@ -1,15 +1,11 @@
+import { FilterQuery } from 'mongoose';
 import { ControllerOptions, HttpRequest, RouteConfigItem } from 'node-rest-server';
-import { TransactionModel } from '../database/models/TransactionsModel.js';
+import { TransactionModel } from '../../database/models/TransactionsModel';
 
 interface TransactionPayloadItem {
 	date: string;
 	transactionSource: string;
 	amount: number;
-}
-
-interface InsertTransactionPayload {
-	accountType: string;
-	transactions: Array<TransactionPayloadItem>;
 }
 
 const getTransactionsHandler = async (requestData: HttpRequest, { getDatabaseConnection }: ControllerOptions) => {
@@ -18,7 +14,7 @@ const getTransactionsHandler = async (requestData: HttpRequest, { getDatabaseCon
 	const startDate = new Date(`${requestData.pathParams.monthAndYear}-01`);
 	const lastDay = new Date(startDate.getFullYear(), startDate.getMonth() + 1, 0);
 
-	const searchQuery: any = {
+	const searchQuery: FilterQuery<unknown> = {
 		date: {
 			$gte: startDate,
 			$lte: lastDay,
@@ -44,12 +40,14 @@ const getTransactionsHandler = async (requestData: HttpRequest, { getDatabaseCon
 };
 
 const insertTransactionHandler = async (requestData: HttpRequest, { getDatabaseConnection }: ControllerOptions) => {
-	const payload = requestData.body as InsertTransactionPayload;
-	const { accountType, transactions } = payload;
+	const {
+		pathParams: { accountType },
+		body,
+	} = requestData;
 
 	await getDatabaseConnection!(requestData);
 
-	const dbData = transactions.map(({ amount, date, transactionSource }) => ({
+	const dbData = (body as Array<TransactionPayloadItem>).map(({ amount, date, transactionSource }) => ({
 		accountType,
 		transactionOf: transactionSource,
 		date,

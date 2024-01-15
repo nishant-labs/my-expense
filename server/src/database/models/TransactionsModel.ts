@@ -5,7 +5,10 @@ const { Schema, model } = mongoose;
 const transactionSchema = new Schema({
 	accountType: String,
 	date: Date,
-	transactionOf: String,
+	transactionOf: {
+		type: String,
+		set: (v: string) => v.trim().replace(/^\s+|\s+$|\s+(?=\s)/g, ' '),
+	},
 	amount: Number,
 });
 

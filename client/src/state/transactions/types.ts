@@ -1,4 +1,6 @@
 import { SerializableParam } from 'recoil';
+import { ITransactionGroup } from '../settings/group/types';
+import { ITransactionSource } from '../settings/source/types';
 
 export interface ITransactionsPayload {
 	date: Date;
@@ -8,12 +10,12 @@ export interface ITransactionsPayload {
 
 export interface ITransactions extends ITransactionsPayload {
 	id?: string;
-	accountType: string;
+	accountType: 'account' | 'creditCard';
 }
 
 export interface ITransactionsEnhanced extends ITransactions {
-	groupName?: string;
-	sourceName?: string;
+	group?: ITransactionGroup;
+	source?: ITransactionSource;
 }
 
 export interface ITransactionsState {
@@ -26,8 +28,16 @@ export interface ISelectorPayload {
 	month: string;
 }
 
-export interface IExpenseSummaryTransaction {
+export interface IExpenseSummaryTransactionGroup {
+	groupName: string;
+	budget?: number;
+	amount: number;
+}
+
+export interface IExpenseSummaryTiles {
 	title: string;
-	transactions: Array<ITransactionsEnhanced>;
+	isAccount: boolean;
+	isExpense?: boolean;
+	transactions: Array<IExpenseSummaryTransactionGroup>;
 	total: number;
 }

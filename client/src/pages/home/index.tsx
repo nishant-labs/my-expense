@@ -11,6 +11,7 @@ const Home = () => {
 	const [key, setKey] = useState(monthNames[0].label.toLowerCase());
 	const { month, year } = useMemo(() => {
 		const todaysDate = new Date();
+		todaysDate.setMonth(todaysDate.getMonth() - 1);
 		return {
 			month: todaysDate.getMonth(),
 			year: todaysDate.getFullYear().toString(),
