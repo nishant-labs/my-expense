@@ -1,5 +1,5 @@
 import { ControllerOptions, HttpRequest, RouteConfigItem } from 'node-rest-server';
-import { SourceReferenceDataModel } from '../../database/models/SourceReferenceModel.js';
+import { SourceReferenceDataModel } from '../../database/models/SourceReferenceModel';
 
 interface InsertSourcePayload {
 	name?: string;
@@ -27,7 +27,7 @@ const getSourceListHandler = async (requestData: HttpRequest, { getDatabaseConne
 const insertSourceHandler = async (requestData: HttpRequest, { getDatabaseConnection }: ControllerOptions) => {
 	const payload = requestData.body as InsertSourcePayload;
 	await getDatabaseConnection!(requestData);
-	const data = await SourceReferenceDataModel.create({
+	await SourceReferenceDataModel.create({
 		sourceName: payload.name,
 		chartColor: payload.chartColor,
 		isExpense: payload.isExpense,
@@ -40,11 +40,12 @@ const insertSourceHandler = async (requestData: HttpRequest, { getDatabaseConnec
 };
 
 const updateSourceHandler = async (requestData: HttpRequest, { getDatabaseConnection }: ControllerOptions) => {
-	const { name, ...restPayload } = requestData.body as InsertSourcePayload;
+	const { body, pathParams } = requestData;
+	const { name, ...restPayload } = body as InsertSourcePayload;
 	const sanitizedPayload = { ...restPayload, ...(name ? { sourceName: name } : {}) };
 
 	await getDatabaseConnection!(requestData);
-	const data = await SourceReferenceDataModel.findByIdAndUpdate(requestData.pathParams.id, sanitizedPayload);
+	const data = await SourceReferenceDataModel.findByIdAndUpdate(pathParams?.id, sanitizedPayload);
 	return {
 		data,
 		status: 200,
@@ -52,11 +53,12 @@ const updateSourceHandler = async (requestData: HttpRequest, { getDatabaseConnec
 };
 
 const deleteSourceHandler = async (requestData: HttpRequest, { getDatabaseConnection }: ControllerOptions) => {
+	const { pathParams } = requestData;
 	let deleteCount = 0;
-	if (requestData.pathParams.id) {
+	if (pathParams?.id) {
 		await getDatabaseConnection!(requestData);
 		const response = await SourceReferenceDataModel.deleteOne({
-			_id: requestData.pathParams.id,
+			_id: pathParams?.id,
 		});
 		deleteCount = response.deletedCount;
 	}

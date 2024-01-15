@@ -1,5 +1,5 @@
 import { ControllerOptions, HttpRequest, RouteConfigItem } from 'node-rest-server';
-import { GroupReferenceDataModel } from '../../database/models/GroupReferenceModel.js';
+import { GroupReferenceDataModel } from '../../database/models/GroupReferenceModel';
 
 interface InsertGroupPayload {
 	name?: string;
@@ -45,7 +45,8 @@ const insertGroupHandler = async (requestData: HttpRequest, { getDatabaseConnect
 };
 
 const updateGroupHandler = async (requestData: HttpRequest, { getDatabaseConnection }: ControllerOptions) => {
-	const { matchers, ...restPayload } = requestData.body as InsertGroupPayload;
+	const { body, pathParams } = requestData;
+	const { matchers, ...restPayload } = body as InsertGroupPayload;
 	await getDatabaseConnection!(requestData);
 
 	const sanitizedPayload = {
@@ -53,7 +54,7 @@ const updateGroupHandler = async (requestData: HttpRequest, { getDatabaseConnect
 		...(matchers ? { transactionMatchers: matchers } : {}),
 	};
 
-	const data = await GroupReferenceDataModel.findByIdAndUpdate(requestData.pathParams.id, sanitizedPayload);
+	const data = await GroupReferenceDataModel.findByIdAndUpdate(pathParams?.id, sanitizedPayload);
 	return {
 		data,
 		status: 200,
@@ -61,11 +62,12 @@ const updateGroupHandler = async (requestData: HttpRequest, { getDatabaseConnect
 };
 
 const deleteGroupHandler = async (requestData: HttpRequest, { getDatabaseConnection }: ControllerOptions) => {
+	const { pathParams } = requestData;
 	let deleteCount = 0;
-	if (requestData.pathParams.id) {
+	if (pathParams?.id) {
 		await getDatabaseConnection!(requestData);
 		const response = await GroupReferenceDataModel.deleteOne({
-			_id: requestData.pathParams.id,
+			_id: pathParams?.id,
 		});
 		deleteCount = response.deletedCount;
 	}

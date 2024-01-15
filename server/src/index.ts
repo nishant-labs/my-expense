@@ -1,7 +1,7 @@
 import RestServer, { ServerConfiguration } from 'node-rest-server';
 import mongoose from 'mongoose';
 
-import routes from './routes.js';
+import routes from './routes';
 
 const serverConfig: ServerConfiguration = {
 	basePath: '/api',

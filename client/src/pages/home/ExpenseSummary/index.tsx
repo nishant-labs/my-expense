@@ -7,7 +7,7 @@ import { useTransactions } from '../../../hooks/useTransactions';
 import { IExpenseSummaryTiles } from '../../../state/transactions/types';
 import { groupTransactionsByTiles, totalReducer } from '../../../utils/TransactionUtils';
 import { formatNumberAsCurrency } from '../../../utils/NumberUtils';
-import { Badge, Button } from 'react-bootstrap';
+import { Badge } from 'react-bootstrap';
 
 interface ExpenseSummaryProps {
 	month: string;
