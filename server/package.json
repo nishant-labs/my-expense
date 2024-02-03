@@ -13,6 +13,7 @@
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
+		"@date-fns/utc": "^1.1.1",
 		"mongoose": "^8.0.4",
 		"node-rest-server": "4.0.0"
 	},

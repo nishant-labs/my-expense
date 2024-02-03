@@ -2,7 +2,14 @@ import mongoose from 'mongoose';
 
 const { Schema, model } = mongoose;
 
-const transactionSchema = new Schema({
+interface ITransaction {
+	accountType: string;
+	date: Date;
+	transactionOf: string;
+	amount: number;
+}
+
+const transactionSchema = new Schema<ITransaction>({
 	accountType: String,
 	date: Date,
 	transactionOf: {
@@ -12,4 +19,4 @@ const transactionSchema = new Schema({
 	amount: Number,
 });
 
-export const TransactionModel = model('Transactions', transactionSchema);
+export const TransactionModel = model('transactions', transactionSchema);
