@@ -1,0 +1,1 @@
+- Migrate to use [react-query](https://tanstack.com/query/latest)

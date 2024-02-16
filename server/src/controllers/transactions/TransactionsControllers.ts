@@ -1,6 +1,6 @@
 import { FilterQuery } from 'mongoose';
 import { ControllerOptions, HttpRequest, RouteConfigItem } from 'node-rest-server';
-import { TransactionModel } from '../../database/models';
+import { TransactionModel } from '../../database/models/index.js';
 
 interface TransactionPayloadItem {
 	date: string;

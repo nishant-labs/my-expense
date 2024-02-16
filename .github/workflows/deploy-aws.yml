@@ -1,4 +1,4 @@
-name: Deploy(gh-pages)
+name: AWS Deploy(my-expense)
 
 on:
   push:
@@ -16,10 +16,11 @@ jobs:
         with:
           node-version: 20
       - run: npm ci
-      - run: npm run build:client
+      - run: npm run build:client:aws
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./client/dist
+          publish_branch: my-expense

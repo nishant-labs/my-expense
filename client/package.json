@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -p tsconfig.client.json && vite build",
+    "build:gh:": "tsc -p tsconfig.client.json && TARGET=gh && vite build",
+    "build:aws": "tsc -p tsconfig.client.json && TARGET=aws && vite build",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },

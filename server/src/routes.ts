@@ -1,7 +1,7 @@
 import { RouteConfiguration } from 'node-rest-server';
-import { sourceApiHandlers } from './controllers/settings/SourceSettingsControllers';
-import { groupApiHandlers } from './controllers/settings/GroupSettingsControllers';
-import { transactionsApiHandlers } from './controllers/transactions/TransactionsControllers';
+import { sourceApiHandlers } from './controllers/settings/SourceSettingsControllers.js';
+import { groupApiHandlers } from './controllers/settings/GroupSettingsControllers.js';
+import { transactionsApiHandlers } from './controllers/transactions/TransactionsControllers.js';
 
 const routes: RouteConfiguration = {
 	'/transactions/:accountType/:monthAndYear?': transactionsApiHandlers,

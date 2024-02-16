@@ -16,6 +16,11 @@ jobs:
         with:
           node-version: 20
       - run: npm ci
-      - run: npm run build --prefix ./client
-      - run: npm run lint --prefix ./client
+
+      - run: npm run build:client:gh
+      - run: npm run build:server
+
+      - run: npm run lint:client
+      - run: npm run lint:server
+
       - run: npm run format:verify
