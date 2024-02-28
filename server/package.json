@@ -5,20 +5,25 @@
 	"type": "module",
 	"main": "dist/index.js",
 	"scripts": {
-		"dev": "nodemon --exec 'npm run start' -w src -e ts,json",
-		"start": "tsc -p tsconfig.server.json && node --inspect --experimental-specifier-resolution=node ./dist/index.js",
+		"dev": "NODE_ENV=development nodemon --exec 'npm run start' -w src -e ts,json",
+		"start": "npm run build && node --inspect --experimental-specifier-resolution=node ./dist/index.js",
+		"build": "tsc -p tsconfig.server.json",
 		"lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
+		"@aws-sdk/client-dynamodb": "^3.521.0",
+		"@aws-sdk/lib-dynamodb": "^3.521.0",
 		"@date-fns/utc": "^1.1.1",
-		"mongoose": "^8.1.2",
-		"node-rest-server": "4.0.0"
+		"dotenv": "^16.4.5",
+		"mongoose": "^8.2.0",
+		"node-rest-server": "4.1.0"
 	},
 	"devDependencies": {
-		"@types/node": "^20.11.19",
+		"@aws-sdk/types": "^3.521.0",
+		"@types/node": "^20.11.20",
 		"@typescript-eslint/eslint-plugin": "^7.0.1",
 		"@typescript-eslint/parser": "^7.0.1",
 		"eslint": "^8.56.0",

@@ -1,0 +1,2 @@
+- Use i18n for maintaining string content file
+- Rest of the constants will still be here

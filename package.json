@@ -11,13 +11,21 @@
     "start": "run-p start:*",
     "start:server": "npm run dev --prefix ./server",
     "start:client": "npm run dev --prefix ./client",
-    "build:client": "npm run build --prefix ./client",
+    
+    "build:server": "npm run build --prefix ./server",
+    "build:client:gh": "npm run build:gh --prefix ./client",
+    "build:client:aws": "npm run build:aws --prefix ./client",
+    
     "lint:client": "npm run lint --prefix ./client",
     "lint:server": "npm run lint --prefix ./server",
+    
     "format": "prettier --write --ignore-unknown ./",
     "format:verify": "prettier --check --ignore-unknown ./",
+    
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prepare": "husky install"
+    
+    "install:husky": "husky install",
+    "prepare": "run-p install:*"
   },
   "author": "Nishant Labs",
   "license": "ISC",
