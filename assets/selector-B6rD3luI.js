@@ -1,0 +1,1 @@
+import{y as o}from"./vendor-CCYQAUK3.js";import{t as e}from"./index-DgxbrRkJ.js";const c=o({key:"toggleGroupFetchAgainFlag",get:({get:t})=>t(e).fetchAgain,set:({set:t},s)=>{t(e,a=>({...a,fetchAgain:s}))}}),i=o({key:"selectGroups",get:({get:t})=>t(e).groupList});export{i as s,c as t};
