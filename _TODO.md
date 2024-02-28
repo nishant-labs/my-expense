@@ -1,0 +1,2 @@
+- Add tests
+- deploy Backend, database and frontend to AWS

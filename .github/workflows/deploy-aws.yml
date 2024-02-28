@@ -12,7 +12,7 @@ jobs:
       EXAMPLE: example # environment variable
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: 20
       - run: npm ci
@@ -27,6 +27,7 @@ jobs:
   publish-ecr:
     name: Build Image
     runs-on: ubuntu-latest
+    environment: aws
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
