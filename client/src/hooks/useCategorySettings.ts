@@ -1,21 +1,21 @@
 import { useCallback, useState } from 'react';
 import { ApiError } from '../api/types';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { ITransactionGroup } from '../state/settings/group/types';
+import { ITransactionCategory } from '../state/settings/category/types';
 import { selectSources } from '../state/settings/source/selector';
-import { selectGroups, toggleGroupFetchAgainFlag } from '../state/settings/group/selector';
-import { deleteGroupById, insertNewGroup, updateGroupById } from '../api/GroupSettingsApi';
+import { selectCategories, toggleCategoryFetchAgainFlag } from '../state/settings/category/selector';
+import { deleteCategoryById, insertNewCategory, updateCategoryById } from '../api/CategorySettingsApi';
 
-export function useGroupSettings() {
-	const triggerToggle = useSetRecoilState(toggleGroupFetchAgainFlag);
-	const groupList = useRecoilValue(selectGroups);
+export function useCategorySettings() {
+	const triggerToggle = useSetRecoilState(toggleCategoryFetchAgainFlag);
+	const categories = useRecoilValue(selectCategories);
 	const sourceList = useRecoilValue(selectSources);
 	const [error, setError] = useState('');
 
 	const onSave = useCallback(
 		async (matchers: Array<string>, name: string, chartColor: string, sourceId: string, budget: number) => {
 			setError('');
-			const response = await insertNewGroup({
+			const response = await insertNewCategory({
 				name,
 				matchers,
 				chartColor,
@@ -35,9 +35,9 @@ export function useGroupSettings() {
 	);
 
 	const onDelete = useCallback(
-		async (group: ITransactionGroup) => {
+		async (group: ITransactionCategory) => {
 			setError('');
-			const response = await deleteGroupById(group.id);
+			const response = await deleteCategoryById(group.id);
 			if ((response as ApiError).error) {
 				setError(`Failed to delete group with id ${group.id}`);
 			} else {
@@ -49,9 +49,9 @@ export function useGroupSettings() {
 	);
 
 	const onToggleStatus = useCallback(
-		async (group: ITransactionGroup) => {
+		async (group: ITransactionCategory) => {
 			setError('');
-			const response = await updateGroupById(group.id, {
+			const response = await updateCategoryById(group.id, {
 				isEnabled: !group.isEnabled,
 			});
 
@@ -69,7 +69,7 @@ export function useGroupSettings() {
 	const onUpdate = useCallback(
 		async (id: string, matchers: Array<string>, name: string, chartColor: string, sourceId: string, budget: number) => {
 			setError('');
-			const response = await updateGroupById(id, {
+			const response = await updateCategoryById(id, {
 				name,
 				matchers,
 				chartColor,
@@ -89,10 +89,10 @@ export function useGroupSettings() {
 	);
 
 	const onUpdateTransactions = useCallback(
-		async (group: ITransactionGroup, matchers: Array<string>) => {
+		async (group: ITransactionCategory, matchers: Array<string>) => {
 			setError('');
 
-			const response = await updateGroupById(group.id, { matchers });
+			const response = await updateCategoryById(group.id, { matchers });
 
 			if ((response as ApiError).error) {
 				setError(`Failed to update transaction for ${group.name}`);
@@ -106,7 +106,7 @@ export function useGroupSettings() {
 	);
 
 	return {
-		groupList,
+		categories,
 		sourceList,
 		error,
 		onSave,

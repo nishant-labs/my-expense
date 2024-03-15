@@ -19,4 +19,4 @@ const transactionSchema = new Schema<ITransaction>({
 	amount: Number,
 });
 
-export const TransactionModel = model('transactions', transactionSchema);
+export const TransactionModel = model('transaction_activities', transactionSchema);

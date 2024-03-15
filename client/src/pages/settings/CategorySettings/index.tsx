@@ -3,17 +3,17 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import { groupSettingsColDefs } from '../../../constants/grid/groupSettingsGridColDefs';
+import { categorySettingsColDefs } from '../../../constants/grid/categorySettingsGridColDefs';
 import { settingsGridComponents } from '../../../components/GridCellRenderers';
 import { GridBase } from '../../../components/GridBase';
 import { TransactionSelectorInput } from '../../../components/TransactionSelectorInput';
-import { useGroupSettings } from '../../../hooks/useGroupSettings';
-import { ITransactionGroup } from '../../../state/settings/group/types';
+import { useCategorySettings } from '../../../hooks/useCategorySettings';
+import { ITransactionCategory } from '../../../state/settings/category/types';
 import { withAsyncDataLoader } from '../../../hoc/withAsyncDataLoader';
 
-export const GroupSettings = () => {
-	const { groupList, sourceList, error, onDelete, onSave, onUpdate, onToggleStatus, onUpdateTransactions } =
-		useGroupSettings();
+export const CategorySettings = () => {
+	const { categories, sourceList, error, onDelete, onSave, onUpdate, onToggleStatus, onUpdateTransactions } =
+		useCategorySettings();
 	const [editId, setEditId] = useState<string | null>(null);
 	const [newMatchers, setNewMatchers] = useState<Array<string>>([]);
 	const [color, setColor] = useState('#000000');
@@ -42,7 +42,7 @@ export const GroupSettings = () => {
 		});
 	}, [onUpdate, editId, newMatchers, newLabel, color, sourceId, budget, handleClear]);
 
-	const handleEdit = useCallback((group: ITransactionGroup) => {
+	const handleEdit = useCallback((group: ITransactionCategory) => {
 		setEditId(group.id);
 		setNewMatchers(group.matchers);
 		setNewLabel(group.name);
@@ -52,7 +52,7 @@ export const GroupSettings = () => {
 	}, []);
 
 	const colDefs = useMemo(
-		() => groupSettingsColDefs(onDelete, onToggleStatus, onUpdateTransactions, handleEdit, sourceList),
+		() => categorySettingsColDefs(onDelete, onToggleStatus, onUpdateTransactions, handleEdit, sourceList),
 		[handleEdit, onDelete, onToggleStatus, onUpdateTransactions, sourceList],
 	);
 
@@ -120,7 +120,7 @@ export const GroupSettings = () => {
 			<Row>
 				<Col>
 					<p>{error}</p>
-					<GridBase colDefs={colDefs} rowData={groupList} components={settingsGridComponents} />
+					<GridBase colDefs={colDefs} rowData={categories} components={settingsGridComponents} />
 				</Col>
 			</Row>
 		</>
@@ -128,4 +128,4 @@ export const GroupSettings = () => {
 };
 
 // eslint-disable-next-line react-refresh/only-export-components
-export default withAsyncDataLoader(GroupSettings);
+export default withAsyncDataLoader(CategorySettings);

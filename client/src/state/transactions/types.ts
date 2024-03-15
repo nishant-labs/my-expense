@@ -1,5 +1,5 @@
 import { SerializableParam } from 'recoil';
-import { ITransactionGroup } from '../settings/group/types';
+import { ITransactionGroup } from '../settings/category/types';
 import { ITransactionSource } from '../settings/source/types';
 
 export interface ITransactionsPayload {

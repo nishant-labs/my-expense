@@ -1,7 +1,7 @@
 import { ColDef, ValueFormatterParams } from 'ag-grid-community';
 import { formatDate } from '../../utils/DateUtils';
 import { ITransactionsEnhanced } from '../../state/transactions/types';
-import { ITransactionGroup } from '../../state/settings/group/types';
+import { ITransactionGroup } from '../../state/settings/category/types';
 import { ITransactionSource } from '../../state/settings/source/types';
 
 const ACCOUNT_TYPE_MAP: Record<string, string> = {

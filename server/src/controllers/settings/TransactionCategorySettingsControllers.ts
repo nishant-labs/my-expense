@@ -1,7 +1,7 @@
 import { ControllerOptions, HttpRequest, RouteConfigItem } from 'node-rest-server';
-import { GroupReferenceDataModel } from '../../database/models/index.js';
+import { TransactionCategoryDataModel } from '../../database/mongodb/models/index.js';
 
-interface InsertGroupPayload {
+interface InsertCategoryPayload {
 	name?: string;
 	matchers?: string;
 	chartColor?: string;
@@ -9,9 +9,9 @@ interface InsertGroupPayload {
 	sourceId?: string;
 }
 
-const getGroupListHandler = async (requestData: HttpRequest, { getDatabaseConnection }: ControllerOptions) => {
+const getCategoryHandler = async (requestData: HttpRequest, { getDatabaseConnection }: ControllerOptions) => {
 	await getDatabaseConnection!(requestData);
-	const response = await GroupReferenceDataModel.find();
+	const response = await TransactionCategoryDataModel.find();
 
 	return {
 		data: response.map((group) => ({
@@ -27,10 +27,10 @@ const getGroupListHandler = async (requestData: HttpRequest, { getDatabaseConnec
 	};
 };
 
-const insertGroupHandler = async (requestData: HttpRequest, { getDatabaseConnection }: ControllerOptions) => {
-	const { budget, chartColor, matchers, name, sourceId } = requestData.body as InsertGroupPayload;
+const insertCategoryHandler = async (requestData: HttpRequest, { getDatabaseConnection }: ControllerOptions) => {
+	const { budget, chartColor, matchers, name, sourceId } = requestData.body as InsertCategoryPayload;
 	await getDatabaseConnection!(requestData);
-	await GroupReferenceDataModel.create({
+	await TransactionCategoryDataModel.create({
 		transactionMatchers: matchers,
 		groupName: name,
 		chartColor: chartColor,
@@ -44,9 +44,9 @@ const insertGroupHandler = async (requestData: HttpRequest, { getDatabaseConnect
 	};
 };
 
-const updateGroupHandler = async (requestData: HttpRequest, { getDatabaseConnection }: ControllerOptions) => {
+const updateCategoryHandler = async (requestData: HttpRequest, { getDatabaseConnection }: ControllerOptions) => {
 	const { body, pathParams } = requestData;
-	const { matchers, ...restPayload } = body as InsertGroupPayload;
+	const { matchers, ...restPayload } = body as InsertCategoryPayload;
 	await getDatabaseConnection!(requestData);
 
 	const sanitizedPayload = {
@@ -54,19 +54,19 @@ const updateGroupHandler = async (requestData: HttpRequest, { getDatabaseConnect
 		...(matchers ? { transactionMatchers: matchers } : {}),
 	};
 
-	const data = await GroupReferenceDataModel.findByIdAndUpdate(pathParams?.id, sanitizedPayload);
+	const data = await TransactionCategoryDataModel.findByIdAndUpdate(pathParams?.id, sanitizedPayload);
 	return {
 		data,
 		status: 200,
 	};
 };
 
-const deleteGroupHandler = async (requestData: HttpRequest, { getDatabaseConnection }: ControllerOptions) => {
+const deleteCategoryHandler = async (requestData: HttpRequest, { getDatabaseConnection }: ControllerOptions) => {
 	const { pathParams } = requestData;
 	let deleteCount = 0;
 	if (pathParams?.id) {
 		await getDatabaseConnection!(requestData);
-		const response = await GroupReferenceDataModel.deleteOne({
+		const response = await TransactionCategoryDataModel.deleteOne({
 			_id: pathParams?.id,
 		});
 		deleteCount = response.deletedCount;
@@ -83,21 +83,21 @@ const deleteGroupHandler = async (requestData: HttpRequest, { getDatabaseConnect
 	};
 };
 
-export const groupApiHandlers: Array<RouteConfigItem> = [
+export const transactionCategoryApiHandlers: Array<RouteConfigItem> = [
 	{
 		method: 'GET',
-		controller: getGroupListHandler,
+		controller: getCategoryHandler,
 	},
 	{
 		method: 'POST',
-		controller: insertGroupHandler,
+		controller: insertCategoryHandler,
 	},
 	{
 		method: 'PUT',
-		controller: updateGroupHandler,
+		controller: updateCategoryHandler,
 	},
 	{
 		method: 'DELETE',
-		controller: deleteGroupHandler,
+		controller: deleteCategoryHandler,
 	},
 ];

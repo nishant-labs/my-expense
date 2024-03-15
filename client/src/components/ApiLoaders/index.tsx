@@ -1,2 +1,2 @@
-export { GroupSettingsLoader } from './GroupSettingsLoader';
+export { CategorySettingsLoader } from './CategorySettingsLoader';
 export { SourceSettingsLoader } from './SourceSettingsLoader';

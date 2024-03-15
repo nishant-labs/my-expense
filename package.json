@@ -12,6 +12,8 @@
     "start:server": "npm run dev --prefix ./server",
     "start:client": "npm run dev --prefix ./client",
     
+    "prod:server": "npm run prod --prefix ./server",
+
     "build:server": "npm run build --prefix ./server",
     "build:client:gh": "npm run build:gh --prefix ./client",
     "build:client:aws": "npm run build:aws --prefix ./client",

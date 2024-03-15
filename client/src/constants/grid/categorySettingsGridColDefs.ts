@@ -1,13 +1,13 @@
 import { CellClassParams, ColDef } from 'ag-grid-community';
-import { ITransactionGroup } from '../../state/settings/group/types';
+import { ITransactionCategory } from '../../state/settings/category/types';
 import { ITransactionSource } from '../../state/settings/source/types';
 import { formatNumberAsCurrency } from '../../utils/NumberUtils';
 
-export const groupSettingsColDefs = (
-	onDelete: (group: ITransactionGroup) => void,
-	onToggleStatus: (group: ITransactionGroup) => void,
-	onUpdateTransactions: (group: ITransactionGroup, matchers: Array<string>) => void,
-	onEdit: (group: ITransactionGroup) => void,
+export const categorySettingsColDefs = (
+	onDelete: (group: ITransactionCategory) => void,
+	onToggleStatus: (group: ITransactionCategory) => void,
+	onUpdateTransactions: (group: ITransactionCategory, matchers: Array<string>) => void,
+	onEdit: (group: ITransactionCategory) => void,
 	sourceList: Array<ITransactionSource>,
 ): Array<ColDef> => [
 	{
