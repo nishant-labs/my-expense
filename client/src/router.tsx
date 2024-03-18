@@ -6,7 +6,7 @@ import { ErrorPage } from './pages/error/ErrorPage';
 const Home = lazy(() => import('./pages/home'));
 const Summary = lazy(() => import('./pages/summary'));
 const Transactions = lazy(() => import('./pages/transactions'));
-const GroupSettings = lazy(() => import('./pages/settings/GroupSettings'));
+const CategorySettings = lazy(() => import('./pages/settings/CategorySettings'));
 const SourceSettings = lazy(() => import('./pages/settings/SourceSettings'));
 
 const router = createHashRouter([
@@ -30,8 +30,8 @@ const router = createHashRouter([
 				element: <Transactions />,
 			},
 			{
-				path: '/settings/group',
-				element: <GroupSettings />,
+				path: '/settings/categories',
+				element: <CategorySettings />,
 			},
 			{
 				path: '/settings/source',

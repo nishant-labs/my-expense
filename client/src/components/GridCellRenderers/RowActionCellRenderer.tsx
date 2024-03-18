@@ -39,7 +39,7 @@ export const RowActionCellRenderer: FC<RowActionCellRendererProps> = ({ deleteIt
 				<Form.Check
 					style={{ display: 'inline-grid' }}
 					type="switch"
-					name={`group-${data.id}`}
+					name={`category-${data.id}`}
 					checked={data.isEnabled}
 					onChange={handleToggle}
 				/>

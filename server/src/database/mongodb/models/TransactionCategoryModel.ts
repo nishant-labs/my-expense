@@ -2,8 +2,8 @@ import mongoose from 'mongoose';
 
 const { Schema, model } = mongoose;
 
-const GroupReferenceDataSchema = new Schema({
-	groupName: String,
+const TransactionCategoryDataSchema = new Schema({
+	categoryName: String,
 	transactionMatchers: Array<string>,
 	chartColor: String,
 	isEnabled: Boolean,
@@ -14,4 +14,4 @@ const GroupReferenceDataSchema = new Schema({
 	},
 });
 
-export const GroupReferenceDataModel = model('TransactionGroupReference', GroupReferenceDataSchema);
+export const TransactionCategoryDataModel = model('transaction_categories', TransactionCategoryDataSchema);

@@ -1,14 +1,14 @@
 import { FC, useCallback, useState } from 'react';
 import ReactCardFlip from 'react-card-flip';
 import { ExpenseDetails } from '../ExpenseDetails';
-import { IExpenseSummaryTransactionGroup } from '../../state/transactions/types';
+import { IExpenseSummaryTransactionCategory } from '../../state/transactions/types';
 import { formatNumberAsCurrency } from '../../utils/NumberUtils';
 import { SummaryTile } from '../SummaryTile';
 
 interface TransactionHighlightsProps {
 	title: string;
 	total: number;
-	transactions: Array<IExpenseSummaryTransactionGroup>;
+	transactions: Array<IExpenseSummaryTransactionCategory>;
 }
 
 export const TransactionHighlights: FC<TransactionHighlightsProps> = ({ title, total, transactions }) => {

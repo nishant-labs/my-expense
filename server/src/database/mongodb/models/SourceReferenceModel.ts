@@ -9,4 +9,4 @@ const sourceReferenceDataSchema = new Schema({
 	isExpense: Boolean,
 });
 
-export const SourceReferenceDataModel = model('TransactionSourceReference', sourceReferenceDataSchema);
+export const SourceReferenceDataModel = model('transaction_source_reference', sourceReferenceDataSchema);

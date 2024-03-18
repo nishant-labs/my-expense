@@ -24,10 +24,10 @@ export const groupTransactionsByTiles = (transactions: ITransactionsEnhanced[]) 
 		const isExpense = sourceMap[title]?.[0].source?.isExpense;
 		const isAccount = sourceMap[title]?.[0].accountType === 'account';
 
-		const groupMap = Object.groupBy(sourceMap[title] ?? [], (trans) => trans.group?.name ?? 'misc');
-		const transactions = Object.keys(groupMap).map((groupName) => {
-			const total = totalReducer(groupMap[groupName]);
-			return { groupName, amount: total, budget: groupMap[groupName]?.[0].group?.budget };
+		const categoryMap = Object.groupBy(sourceMap[title] ?? [], (trans) => trans.category?.name ?? 'misc');
+		const transactions = Object.keys(categoryMap).map((categoryName) => {
+			const total = totalReducer(categoryMap[categoryName]);
+			return { categoryName, amount: total, budget: categoryMap[categoryName]?.[0].category?.budget };
 		});
 
 		const total = totalReducer(transactions);

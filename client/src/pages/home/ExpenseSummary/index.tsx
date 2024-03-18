@@ -17,13 +17,13 @@ interface ExpenseSummaryProps {
 export const ExpenseSummary: FC<ExpenseSummaryProps> = ({ year, month }) => {
 	const { transactions } = useTransactions(year, month);
 
-	const transactionGroups = useMemo<Array<IExpenseSummaryTiles>>(
+	const transactionCategories = useMemo<Array<IExpenseSummaryTiles>>(
 		() => groupTransactionsByTiles(transactions),
 		[transactions],
 	);
 
 	const savedAmount = useMemo(() => {
-		const accountOnlyTransaction = transactionGroups.filter((transactionGroup) => transactionGroup.isAccount);
+		const accountOnlyTransaction = transactionCategories.filter((transactionCategory) => transactionCategory.isAccount);
 		const { credit, debit } = Object.groupBy(accountOnlyTransaction, (trans) => (trans.isExpense ? 'debit' : 'credit'));
 		if (!credit || !debit) {
 			return 0;
@@ -31,7 +31,7 @@ export const ExpenseSummary: FC<ExpenseSummaryProps> = ({ year, month }) => {
 		const creditTotal = totalReducer(credit.map(({ transactions }) => totalReducer(transactions)));
 		const debitTotal = totalReducer(debit.map(({ transactions }) => totalReducer(transactions)));
 		return creditTotal - Math.abs(debitTotal);
-	}, [transactionGroups]);
+	}, [transactionCategories]);
 
 	if (transactions.length === 0) {
 		return <Alert variant="warning">Transaction Missing, please upload for the month</Alert>;
@@ -57,7 +57,7 @@ export const ExpenseSummary: FC<ExpenseSummaryProps> = ({ year, month }) => {
 				</Col>
 			</Row>
 			<Row className="row-cols-3">
-				{transactionGroups.map(({ title, total, transactions }, index) => (
+				{transactionCategories.map(({ title, total, transactions }, index) => (
 					<Col className="mb-4" key={`income-${index}`}>
 						<TransactionHighlights title={title} total={total} transactions={transactions} />
 					</Col>

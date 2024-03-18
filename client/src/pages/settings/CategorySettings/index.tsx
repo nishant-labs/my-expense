@@ -3,17 +3,17 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import { groupSettingsColDefs } from '../../../constants/grid/groupSettingsGridColDefs';
+import { categorySettingsColDefs } from '../../../constants/grid/categorySettingsGridColDefs';
 import { settingsGridComponents } from '../../../components/GridCellRenderers';
 import { GridBase } from '../../../components/GridBase';
 import { TransactionSelectorInput } from '../../../components/TransactionSelectorInput';
-import { useGroupSettings } from '../../../hooks/useGroupSettings';
-import { ITransactionGroup } from '../../../state/settings/group/types';
+import { useCategorySettings } from '../../../hooks/useCategorySettings';
+import { ITransactionCategory } from '../../../state/settings/category/types';
 import { withAsyncDataLoader } from '../../../hoc/withAsyncDataLoader';
 
-export const GroupSettings = () => {
-	const { groupList, sourceList, error, onDelete, onSave, onUpdate, onToggleStatus, onUpdateTransactions } =
-		useGroupSettings();
+export const CategorySettings = () => {
+	const { categories, sourceList, error, onDelete, onSave, onUpdate, onToggleStatus, onUpdateTransactions } =
+		useCategorySettings();
 	const [editId, setEditId] = useState<string | null>(null);
 	const [newMatchers, setNewMatchers] = useState<Array<string>>([]);
 	const [color, setColor] = useState('#000000');
@@ -42,23 +42,23 @@ export const GroupSettings = () => {
 		});
 	}, [onUpdate, editId, newMatchers, newLabel, color, sourceId, budget, handleClear]);
 
-	const handleEdit = useCallback((group: ITransactionGroup) => {
-		setEditId(group.id);
-		setNewMatchers(group.matchers);
-		setNewLabel(group.name);
-		setColor(group.chartColor);
-		setSourceId(group.sourceId);
-		setBudget(group.budget?.toString() || '');
+	const handleEdit = useCallback((category: ITransactionCategory) => {
+		setEditId(category.id);
+		setNewMatchers(category.matchers);
+		setNewLabel(category.name);
+		setColor(category.chartColor);
+		setSourceId(category.sourceId);
+		setBudget(category.budget?.toString() || '');
 	}, []);
 
 	const colDefs = useMemo(
-		() => groupSettingsColDefs(onDelete, onToggleStatus, onUpdateTransactions, handleEdit, sourceList),
+		() => categorySettingsColDefs(onDelete, onToggleStatus, onUpdateTransactions, handleEdit, sourceList),
 		[handleEdit, onDelete, onToggleStatus, onUpdateTransactions, sourceList],
 	);
 
 	return (
 		<>
-			<h2>Group Settings</h2>
+			<h2>Category Settings</h2>
 			<Row className="mb-2">
 				<Col>
 					<Form.Control
@@ -110,7 +110,7 @@ export const GroupSettings = () => {
 						disabled={!newLabel || newMatchers.length === 0 || !color || !sourceId}
 						onClick={editId ? handleUpdate : handleSave}
 					>
-						{editId ? 'Update' : 'Add Group'}
+						{editId ? 'Update' : 'Add Category'}
 					</Button>
 					<Button variant="outline-secondary" onClick={handleClear}>
 						Clear
@@ -120,7 +120,7 @@ export const GroupSettings = () => {
 			<Row>
 				<Col>
 					<p>{error}</p>
-					<GridBase colDefs={colDefs} rowData={groupList} components={settingsGridComponents} />
+					<GridBase colDefs={colDefs} rowData={categories} components={settingsGridComponents} />
 				</Col>
 			</Row>
 		</>
@@ -128,4 +128,4 @@ export const GroupSettings = () => {
 };
 
 // eslint-disable-next-line react-refresh/only-export-components
-export default withAsyncDataLoader(GroupSettings);
+export default withAsyncDataLoader(CategorySettings);

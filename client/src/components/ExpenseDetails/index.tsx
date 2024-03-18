@@ -1,10 +1,10 @@
 import { FC } from 'react';
-import { IExpenseSummaryTransactionGroup } from '../../state/transactions/types';
+import { IExpenseSummaryTransactionCategory } from '../../state/transactions/types';
 import { GridBase } from '../GridBase';
 import { defaultExpenseDetailsColDefs, expenseDetailsColDefs } from '../../constants/grid/expenseDetailsGridColDefs';
 
 interface ExpenseDetailsProps {
-	transactionList: Array<IExpenseSummaryTransactionGroup>;
+	transactionList: Array<IExpenseSummaryTransactionCategory>;
 }
 
 export const ExpenseDetails: FC<ExpenseDetailsProps> = ({ transactionList }) => (
