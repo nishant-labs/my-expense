@@ -6,11 +6,11 @@ import { ITransactionCategory } from '../../state/settings/category/types';
 import { transactionCategoryState } from '../../state/settings/category/state';
 
 export const CategorySettingsLoader = memo(() => {
-	const [{ fetchAgain }, setGroupState] = useRecoilState(transactionCategoryState);
+	const [{ fetchAgain }, setCategoryState] = useRecoilState(transactionCategoryState);
 	useEffect(() => {
 		fetchAllCategories().then((res) => {
 			if (!(res as ApiError).error) {
-				setGroupState({
+				setCategoryState({
 					fetchAgain: false,
 					categories: res as ITransactionCategory[],
 				});
@@ -23,14 +23,14 @@ export const CategorySettingsLoader = memo(() => {
 		if (fetchAgain) {
 			fetchAllCategories().then((res) => {
 				if (!(res as ApiError).error) {
-					setGroupState({
+					setCategoryState({
 						fetchAgain: false,
 						categories: res as ITransactionCategory[],
 					});
 				}
 			});
 		}
-	}, [fetchAgain, setGroupState]);
+	}, [fetchAgain, setCategoryState]);
 
 	return <></>;
 });

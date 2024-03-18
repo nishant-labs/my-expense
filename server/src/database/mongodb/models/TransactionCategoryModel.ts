@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const { Schema, model } = mongoose;
 
 const TransactionCategoryDataSchema = new Schema({
-	groupName: String,
+	categoryName: String,
 	transactionMatchers: Array<string>,
 	chartColor: String,
 	isEnabled: Boolean,

@@ -25,8 +25,8 @@ export const TopHeader = () => {
 							<NavDropdown.Item as={NavLink} to="/settings/source">
 								Source
 							</NavDropdown.Item>
-							<NavDropdown.Item as={NavLink} to="/settings/group">
-								Group
+							<NavDropdown.Item as={NavLink} to="/settings/categories">
+								Categories
 							</NavDropdown.Item>
 						</NavDropdown>
 					</Nav>

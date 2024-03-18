@@ -7,8 +7,8 @@ export const defaultExpenseDetailsColDefs: ColDef = {
 
 export const expenseDetailsColDefs: Array<ColDef> = [
 	{
-		headerName: 'Group',
-		field: 'groupName',
+		headerName: 'Category',
+		field: 'categoryName',
 	},
 	{
 		headerName: 'Budget',

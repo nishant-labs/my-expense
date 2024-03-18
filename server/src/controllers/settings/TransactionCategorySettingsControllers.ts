@@ -14,14 +14,14 @@ const getCategoryHandler = async (requestData: HttpRequest, { getDatabaseConnect
 	const response = await TransactionCategoryDataModel.find();
 
 	return {
-		data: response.map((group) => ({
-			id: group['_id'],
-			name: group.groupName,
-			matchers: group.transactionMatchers,
-			budget: group.budget,
-			chartColor: group.chartColor,
-			sourceId: group.sourceId,
-			isEnabled: group.isEnabled,
+		data: response.map((category) => ({
+			id: category['_id'],
+			name: category.categoryName,
+			matchers: category.transactionMatchers,
+			budget: category.budget,
+			chartColor: category.chartColor,
+			sourceId: category.sourceId,
+			isEnabled: category.isEnabled,
 		})),
 		status: 200,
 	};
@@ -32,7 +32,7 @@ const insertCategoryHandler = async (requestData: HttpRequest, { getDatabaseConn
 	await getDatabaseConnection!(requestData);
 	await TransactionCategoryDataModel.create({
 		transactionMatchers: matchers,
-		groupName: name,
+		categoryName: name,
 		chartColor: chartColor,
 		isEnabled: true,
 		sourceId,

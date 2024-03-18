@@ -4,10 +4,10 @@ import { ITransactionSource } from '../../state/settings/source/types';
 import { formatNumberAsCurrency } from '../../utils/NumberUtils';
 
 export const categorySettingsColDefs = (
-	onDelete: (group: ITransactionCategory) => void,
-	onToggleStatus: (group: ITransactionCategory) => void,
-	onUpdateTransactions: (group: ITransactionCategory, matchers: Array<string>) => void,
-	onEdit: (group: ITransactionCategory) => void,
+	onDelete: (category: ITransactionCategory) => void,
+	onToggleStatus: (category: ITransactionCategory) => void,
+	onUpdateTransactions: (category: ITransactionCategory, matchers: Array<string>) => void,
+	onEdit: (category: ITransactionCategory) => void,
 	sourceList: Array<ITransactionSource>,
 ): Array<ColDef> => [
 	{

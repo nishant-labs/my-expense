@@ -42,13 +42,13 @@ export const CategorySettings = () => {
 		});
 	}, [onUpdate, editId, newMatchers, newLabel, color, sourceId, budget, handleClear]);
 
-	const handleEdit = useCallback((group: ITransactionCategory) => {
-		setEditId(group.id);
-		setNewMatchers(group.matchers);
-		setNewLabel(group.name);
-		setColor(group.chartColor);
-		setSourceId(group.sourceId);
-		setBudget(group.budget?.toString() || '');
+	const handleEdit = useCallback((category: ITransactionCategory) => {
+		setEditId(category.id);
+		setNewMatchers(category.matchers);
+		setNewLabel(category.name);
+		setColor(category.chartColor);
+		setSourceId(category.sourceId);
+		setBudget(category.budget?.toString() || '');
 	}, []);
 
 	const colDefs = useMemo(
@@ -58,7 +58,7 @@ export const CategorySettings = () => {
 
 	return (
 		<>
-			<h2>Group Settings</h2>
+			<h2>Category Settings</h2>
 			<Row className="mb-2">
 				<Col>
 					<Form.Control
@@ -110,7 +110,7 @@ export const CategorySettings = () => {
 						disabled={!newLabel || newMatchers.length === 0 || !color || !sourceId}
 						onClick={editId ? handleUpdate : handleSave}
 					>
-						{editId ? 'Update' : 'Add Group'}
+						{editId ? 'Update' : 'Add Category'}
 					</Button>
 					<Button variant="outline-secondary" onClick={handleClear}>
 						Clear

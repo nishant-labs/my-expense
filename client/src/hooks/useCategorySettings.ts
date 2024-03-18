@@ -24,7 +24,7 @@ export function useCategorySettings() {
 			});
 
 			if ((response as ApiError).error) {
-				setError('Failed to create new group');
+				setError('Failed to create new category');
 			} else {
 				triggerToggle(true);
 			}
@@ -35,11 +35,11 @@ export function useCategorySettings() {
 	);
 
 	const onDelete = useCallback(
-		async (group: ITransactionCategory) => {
+		async (category: ITransactionCategory) => {
 			setError('');
-			const response = await deleteCategoryById(group.id);
+			const response = await deleteCategoryById(category.id);
 			if ((response as ApiError).error) {
-				setError(`Failed to delete group with id ${group.id}`);
+				setError(`Failed to delete category with id ${category.id}`);
 			} else {
 				triggerToggle(true);
 			}
@@ -49,14 +49,14 @@ export function useCategorySettings() {
 	);
 
 	const onToggleStatus = useCallback(
-		async (group: ITransactionCategory) => {
+		async (category: ITransactionCategory) => {
 			setError('');
-			const response = await updateCategoryById(group.id, {
-				isEnabled: !group.isEnabled,
+			const response = await updateCategoryById(category.id, {
+				isEnabled: !category.isEnabled,
 			});
 
 			if ((response as ApiError).error) {
-				setError(`Failed to toggle status for ${group.name}`);
+				setError(`Failed to toggle status for ${category.name}`);
 			} else {
 				triggerToggle(true);
 			}
@@ -89,13 +89,13 @@ export function useCategorySettings() {
 	);
 
 	const onUpdateTransactions = useCallback(
-		async (group: ITransactionCategory, matchers: Array<string>) => {
+		async (category: ITransactionCategory, matchers: Array<string>) => {
 			setError('');
 
-			const response = await updateCategoryById(group.id, { matchers });
+			const response = await updateCategoryById(category.id, { matchers });
 
 			if ((response as ApiError).error) {
-				setError(`Failed to update transaction for ${group.name}`);
+				setError(`Failed to update transaction for ${category.name}`);
 			} else {
 				triggerToggle(true);
 			}

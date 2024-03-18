@@ -30,7 +30,7 @@ const router = createHashRouter([
 				element: <Transactions />,
 			},
 			{
-				path: '/settings/group',
+				path: '/settings/categories',
 				element: <CategorySettings />,
 			},
 			{

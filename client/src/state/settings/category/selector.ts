@@ -14,5 +14,5 @@ export const toggleCategoryFetchAgainFlag = selector<boolean>({
 
 export const selectCategories = selector({
 	key: 'selectCategories',
-	get: ({ get }) => get(transactionCategoryState).CategoryList,
+	get: ({ get }) => get(transactionCategoryState).categories,
 });
