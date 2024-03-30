@@ -1,0 +1,1 @@
+import{h as a}from"./vendor-yZUb1w_a.js";import{t}from"./index-Bv3VFFVW.js";const i=a({key:"toggleCategoryFetchAgainFlag",get:({get:e})=>e(t).fetchAgain,set:({set:e},g)=>{e(t,o=>({...o,fetchAgain:g}))}}),c=a({key:"selectCategories",get:({get:e})=>e(t).categories});export{c as s,i as t};
