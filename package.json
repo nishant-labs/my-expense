@@ -42,7 +42,6 @@
   },
   "lint-staged": {
     "**/*": "npm run format",
-    "client/src/**.*": "npm run lint:client",
-    "server/src/**.*": "npm run lint:server"
+    "src/**.*": "npm run lint"
   }
 }
