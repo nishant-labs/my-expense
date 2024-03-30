@@ -29,7 +29,7 @@
     
     "test": "echo \"Error: no test specified\" && exit 1",
     
-    "install:husky": "husky install",
+    "install:husky": "husky",
     "prepare": "run-p install:*"
   },
   "author": "Nishant Labs",
