@@ -8,7 +8,7 @@
 	"scripts": {
 		"dev": "NODE_ENV=development nodemon --exec 'npm run start' -w src -e ts,json",
 		"start": "npm run build && node --inspect --experimental-specifier-resolution=node ./dist/index.js",
-		"prod": "node --experimental-specifier-resolution=node ./dist/index.js > ../server.log",
+		"prod": "node --experimental-specifier-resolution=node ./dist/index.js >> ../logs/server.log",
 		"build": "tsc -p tsconfig.server.json",
 		"lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
 		"test": "echo \"Error: no test specified\" && exit 1"
