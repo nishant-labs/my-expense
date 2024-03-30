@@ -12,22 +12,24 @@
     "start:server": "npm run dev --prefix ./server",
     "start:client": "npm run dev --prefix ./client",
     
+    "prod": "run-p prod:*",
+    "prod:client": "npm run prod --prefix ./client",
     "prod:server": "npm run prod --prefix ./server",
-
+    
+    "build": "npm-run-all build:server build:client:aws --sequential build:scripts",
     "build:server": "npm run build --prefix ./server",
     "build:client:gh": "npm run build:gh --prefix ./client",
     "build:client:aws": "npm run build:aws --prefix ./client",
+    "build:scripts": "node ./scripts/postBuildScript.js",
    
-    "lint": "npm run lint:client && npm run lint:server",
-    "lint:client": "npm run lint --prefix ./client",
-    "lint:server": "npm run lint --prefix ./server",
+    "lint": "npm run lint --ws",
     
     "format": "prettier --write --ignore-unknown ./",
     "format:verify": "prettier --check --ignore-unknown ./",
     
     "test": "echo \"Error: no test specified\" && exit 1",
     
-    "install:husky": "husky install",
+    "install:husky": "husky",
     "prepare": "run-p install:*"
   },
   "author": "Nishant Labs",
@@ -40,7 +42,6 @@
   },
   "lint-staged": {
     "**/*": "npm run format",
-    "client/src/**.*": "npm run lint:client",
-    "server/src/**.*": "npm run lint:server"
+    "src/**.*": "npm run lint"
   }
 }
