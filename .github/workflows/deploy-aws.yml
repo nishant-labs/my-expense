@@ -21,9 +21,9 @@ jobs:
 
       # Group Assets together for copy
       - run: mkdir ./aws_publish
-      - run: cp ./scripts/ ./aws_publish/
-      - run: cp ./client/dist ./aws_publish/client/
-      - run: cp ./server/dist ./aws_publish/server/
+      - run: cp -r ./scripts/ ./aws_publish/
+      - run: cp -r ./client/dist ./aws_publish/client/
+      - run: cp -r ./server/dist ./aws_publish/server/
       - run: cp ./server/package.json ./aws_publish/server/package.json
 
       - name: Deploy
