@@ -9,7 +9,7 @@ console.log('SERVER_PORT: ', SERVER_PORT);
 console.groupEnd();
 
 fs.writeFileSync(
-	'./client/dist/config.json',
+	'./client/config.json',
 	JSON.stringify({
 		baseUrl: `${SERVER_HOST}:${SERVER_PORT}`,
 	}),
