@@ -5,7 +5,6 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "prod": "http-server -p $(echo $CLIENT_PORT) ./dist >> ../logs/client.log",
     "build:gh": "tsc -p tsconfig.client.json && TARGET=gh && vite build",
     "build:aws": "tsc -p tsconfig.client.json && TARGET=aws && vite build",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
@@ -41,7 +40,6 @@
     "eslint": "8.57.0",
     "eslint-plugin-react-hooks": "4.6.0",
     "eslint-plugin-react-refresh": "0.4.6",
-    "http-server": "14.1.1",
     "typescript": "5.4.3",
     "vite": "5.2.7"
   }

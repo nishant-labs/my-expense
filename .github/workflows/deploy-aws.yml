@@ -17,12 +17,20 @@ jobs:
           node-version: 20
       - run: npm ci
       - run: npm run build:client:aws
+      - run: npm run build:server
+
+      # Group Assets together for copy
+      - run: mkdir ./aws_publish
+      - run: cp ./scripts/ ./aws_publish/
+      - run: cp ./client/dist ./aws_publish/client/
+      - run: cp ./server/dist ./aws_publish/server/
+      - run: cp ./server/package.json ./aws_publish/server/package.json
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./client/dist
+          publish_dir: ./aws_publish
           publish_branch: my-expense
   publish-ecr:
     name: Build Image
