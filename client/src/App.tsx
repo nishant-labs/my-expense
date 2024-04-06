@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { AppRouter } from './router';
 import { withAsyncDataLoader } from './hoc/withAsyncDataLoader';
-import { QueryProvider } from './components/QueryProvider';
 import { ENDPOINTS, QUERY_KEYS } from './constants/queryMapping';
 
 export function MyExpenseApp() {
@@ -26,11 +25,7 @@ export function MyExpenseApp() {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	return (
-		<QueryProvider>
-			<AppRouter />
-		</QueryProvider>
-	);
+	return <AppRouter />;
 }
 
 export const MyExpenseAppWithLoader = withAsyncDataLoader(MyExpenseApp);

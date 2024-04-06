@@ -3,12 +3,13 @@ import { useRecoilState } from 'recoil';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { appConfigQuery } from '../../state/config/selector';
 import { createQueryClientInstance } from './QueryProviderService';
+import { withAsyncDataLoader } from '../../hoc/withAsyncDataLoader';
 
 interface QueryProviderProps {
 	children: ReactNode;
 }
 
-export const QueryProvider: FC<QueryProviderProps> = ({ children }) => {
+const QueryProvider: FC<QueryProviderProps> = ({ children }) => {
 	const [appConfig, setAppConfig] = useRecoilState(appConfigQuery);
 	const [queryClientInstance, setQueryClientInstance] = useState<QueryClient>();
 
@@ -30,3 +31,5 @@ export const QueryProvider: FC<QueryProviderProps> = ({ children }) => {
 
 	return <QueryClientProvider client={queryClientInstance}>{children}</QueryClientProvider>;
 };
+
+export const QueryProviderWithLoader = withAsyncDataLoader(QueryProvider);

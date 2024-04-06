@@ -8,7 +8,7 @@ export const categorySettingsColDefs = (
 	onToggleStatus: (category: ITransactionCategory) => void,
 	onUpdateTransactions: (category: ITransactionCategory, matchers: Array<string>) => void,
 	onEdit: (category: ITransactionCategory) => void,
-	sourceList: Array<ITransactionSource>,
+	sourceList?: Array<ITransactionSource>,
 ): Array<ColDef> => [
 	{
 		headerName: 'Name',
