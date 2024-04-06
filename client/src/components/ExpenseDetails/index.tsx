@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { IExpenseSummaryTransactionCategory } from '../../state/transactions/types';
+import { IExpenseSummaryTransactionCategory } from '../../hooks/useTransactions/types';
 import { GridBase } from '../GridBase';
 import { defaultExpenseDetailsColDefs, expenseDetailsColDefs } from '../../constants/grid/expenseDetailsGridColDefs';
 

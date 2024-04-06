@@ -7,6 +7,7 @@ import ThemeProvider from 'react-bootstrap/ThemeProvider';
 import { RecoilRoot } from 'recoil';
 import RecoilizeDebugger from 'recoilize';
 import { MyExpenseAppWithLoader } from './App';
+import { QueryProvider } from './components/QueryProvider';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
@@ -14,7 +15,9 @@ root.render(
 		<RecoilRoot>
 			<RecoilizeDebugger />
 			<ThemeProvider>
-				<MyExpenseAppWithLoader />
+				<QueryProvider>
+					<MyExpenseAppWithLoader />
+				</QueryProvider>
 			</ThemeProvider>
 		</RecoilRoot>
 	</React.StrictMode>,

@@ -7,8 +7,8 @@ import { categorySettingsColDefs } from '../../../constants/grid/categorySetting
 import { settingsGridComponents } from '../../../components/GridCellRenderers';
 import { GridBase } from '../../../components/GridBase';
 import { TransactionSelectorInput } from '../../../components/TransactionSelectorInput';
-import { useCategorySettings } from '../../../hooks/useCategorySettings';
-import { ITransactionCategory } from '../../../state/settings/category/types';
+import { useCategorySettings } from '../../../hooks/useCategorySettings/useCategorySettings';
+import { ITransactionCategory } from '../../../hooks/useCategorySettings/types';
 import { withAsyncDataLoader } from '../../../hoc/withAsyncDataLoader';
 
 export const CategorySettings = () => {
@@ -16,7 +16,7 @@ export const CategorySettings = () => {
 		useCategorySettings();
 	const [editId, setEditId] = useState<string | null>(null);
 	const [newMatchers, setNewMatchers] = useState<Array<string>>([]);
-	const [color, setColor] = useState('#000000');
+	const [color, setColor] = useState('#FFFFFF');
 	const [newLabel, setNewLabel] = useState('');
 	const [sourceId, setSourceId] = useState('');
 	const [budget, setBudget] = useState('');
@@ -95,7 +95,7 @@ export const CategorySettings = () => {
 						onChange={(event) => setSourceId(event.target.value)}
 					>
 						<option>Select Source</option>
-						{sourceList.map((source, index) => (
+						{sourceList?.map((source, index) => (
 							<option key={`source-${index}`} value={source.id}>
 								{source.name}
 							</option>
@@ -119,7 +119,7 @@ export const CategorySettings = () => {
 			</Row>
 			<Row>
 				<Col>
-					<p>{error}</p>
+					<p>{error?.error}</p>
 					<GridBase colDefs={colDefs} rowData={categories} components={settingsGridComponents} />
 				</Col>
 			</Row>

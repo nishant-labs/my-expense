@@ -1,5 +1,5 @@
 import { CellClassParams, ColDef } from 'ag-grid-community';
-import { ITransactionSource } from '../../state/settings/source/types';
+import { ITransactionSource } from '../../hooks/useSourceSettings/types';
 
 export const sourceSettingsColDefs = (
 	onDelete: (source: ITransactionSource) => void,
@@ -17,7 +17,7 @@ export const sourceSettingsColDefs = (
 	{
 		headerName: 'Chart Color',
 		field: 'chartColor',
-		width: 100,
+		minWidth: 100,
 		cellStyle: (params: CellClassParams) => ({
 			backgroundColor: params.value,
 			color: 'white',
@@ -26,7 +26,7 @@ export const sourceSettingsColDefs = (
 	{
 		headerName: 'Action',
 		type: 'rightAligned',
-		width: 140,
+		minWidth: 140,
 		cellRenderer: 'rowActionCellRenderer',
 		cellRendererParams: {
 			deleteItem: onDelete,

@@ -4,7 +4,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { TransactionHighlights } from '../../../components/TransactionHighlights';
 import { useTransactions } from '../../../hooks/useTransactions';
-import { IExpenseSummaryTiles } from '../../../state/transactions/types';
+import { IExpenseSummaryTiles } from '../../../hooks/useTransactions/types';
 import { groupTransactionsByTiles, totalReducer } from '../../../utils/TransactionUtils';
 import { formatNumberAsCurrency } from '../../../utils/NumberUtils';
 import { Badge } from 'react-bootstrap';
@@ -15,7 +15,7 @@ interface ExpenseSummaryProps {
 }
 
 export const ExpenseSummary: FC<ExpenseSummaryProps> = ({ year, month }) => {
-	const { transactions } = useTransactions(year, month);
+	const [transactions] = useTransactions(year, month);
 
 	const transactionCategories = useMemo<Array<IExpenseSummaryTiles>>(
 		() => groupTransactionsByTiles(transactions),

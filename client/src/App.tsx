@@ -1,25 +1,35 @@
-import { useRecoilState } from 'recoil';
-import { AppRouter } from './router.tsx';
-import { SourceSettingsLoader, CategorySettingsLoader } from './components/ApiLoaders';
-import { withAsyncDataLoader } from './hoc/withAsyncDataLoader/index.tsx';
-import { appConfigQuery } from './state/config/selector.ts';
 import { useEffect } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
+import { AppRouter } from './router';
+import { withAsyncDataLoader } from './hoc/withAsyncDataLoader';
+import { QueryProvider } from './components/QueryProvider';
+import { ENDPOINTS, QUERY_KEYS } from './constants/queryMapping';
 
 export function MyExpenseApp() {
-	const [appConfig, setAppConfig] = useRecoilState(appConfigQuery);
+	const queryClient = useQueryClient();
+
 	useEffect(() => {
-		if (appConfig.baseUrl && !window.EXPENSE_API_HOST) {
-			setAppConfig(appConfig);
-			window.EXPENSE_API_HOST = appConfig.baseUrl;
-		}
-	}, [appConfig, setAppConfig]);
+		queryClient.prefetchQuery({
+			queryKey: QUERY_KEYS.SOURCE_SETTINGS,
+			meta: {
+				endpoint: ENDPOINTS.SOURCE_SETTINGS,
+			},
+		});
+
+		queryClient.prefetchQuery({
+			queryKey: QUERY_KEYS.CATEGORY_SETTINGS,
+			meta: {
+				endpoint: ENDPOINTS.CATEGORY_SETTINGS,
+			},
+		});
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	return (
-		<>
+		<QueryProvider>
 			<AppRouter />
-			<SourceSettingsLoader />
-			<CategorySettingsLoader />
-		</>
+		</QueryProvider>
 	);
 }
 

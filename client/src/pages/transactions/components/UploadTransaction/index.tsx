@@ -4,11 +4,12 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import { BaseModal } from '../../../../components/BaseModal';
 import { parseCSVFileToTransaction } from '../../../../utils/FileHandler';
-import { insertTransactions } from '../../../../api/TransactionsApi';
+import { useTransactionUploader } from '../../../../api/TransactionsApi';
 import { FormSelectBase } from '../../../../components/FormSelectBase';
 import { ACCOUNT_TYPE } from '../../../../constants';
 
 export const UploadTransaction = () => {
+	const transactionUploader = useTransactionUploader();
 	const [selectedFile, setSelectedFile] = useState<File | null>(null);
 	const [accountType, setAccountType] = useState('');
 
@@ -23,7 +24,7 @@ export const UploadTransaction = () => {
 		(close: () => void) => {
 			if (selectedFile && accountType) {
 				parseCSVFileToTransaction(selectedFile).then((transactions) => {
-					insertTransactions(accountType, transactions).then(() => {
+					transactionUploader.mutateAsync({ accountType, payload: transactions }).then(() => {
 						close();
 					});
 				});
@@ -31,7 +32,7 @@ export const UploadTransaction = () => {
 				alert('Please select file to upload');
 			}
 		},
-		[selectedFile, accountType],
+		[selectedFile, accountType, transactionUploader],
 	);
 
 	return (

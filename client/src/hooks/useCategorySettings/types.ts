@@ -3,6 +3,11 @@ export interface ITransactionCategory extends ITransactionCategoryPayload {
 	isEnabled: boolean;
 }
 
+export interface ICategorySettingUpdateMutator {
+	id: string;
+	payload: Partial<ITransactionCategory>;
+}
+
 export interface ITransactionCategoryPayload {
 	name: string;
 	matchers: Array<string>;

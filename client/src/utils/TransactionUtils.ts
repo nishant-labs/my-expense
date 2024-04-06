@@ -1,4 +1,4 @@
-import { ITransactionsPayload, ITransactionsEnhanced } from '../state/transactions/types';
+import { ITransactionsPayload, ITransactionsEnhanced } from '../hooks/useTransactions/types';
 import { getNewFormattedDate } from './DateUtils';
 
 export const totalReducer = (transactions: Array<{ amount: number } | number> = []): number =>

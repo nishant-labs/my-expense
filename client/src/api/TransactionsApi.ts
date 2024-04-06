@@ -1,8 +1,31 @@
-import { handleGetCall, handlePostCall } from './ApiBase';
-import { ITransactions, ITransactionsPayload } from '../state/transactions/types';
+import { handlePostCall } from './ApiBase';
+import { ITransactions, ITransactionsMutator } from '../hooks/useTransactions/types';
+import { UseMutationResult, UseQueryResult, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { ApiError } from './types';
+import { ENDPOINTS, QUERY_KEYS } from '../constants/queryMapping';
 
-export const fetchTransactionsByMonth = async (year: string, month: string, accountType?: string) =>
-	await handleGetCall<Array<ITransactions>>(`/api/transactions/${accountType ?? 'consolidated'}/${year}-${month}`);
+export const useFetchTransactionsByMonth = (
+	year: string,
+	month: string,
+	accountType?: string,
+): UseQueryResult<Array<ITransactions>, ApiError> => {
+	return useQuery({
+		queryKey: [...QUERY_KEYS.TRANSACTIONS, year, month],
+		meta: {
+			endpoint: `${ENDPOINTS.TRANSACTIONS}${accountType ?? 'consolidated'}/${year}-${month}`,
+		},
+		enabled: !!(year && month),
+	});
+};
 
-export const insertTransactions = async (accountType: string, payload: Array<ITransactionsPayload>) =>
-	await handlePostCall<string>(`/api/transactions/${accountType}`, payload);
+export const useTransactionUploader = (): UseMutationResult<string, ApiError, ITransactionsMutator> => {
+	const queryClient = useQueryClient();
+	const baseUrl = queryClient.getDefaultOptions().queries?.meta?.baseUrl;
+	return useMutation({
+		mutationFn: (mutator) =>
+			handlePostCall<string>(`${baseUrl}${ENDPOINTS.TRANSACTIONS}${mutator.accountType}`, mutator.payload),
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: QUERY_KEYS.TRANSACTIONS });
+		},
+	});
+};
