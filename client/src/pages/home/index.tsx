@@ -22,7 +22,13 @@ const Home = () => {
 			<h2>Monthly Expense Report</h2>
 			<Tabs activeKey={key} onSelect={(k) => setKey(k!)} className="mb-3">
 				{monthNames.map(({ label, value }, index) => (
-					<Tab key={value as string} eventKey={label.toLowerCase()} title={label} disabled={index > month}>
+					<Tab
+						key={value as string}
+						eventKey={label.toLowerCase()}
+						title={label}
+						disabled={index > month}
+						unmountOnExit
+					>
 						<ExpenseSummary month={value as string} year={year} />
 					</Tab>
 				))}

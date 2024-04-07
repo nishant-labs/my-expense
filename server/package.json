@@ -15,22 +15,22 @@
 	"author": "Nishant Labs",
 	"license": "ISC",
 	"dependencies": {
-		"@aws-sdk/client-dynamodb": "3.540.0",
-		"@aws-sdk/lib-dynamodb": "3.540.0",
+		"@aws-sdk/client-dynamodb": "3.549.0",
+		"@aws-sdk/lib-dynamodb": "3.549.0",
 		"@date-fns/utc": "1.2.0",
 		"dotenv": "16.4.5",
-		"mongoose": "8.2.4",
+		"mongoose": "8.3.0",
 		"node-rest-server": "4.1.0"
 	},
 	"devDependencies": {
 		"@aws-sdk/types": "3.535.0",
-		"@types/node": "20.12.2",
-		"@typescript-eslint/eslint-plugin": "7.4.0",
-		"@typescript-eslint/parser": "7.4.0",
-		"eslint": "8.57.0",
+		"@types/node": "20.12.5",
+		"@typescript-eslint/eslint-plugin": "7.5.0",
+		"@typescript-eslint/parser": "7.5.0",
+		"eslint": "9.0.0",
 		"nodemon": "3.1.0",
 		"ts-node": "10.9.2",
-		"typescript": "5.4.3"
+		"typescript": "5.4.4"
 	},
 	"files": [
 		"dist",
