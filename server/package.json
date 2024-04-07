@@ -9,7 +9,7 @@
 		"dev": "NODE_ENV=development nodemon --exec 'npm run start' -w src -e ts,json",
 		"start": "npm run build && node --inspect --experimental-specifier-resolution=node ./dist/index.js",
 		"build": "tsc -p tsconfig.server.json",
-		"lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+		"lint": "eslint --report-unused-disable-directives",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"author": "Nishant Labs",
@@ -24,13 +24,13 @@
 	},
 	"devDependencies": {
 		"@aws-sdk/types": "3.535.0",
+		"@eslint/js": "9.0.0",
 		"@types/node": "20.12.5",
-		"@typescript-eslint/eslint-plugin": "7.5.0",
-		"@typescript-eslint/parser": "7.5.0",
 		"eslint": "9.0.0",
 		"nodemon": "3.1.0",
 		"ts-node": "10.9.2",
-		"typescript": "5.4.4"
+		"typescript": "5.4.4",
+		"typescript-eslint": "7.5.0"
 	},
 	"files": [
 		"dist",
