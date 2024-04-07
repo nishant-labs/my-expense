@@ -6,7 +6,7 @@ import { AgGridReact } from 'ag-grid-react';
 import { ColDef, GridReadyEvent } from 'ag-grid-community';
 
 interface GridBaseProps {
-	rowData: Array<unknown>;
+	rowData?: Array<unknown>;
 	defaultColDef?: ColDef;
 	colDefs: Array<ColDef>;
 	components?: {

@@ -7,8 +7,8 @@ import { sourceSettingsColDefs } from '../../../constants/grid/sourceSettingGrid
 import { settingsGridComponents } from '../../../components/GridCellRenderers';
 import { GridBase } from '../../../components/GridBase';
 import { useSourceSettings } from '../../../hooks/useSourceSettings';
-import { ITransactionSource } from '../../../state/settings/source/types';
-import { withAsyncDataLoader } from '../../../hoc/withAsyncDataLoader/index';
+import { ITransactionSource } from '../../../hooks/useSourceSettings/types';
+import { withAsyncDataLoader } from '../../../hoc/withAsyncDataLoader';
 
 export const SourceSettings = () => {
 	const { error, sourceList, onDelete, onSave, onToggleStatus, onUpdate } = useSourceSettings();
@@ -89,7 +89,7 @@ export const SourceSettings = () => {
 			</Row>
 			<Row>
 				<Col>
-					<p>{error}</p>
+					<p>{error?.error}</p>
 					<GridBase colDefs={colDefs} rowData={sourceList} components={settingsGridComponents} />
 				</Col>
 			</Row>

@@ -1,4 +1,4 @@
-import 'bootswatch/dist/spacelab/bootstrap.min.css';
+import 'bootswatch/dist/journal/bootstrap.min.css';
 import './index.css';
 
 import React from 'react';
@@ -7,6 +7,7 @@ import ThemeProvider from 'react-bootstrap/ThemeProvider';
 import { RecoilRoot } from 'recoil';
 import RecoilizeDebugger from 'recoilize';
 import { MyExpenseAppWithLoader } from './App';
+import { QueryProviderWithLoader } from './components/QueryProvider';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
@@ -14,7 +15,9 @@ root.render(
 		<RecoilRoot>
 			<RecoilizeDebugger />
 			<ThemeProvider>
-				<MyExpenseAppWithLoader />
+				<QueryProviderWithLoader>
+					<MyExpenseAppWithLoader />
+				</QueryProviderWithLoader>
 			</ThemeProvider>
 		</RecoilRoot>
 	</React.StrictMode>,

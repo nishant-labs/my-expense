@@ -1,6 +1,11 @@
 import { SerializableParam } from 'recoil';
-import { ITransactionCategory } from '../settings/category/types';
-import { ITransactionSource } from '../settings/source/types';
+import { ITransactionCategory } from '../useCategorySettings/types';
+import { ITransactionSource } from '../useSourceSettings/types';
+
+export interface ITransactionsMutator {
+	accountType: string;
+	payload: Array<ITransactionsPayload>;
+}
 
 export interface ITransactionsPayload {
 	date: Date;

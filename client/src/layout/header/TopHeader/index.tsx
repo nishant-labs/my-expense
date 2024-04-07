@@ -6,11 +6,11 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 
 export const TopHeader = () => {
 	return (
-		<Navbar bg="light" expand="lg">
+		<Navbar bg="primary" expand="lg">
 			<Container fluid>
 				<Navbar.Brand href="/">My Expense</Navbar.Brand>
-				<Navbar.Toggle aria-controls="basic-navbar-nav" />
-				<Navbar.Collapse id="basic-navbar-nav">
+				<Navbar.Toggle />
+				<Navbar.Collapse>
 					<Nav className="me-auto">
 						<Nav.Link as={NavLink} to="/">
 							Home
@@ -21,7 +21,7 @@ export const TopHeader = () => {
 						<Nav.Link as={NavLink} to="/summary">
 							Year End Summary
 						</Nav.Link>
-						<NavDropdown title="Settings" id="basic-nav-dropdown">
+						<NavDropdown title="Settings">
 							<NavDropdown.Item as={NavLink} to="/settings/source">
 								Source
 							</NavDropdown.Item>

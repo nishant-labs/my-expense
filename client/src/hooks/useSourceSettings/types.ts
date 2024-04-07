@@ -3,6 +3,11 @@ export interface ITransactionSource extends ITransactionSourcePayload {
 	isEnabled: boolean;
 }
 
+export interface ISourceSettingUpdateMutator {
+	id: string;
+	payload: Partial<ITransactionSource>;
+}
+
 export interface ITransactionSourcePayload {
 	name: string;
 	chartColor: string;

@@ -1,6 +1,6 @@
 import { CellClassParams, ColDef } from 'ag-grid-community';
-import { ITransactionCategory } from '../../state/settings/category/types';
-import { ITransactionSource } from '../../state/settings/source/types';
+import { ITransactionCategory } from '../../hooks/useCategorySettings/types';
+import { ITransactionSource } from '../../hooks/useSourceSettings/types';
 import { formatNumberAsCurrency } from '../../utils/NumberUtils';
 
 export const categorySettingsColDefs = (
@@ -8,7 +8,7 @@ export const categorySettingsColDefs = (
 	onToggleStatus: (category: ITransactionCategory) => void,
 	onUpdateTransactions: (category: ITransactionCategory, matchers: Array<string>) => void,
 	onEdit: (category: ITransactionCategory) => void,
-	sourceList: Array<ITransactionSource>,
+	sourceList?: Array<ITransactionSource>,
 ): Array<ColDef> => [
 	{
 		headerName: 'Name',
@@ -21,35 +21,34 @@ export const categorySettingsColDefs = (
 		cellRendererParams: {
 			updateItem: onUpdateTransactions,
 		},
-		valueFormatter: (params) => params?.value?.join(''),
-		width: 350,
+		valueFormatter: ({ value }) => value?.join(''),
+		minWidth: 350,
 		autoHeight: true,
 	},
 	{
 		headerName: 'Budget',
 		field: 'budget',
-		width: 100,
-		valueFormatter: (params) => formatNumberAsCurrency(Number(params.value ?? 0), true, 0),
+		minWidth: 100,
+		valueFormatter: ({ value }) => (value ? formatNumberAsCurrency(Number(value), true, 0) : ' '),
 	},
 	{
 		headerName: 'Chart Color',
 		field: 'chartColor',
-		width: 110,
-		cellStyle: (params: CellClassParams) => ({
-			backgroundColor: params.value,
+		minWidth: 110,
+		cellStyle: ({ value }: CellClassParams) => ({
+			backgroundColor: value,
 			color: 'white',
 		}),
-		valueFormatter: () => ' ',
 	},
 	{
 		headerName: 'Transaction Source',
 		field: 'sourceId',
-		valueFormatter: (params) => sourceList?.find((source) => source.id === params.value)?.name ?? 'Source Not Found',
+		valueFormatter: ({ value }) => sourceList?.find((source) => source.id === value)?.name ?? 'Source Not Found',
 	},
 	{
 		headerName: 'Action',
 		type: 'rightAligned',
-		width: 140,
+		minWidth: 140,
 		cellRenderer: 'rowActionCellRenderer',
 		cellRendererParams: {
 			deleteItem: onDelete,

@@ -1,7 +1,7 @@
 import { FC, useCallback, useState } from 'react';
 import ReactCardFlip from 'react-card-flip';
 import { ExpenseDetails } from '../ExpenseDetails';
-import { IExpenseSummaryTransactionCategory } from '../../state/transactions/types';
+import { IExpenseSummaryTransactionCategory } from '../../hooks/useTransactions/types';
 import { formatNumberAsCurrency } from '../../utils/NumberUtils';
 import { SummaryTile } from '../SummaryTile';
 

@@ -1,18 +1,56 @@
-import { handleDeleteCall, handleGetCall, handlePostCall, handlePutCall } from './ApiBase';
-import { ITransactionSource, ITransactionSourcePayload } from '../state/settings/source/types';
+import { UseMutationResult, UseQueryResult, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { handleDeleteCall, handlePostCall, handlePutCall } from './ApiBase';
+import {
+	ISourceSettingUpdateMutator,
+	ITransactionSource,
+	ITransactionSourcePayload,
+} from '../hooks/useSourceSettings/types';
+import { ApiError } from './types';
+import { ENDPOINTS, QUERY_KEYS } from '../constants/queryMapping';
 
-export const fetchAllSources = async () => {
-	return await handleGetCall<Array<ITransactionSource>>('/api/settings/sources');
+export const useFetchSources = (): UseQueryResult<Array<ITransactionSource>, ApiError> => {
+	return useQuery({
+		queryKey: QUERY_KEYS.SOURCE_SETTINGS,
+		meta: {
+			endpoint: ENDPOINTS.SOURCE_SETTINGS,
+		},
+	});
 };
 
-export const insertNewSource = async (payload: ITransactionSourcePayload) => {
-	return await handlePostCall<string>('/api/settings/sources', payload);
+export const useAddSourceMutator = (): UseMutationResult<string, ApiError, ITransactionSourcePayload> => {
+	const queryClient = useQueryClient();
+
+	const baseUrl = queryClient.getDefaultOptions().queries?.meta?.baseUrl;
+	return useMutation({
+		mutationFn: (payload: ITransactionSourcePayload) =>
+			handlePostCall<string>(`${baseUrl}${ENDPOINTS.SOURCE_SETTINGS}`, payload),
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: QUERY_KEYS.SOURCE_SETTINGS });
+		},
+	});
 };
 
-export const deleteSourceById = async (id: string) => {
-	return await handleDeleteCall<string>(`/api/settings/sources/${id}`);
+export const useUpdateSourceByIdMutator = (): UseMutationResult<string, ApiError, ISourceSettingUpdateMutator> => {
+	const queryClient = useQueryClient();
+
+	const baseUrl = queryClient.getDefaultOptions().queries?.meta?.baseUrl;
+	return useMutation({
+		mutationFn: (mutator) =>
+			handlePutCall<string>(`${baseUrl}${ENDPOINTS.SOURCE_SETTINGS}/${mutator.id}`, mutator.payload),
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: QUERY_KEYS.SOURCE_SETTINGS });
+		},
+	});
 };
 
-export const updateSourceById = async (id: string, payload: Partial<ITransactionSource>) => {
-	return await handlePutCall<string>(`/api/settings/sources/${id}`, payload);
+export const useDeleteSourceByIdMutator = (): UseMutationResult<string, ApiError, string> => {
+	const queryClient = useQueryClient();
+
+	const baseUrl = queryClient.getDefaultOptions().queries?.meta?.baseUrl;
+	return useMutation({
+		mutationFn: (id: string) => handleDeleteCall<string>(`${baseUrl}${ENDPOINTS.SOURCE_SETTINGS}/${id}`),
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: QUERY_KEYS.SOURCE_SETTINGS });
+		},
+	});
 };
