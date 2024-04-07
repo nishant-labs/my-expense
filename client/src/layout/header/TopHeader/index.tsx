@@ -6,7 +6,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 
 export const TopHeader = () => {
 	return (
-		<Navbar bg="light" expand="lg">
+		<Navbar bg="primary" expand="lg">
 			<Container fluid>
 				<Navbar.Brand href="/">My Expense</Navbar.Brand>
 				<Navbar.Toggle aria-controls="basic-navbar-nav" />

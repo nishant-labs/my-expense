@@ -34,7 +34,7 @@ export const ExpenseSummary: FC<ExpenseSummaryProps> = ({ year, month }) => {
 	}, [transactionCategories]);
 
 	if (transactions.length === 0) {
-		return <Alert variant="warning">Transaction Missing, please upload for the month</Alert>;
+		return <Alert variant="info">Transaction Missing, please upload for the month</Alert>;
 	}
 
 	const credit = (

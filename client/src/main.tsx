@@ -1,4 +1,4 @@
-import 'bootswatch/dist/spacelab/bootstrap.min.css';
+import 'bootswatch/dist/journal/bootstrap.min.css';
 import './index.css';
 
 import React from 'react';
