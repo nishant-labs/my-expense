@@ -39,12 +39,12 @@ export const ExpenseSummary: FC<ExpenseSummaryProps> = ({ year, month }) => {
 
 	const credit = (
 		<span>
-			You have saved <strong>{formatNumberAsCurrency(savedAmount)}</strong>
+			<strong>{formatNumberAsCurrency(savedAmount)}</strong> saved
 		</span>
 	);
 	const deficit = (
 		<span>
-			You have spend <strong>{formatNumberAsCurrency(savedAmount)}</strong> more than you income
+			Spent <strong>{formatNumberAsCurrency(savedAmount)}</strong> more than total income
 		</span>
 	);
 	return (
