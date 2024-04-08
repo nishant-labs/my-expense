@@ -9,7 +9,7 @@
 		"dev": "NODE_ENV=development nodemon --exec 'npm run start' -w src -e ts,json",
 		"start": "npm run build && node --inspect --experimental-specifier-resolution=node ./dist/index.js",
 		"build": "tsc -p tsconfig.server.json",
-		"lint": "eslint --report-unused-disable-directives",
+		"lint": "eslint src --report-unused-disable-directives",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"author": "Nishant Labs",
