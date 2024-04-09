@@ -2,7 +2,7 @@
 FROM node:20 AS build-env
 WORKDIR /app
 COPY ["dist", "package.json", "./"]
-RUN npm install --omit=dev
+RUN npm install --omit=dev --legacy-peer-deps
 
 # ============================= Run APP ===================================
 
