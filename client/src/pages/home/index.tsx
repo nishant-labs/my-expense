@@ -1,6 +1,5 @@
 import { useMemo, useState } from 'react';
-import Tab from 'react-bootstrap/Tab';
-import Tabs from 'react-bootstrap/Tabs';
+import { Tabs, Tab } from 'react-bootstrap';
 import { MONTH_NAMES } from '../../constants';
 import { ExpenseSummary } from './ExpenseSummary';
 
