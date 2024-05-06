@@ -4,11 +4,13 @@ import Footer from './footer';
 
 function Layout() {
 	return (
-		<>
+		<div className="flex-lg-row">
 			<Header />
-			<Body />
+			<div className="flex-grow-1">
+				<Body />
+			</div>
 			<Footer />
-		</>
+		</div>
 	);
 }
 

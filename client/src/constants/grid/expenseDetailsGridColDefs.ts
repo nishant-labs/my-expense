@@ -13,7 +13,7 @@ export const expenseDetailsColDefs: Array<ColDef> = [
 	{
 		headerName: 'Budget',
 		field: 'amount',
-		minWidth: 120,
+		minWidth: 100,
 		type: 'rightAligned',
 		valueFormatter: (params: ValueFormatterParams<object, string>) =>
 			formatNumberAsCurrency(parseInt(params.value ?? '0'), false),
@@ -21,7 +21,7 @@ export const expenseDetailsColDefs: Array<ColDef> = [
 	{
 		headerName: 'Amount',
 		field: 'amount',
-		minWidth: 120,
+		minWidth: 100,
 		type: 'rightAligned',
 		valueFormatter: (params: ValueFormatterParams<object, string>) =>
 			formatNumberAsCurrency(parseInt(params.value ?? '0'), false),

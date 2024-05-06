@@ -1,4 +1,5 @@
 import { FC, ReactNode, useState } from 'react';
+import { Spinner } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
@@ -8,6 +9,7 @@ interface ModalBaseProps {
 	children: ReactNode;
 	onPrimaryAction: (close: () => void) => void;
 	primaryButtonText: string;
+	isLoading?: boolean;
 }
 
 export const BaseModal: FC<ModalBaseProps> = ({
@@ -16,6 +18,7 @@ export const BaseModal: FC<ModalBaseProps> = ({
 	children,
 	onPrimaryAction,
 	primaryButtonText,
+	isLoading,
 }) => {
 	const [show, setShow] = useState(false);
 
@@ -37,6 +40,7 @@ export const BaseModal: FC<ModalBaseProps> = ({
 				</Modal.Header>
 				<Modal.Body>{children}</Modal.Body>
 				<Modal.Footer>
+					{isLoading && <Spinner animation="border" />}
 					<Button variant="secondary" onClick={handleClose}>
 						Close
 					</Button>

@@ -1,6 +1,5 @@
 import { ChangeEvent, useCallback, useState } from 'react';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import { Alert, Row, Col } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 import { BaseModal } from '../../../../components/BaseModal';
 import { parseCSVFileToTransaction } from '../../../../utils/FileHandler';
@@ -9,7 +8,7 @@ import { FormSelectBase } from '../../../../components/FormSelectBase';
 import { ACCOUNT_TYPE } from '../../../../constants';
 
 export const UploadTransaction = () => {
-	const transactionUploader = useTransactionUploader();
+	const { mutateAsync, isPending, isSuccess, isError } = useTransactionUploader();
 	const [selectedFile, setSelectedFile] = useState<File | null>(null);
 	const [accountType, setAccountType] = useState('');
 
@@ -24,7 +23,7 @@ export const UploadTransaction = () => {
 		(close: () => void) => {
 			if (selectedFile && accountType) {
 				parseCSVFileToTransaction(selectedFile).then((transactions) => {
-					transactionUploader.mutateAsync({ accountType, payload: transactions }).then(() => {
+					mutateAsync({ accountType, payload: transactions }).then(() => {
 						close();
 					});
 				});
@@ -32,7 +31,7 @@ export const UploadTransaction = () => {
 				alert('Please select file to upload');
 			}
 		},
-		[selectedFile, accountType, transactionUploader],
+		[selectedFile, accountType, mutateAsync],
 	);
 
 	return (
@@ -41,6 +40,7 @@ export const UploadTransaction = () => {
 			buttonText="Upload"
 			primaryButtonText="Upload"
 			onPrimaryAction={handleTransactionUpload}
+			isLoading={isPending}
 		>
 			<Row className="mb-4">
 				<Col>
@@ -55,7 +55,7 @@ export const UploadTransaction = () => {
 					</Form.Group>
 				</Col>
 			</Row>
-			<Row className="mb-4">
+			<Row>
 				<Col>
 					<Form.Group controlId="formFile" className="mb-3">
 						<Form.Label>Select CSV file</Form.Label>
@@ -63,6 +63,8 @@ export const UploadTransaction = () => {
 					</Form.Group>
 				</Col>
 			</Row>
+			{isSuccess && <Alert variant="success">Successfully uploaded {accountType} transactions</Alert>}
+			{isError && <Alert variant="error">Something went wrong while uploading transaction, try again later</Alert>}
 		</BaseModal>
 	);
 };
