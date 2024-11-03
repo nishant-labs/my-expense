@@ -1,9 +1,6 @@
 name: AWS Deploy(my-expense)
 
-on:
-  push:
-    branches:
-      - main
+on: workflow_dispatch
 
 jobs:
   aws-static:
@@ -22,7 +19,7 @@ jobs:
       # Group Assets together for copy
       - run: mkdir ./aws_publish
       - run: cp ./scripts/package.json ./aws_publish/
-      - run: cp ./scripts/postBuildScript.js ./aws_publish/
+      - run: cp ./scripts/postBuildScript.mjs ./aws_publish/
       - run: cp -r ./client/dist ./aws_publish/client/
       - run: cp -r ./server/dist ./aws_publish/server/
       - run: cp ./server/package.json ./aws_publish/server/package.json

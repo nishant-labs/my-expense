@@ -1,4 +1,4 @@
-import { FC, ReactNode, useState } from 'react';
+import { FC, ReactNode, useCallback, useState } from 'react';
 import { Spinner } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
@@ -7,7 +7,7 @@ interface ModalBaseProps {
 	buttonText: string;
 	modalTitle: string;
 	children: ReactNode;
-	onPrimaryAction: (close: () => void) => void;
+	onPrimaryAction: (close: () => void) => Promise<void>;
 	primaryButtonText: string;
 	isLoading?: boolean;
 }
@@ -24,9 +24,9 @@ export const BaseModal: FC<ModalBaseProps> = ({
 
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
-	const handlePrimaryAction = () => {
-		onPrimaryAction(handleClose);
-	};
+	const handlePrimaryAction = useCallback(() => {
+		void onPrimaryAction(handleClose);
+	}, [onPrimaryAction]);
 
 	return (
 		<>

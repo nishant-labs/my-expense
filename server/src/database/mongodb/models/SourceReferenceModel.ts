@@ -2,7 +2,14 @@ import mongoose from 'mongoose';
 
 const { Schema, model } = mongoose;
 
-const sourceReferenceDataSchema = new Schema({
+export interface ISourceReference {
+	sourceName: string;
+	chartColor: string;
+	isEnabled: boolean;
+	isExpense: boolean;
+}
+
+const sourceReferenceDataSchema = new Schema<ISourceReference>({
 	sourceName: String,
 	chartColor: String,
 	isEnabled: Boolean,

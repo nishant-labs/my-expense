@@ -2,9 +2,9 @@ import mongoose from 'mongoose';
 
 const { Schema, model } = mongoose;
 
-interface ITransaction {
+export interface ITransaction {
 	accountType: string;
-	date: Date;
+	date: string;
 	transactionOf: string;
 	amount: number;
 }

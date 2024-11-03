@@ -20,13 +20,11 @@ export const UploadTransaction = () => {
 	}, []);
 
 	const handleTransactionUpload = useCallback(
-		(close: () => void) => {
+		async (close: () => void) => {
 			if (selectedFile && accountType) {
-				parseCSVFileToTransaction(selectedFile).then((transactions) => {
-					mutateAsync({ accountType, payload: transactions }).then(() => {
-						close();
-					});
-				});
+				const transactions = await parseCSVFileToTransaction(selectedFile);
+				await mutateAsync({ accountType, payload: transactions });
+				close();
 			} else {
 				alert('Please select file to upload');
 			}

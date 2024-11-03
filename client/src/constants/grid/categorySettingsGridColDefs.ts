@@ -4,12 +4,12 @@ import { ITransactionSource } from '../../hooks/useSourceSettings/types';
 import { formatNumberAsCurrency } from '../../utils/NumberUtils';
 
 export const categorySettingsColDefs = (
-	onDelete: (category: ITransactionCategory) => void,
-	onToggleStatus: (category: ITransactionCategory) => void,
-	onUpdateTransactions: (category: ITransactionCategory, matchers: Array<string>) => void,
+	onDelete: (category: ITransactionCategory) => Promise<string>,
+	onToggleStatus: (category: ITransactionCategory) => Promise<string>,
+	onUpdateTransactions: (category: ITransactionCategory, matchers: Array<string>) => Promise<string>,
 	onEdit: (category: ITransactionCategory) => void,
 	sourceList?: Array<ITransactionSource>,
-): Array<ColDef> => [
+): Array<ColDef<ITransactionCategory>> => [
 	{
 		headerName: 'Name',
 		field: 'name',
@@ -21,7 +21,7 @@ export const categorySettingsColDefs = (
 		cellRendererParams: {
 			updateItem: onUpdateTransactions,
 		},
-		valueFormatter: ({ value }) => value?.join(''),
+		valueFormatter: ({ value }) => (value as Array<string>)?.join(''),
 		minWidth: 350,
 		autoHeight: true,
 	},
@@ -35,8 +35,8 @@ export const categorySettingsColDefs = (
 		headerName: 'Chart Color',
 		field: 'chartColor',
 		minWidth: 110,
-		cellStyle: ({ value }: CellClassParams) => ({
-			backgroundColor: value,
+		cellStyle: ({ value }: CellClassParams<ITransactionCategory, string>) => ({
+			backgroundColor: value ?? 'inherit',
 			color: 'white',
 		}),
 	},
