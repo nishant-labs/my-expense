@@ -1,9 +1,6 @@
 name: AWS Deploy(my-expense)
 
-on:
-  push:
-    branches:
-      - main
+on: workflow_dispatch
 
 jobs:
   aws-static:
