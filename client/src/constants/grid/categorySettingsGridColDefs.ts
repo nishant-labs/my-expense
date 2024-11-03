@@ -36,7 +36,7 @@ export const categorySettingsColDefs = (
 		field: 'chartColor',
 		minWidth: 110,
 		cellStyle: ({ value }: CellClassParams<ITransactionCategory, string>) => ({
-			backgroundColor: value,
+			backgroundColor: value ?? 'inherit',
 			color: 'white',
 		}),
 	},
