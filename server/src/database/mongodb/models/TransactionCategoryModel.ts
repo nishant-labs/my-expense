@@ -1,8 +1,17 @@
-import mongoose from 'mongoose';
+import mongoose, { ObjectId } from 'mongoose';
 
 const { Schema, model } = mongoose;
 
-const TransactionCategoryDataSchema = new Schema({
+export interface ITransactionCategory {
+	categoryName: string;
+	transactionMatchers: Array<string>;
+	chartColor: string;
+	isEnabled: boolean;
+	budget: number;
+	sourceId: ObjectId;
+}
+
+const TransactionCategoryDataSchema = new Schema<ITransactionCategory>({
 	categoryName: String,
 	transactionMatchers: Array<string>,
 	chartColor: String,

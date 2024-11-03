@@ -1,5 +1,4 @@
 import { UseMutationResult, UseQueryResult, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-
 import { handleDeleteCall, handlePostCall, handlePutCall } from './ApiBase';
 import {
 	ICategorySettingUpdateMutator,
@@ -21,12 +20,12 @@ export const useFetchCategories = (): UseQueryResult<Array<ITransactionCategory>
 export const useAddCategoryMutator = (): UseMutationResult<string, ApiError, ITransactionCategoryPayload> => {
 	const queryClient = useQueryClient();
 
-	const baseUrl = queryClient.getDefaultOptions().queries?.meta?.baseUrl;
+	const baseUrl = queryClient.getDefaultOptions().queries?.meta?.baseUrl as string;
 	return useMutation({
 		mutationFn: (payload: ITransactionCategoryPayload) =>
 			handlePostCall<string>(`${baseUrl}${ENDPOINTS.CATEGORY_SETTINGS}`, payload),
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: QUERY_KEYS.CATEGORY_SETTINGS });
+			void queryClient.invalidateQueries({ queryKey: QUERY_KEYS.CATEGORY_SETTINGS });
 		},
 	});
 };
@@ -34,12 +33,12 @@ export const useAddCategoryMutator = (): UseMutationResult<string, ApiError, ITr
 export const useUpdateCategoryByIdMutator = (): UseMutationResult<string, ApiError, ICategorySettingUpdateMutator> => {
 	const queryClient = useQueryClient();
 
-	const baseUrl = queryClient.getDefaultOptions().queries?.meta?.baseUrl;
+	const baseUrl = queryClient.getDefaultOptions().queries?.meta?.baseUrl as string;
 	return useMutation({
 		mutationFn: (mutator) =>
 			handlePutCall<string>(`${baseUrl}${ENDPOINTS.CATEGORY_SETTINGS}/${mutator.id}`, mutator.payload),
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: QUERY_KEYS.CATEGORY_SETTINGS });
+			void queryClient.invalidateQueries({ queryKey: QUERY_KEYS.CATEGORY_SETTINGS });
 		},
 	});
 };
@@ -47,11 +46,11 @@ export const useUpdateCategoryByIdMutator = (): UseMutationResult<string, ApiErr
 export const useDeleteCategoryByIdMutator = (): UseMutationResult<string, ApiError, string> => {
 	const queryClient = useQueryClient();
 
-	const baseUrl = queryClient.getDefaultOptions().queries?.meta?.baseUrl;
+	const baseUrl = queryClient.getDefaultOptions().queries?.meta?.baseUrl as string;
 	return useMutation({
 		mutationFn: (id: string) => handleDeleteCall<string>(`${baseUrl}${ENDPOINTS.CATEGORY_SETTINGS}/${id}`),
 		onSuccess: () => {
-			queryClient.invalidateQueries({ queryKey: QUERY_KEYS.CATEGORY_SETTINGS });
+			void queryClient.invalidateQueries({ queryKey: QUERY_KEYS.CATEGORY_SETTINGS });
 		},
 	});
 };

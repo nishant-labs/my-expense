@@ -2,8 +2,8 @@ import { CellClassParams, ColDef } from 'ag-grid-community';
 import { ITransactionSource } from '../../hooks/useSourceSettings/types';
 
 export const sourceSettingsColDefs = (
-	onDelete: (source: ITransactionSource) => void,
-	onToggleStatus: (source: ITransactionSource) => void,
+	onDelete: (source: ITransactionSource) => Promise<string>,
+	onToggleStatus: (source: ITransactionSource) => Promise<string>,
 	onEdit: (source: ITransactionSource) => void,
 ): Array<ColDef> => [
 	{

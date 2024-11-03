@@ -24,16 +24,14 @@ export const SourceSettings = () => {
 		setExpenseFlag(null);
 	}, []);
 
-	const handleSave = useCallback(() => {
-		onSave(newLabel, color, expenseFlag!).then(() => {
-			handleClear();
-		});
+	const handleSave = useCallback(async () => {
+		await onSave(newLabel, color, expenseFlag!);
+		handleClear();
 	}, [onSave, newLabel, color, expenseFlag, handleClear]);
 
-	const handleUpdate = useCallback(() => {
-		onUpdate(editId!, newLabel, color, expenseFlag!).then(() => {
-			handleClear();
-		});
+	const handleUpdate = useCallback(async () => {
+		await onUpdate(editId!, newLabel, color, expenseFlag!);
+		handleClear();
 	}, [onUpdate, editId, newLabel, color, expenseFlag, handleClear]);
 
 	const handleEdit = useCallback((source: ITransactionSource) => {
@@ -97,5 +95,4 @@ export const SourceSettings = () => {
 	);
 };
 
-// eslint-disable-next-line react-refresh/only-export-components
 export default withAsyncDataLoader(SourceSettings);

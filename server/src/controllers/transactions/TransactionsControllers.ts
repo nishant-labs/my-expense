@@ -1,6 +1,6 @@
 import { FilterQuery } from 'mongoose';
 import { ControllerOptions, HttpRequest, RouteConfigItem } from 'node-rest-server';
-import { TransactionModel } from '../../database/mongodb/models/index.js';
+import { TransactionTable } from '../../database/index.js';
 
 interface TransactionPayloadItem {
 	date: string;
@@ -11,7 +11,7 @@ interface TransactionPayloadItem {
 const getTransactionsHandler = async (requestData: HttpRequest, { getDatabaseConnection }: ControllerOptions) => {
 	await getDatabaseConnection!(requestData);
 
-	const startDate = new Date(`${requestData.pathParams.monthAndYear}-01`);
+	const startDate = new Date(`${requestData.pathParams?.monthAndYear}-01`);
 	const lastDay = new Date(startDate.getFullYear(), startDate.getMonth() + 1, 0);
 
 	const searchQuery: FilterQuery<unknown> = {
@@ -25,12 +25,12 @@ const getTransactionsHandler = async (requestData: HttpRequest, { getDatabaseCon
 		searchQuery.accountType = requestData.pathParams.accountType;
 	}
 
-	const response = await TransactionModel.find(searchQuery);
+	const response = await TransactionTable.findByFilter(searchQuery);
 
 	return {
 		data: response.map((transaction) => ({
 			id: transaction['_id'],
-			date: transaction.date?.toISOString(),
+			date: (transaction.date as unknown as Date)?.toISOString(),
 			accountType: transaction.accountType,
 			transactionSource: transaction.transactionOf,
 			amount: transaction.amount,
@@ -54,7 +54,7 @@ const insertTransactionHandler = async (requestData: HttpRequest, { getDatabaseC
 		amount,
 	}));
 
-	await TransactionModel.create(dbData);
+	await TransactionTable.create(dbData);
 	return {
 		data: 'Successfully inserted data',
 		status: 200,

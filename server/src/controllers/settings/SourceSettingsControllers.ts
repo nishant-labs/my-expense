@@ -1,16 +1,16 @@
 import { ControllerOptions, HttpRequest, RouteConfigItem } from 'node-rest-server';
-import { SourceReferenceDataModel } from '../../database/mongodb/models/index.js';
+import { SourceReferenceTable } from '../../database/index.js';
 
 interface InsertSourcePayload {
 	name?: string;
 	chartColor?: string;
-	isExpense?: string;
+	isExpense?: boolean;
 	isEnabled?: boolean;
 }
 
 const getSourceListHandler = async (requestData: HttpRequest, { getDatabaseConnection }: ControllerOptions) => {
 	await getDatabaseConnection!(requestData);
-	const response = await SourceReferenceDataModel.find();
+	const response = await SourceReferenceTable.findAll();
 
 	return {
 		data: response.map((source) => ({
@@ -27,7 +27,7 @@ const getSourceListHandler = async (requestData: HttpRequest, { getDatabaseConne
 const insertSourceHandler = async (requestData: HttpRequest, { getDatabaseConnection }: ControllerOptions) => {
 	const payload = requestData.body as InsertSourcePayload;
 	await getDatabaseConnection!(requestData);
-	await SourceReferenceDataModel.create({
+	await SourceReferenceTable.create({
 		sourceName: payload.name,
 		chartColor: payload.chartColor,
 		isExpense: payload.isExpense,
@@ -45,7 +45,7 @@ const updateSourceHandler = async (requestData: HttpRequest, { getDatabaseConnec
 	const sanitizedPayload = { ...restPayload, ...(name ? { sourceName: name } : {}) };
 
 	await getDatabaseConnection!(requestData);
-	const data = await SourceReferenceDataModel.findByIdAndUpdate(pathParams?.id, sanitizedPayload);
+	const data = await SourceReferenceTable.updateById(pathParams?.id, sanitizedPayload);
 	return {
 		data,
 		status: 200,
@@ -57,9 +57,7 @@ const deleteSourceHandler = async (requestData: HttpRequest, { getDatabaseConnec
 	let deleteCount = 0;
 	if (pathParams?.id) {
 		await getDatabaseConnection!(requestData);
-		const response = await SourceReferenceDataModel.deleteOne({
-			_id: pathParams?.id,
-		});
+		const response = await SourceReferenceTable.deleteById(pathParams?.id);
 		deleteCount = response.deletedCount;
 	}
 	if (deleteCount > 0) {

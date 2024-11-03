@@ -22,8 +22,7 @@ This is a pet project for self expense management
 ### Backend Service
 
 - **Build**
-  1. ts-node
-  2. Typescript
+  1. Typescript
 - **Framework**
   1. ExpressJS (using [node-rest-server](https://github.com/nishant-labs/node-rest-server))
   2. mongoose for MongoDB

@@ -1,17 +1,18 @@
 import { ControllerOptions, HttpRequest, RouteConfigItem } from 'node-rest-server';
-import { TransactionCategoryDataModel } from '../../database/mongodb/models/index.js';
+import { TransactionCategoryTable } from '../../database/index.js';
+import { ObjectId } from 'mongoose';
 
 interface InsertCategoryPayload {
 	name?: string;
-	matchers?: string;
+	matchers?: Array<string>;
 	chartColor?: string;
-	budget?: string;
-	sourceId?: string;
+	budget?: number;
+	sourceId?: ObjectId;
 }
 
 const getCategoryHandler = async (requestData: HttpRequest, { getDatabaseConnection }: ControllerOptions) => {
 	await getDatabaseConnection!(requestData);
-	const response = await TransactionCategoryDataModel.find();
+	const response = await TransactionCategoryTable.findAll();
 
 	return {
 		data: response.map((category) => ({
@@ -30,7 +31,7 @@ const getCategoryHandler = async (requestData: HttpRequest, { getDatabaseConnect
 const insertCategoryHandler = async (requestData: HttpRequest, { getDatabaseConnection }: ControllerOptions) => {
 	const { budget, chartColor, matchers, name, sourceId } = requestData.body as InsertCategoryPayload;
 	await getDatabaseConnection!(requestData);
-	await TransactionCategoryDataModel.create({
+	await TransactionCategoryTable.create({
 		transactionMatchers: matchers,
 		categoryName: name,
 		chartColor: chartColor,
@@ -54,7 +55,7 @@ const updateCategoryHandler = async (requestData: HttpRequest, { getDatabaseConn
 		...(matchers ? { transactionMatchers: matchers } : {}),
 	};
 
-	const data = await TransactionCategoryDataModel.findByIdAndUpdate(pathParams?.id, sanitizedPayload);
+	const data = await TransactionCategoryTable.updateById(pathParams?.id, sanitizedPayload);
 	return {
 		data,
 		status: 200,
@@ -66,9 +67,7 @@ const deleteCategoryHandler = async (requestData: HttpRequest, { getDatabaseConn
 	let deleteCount = 0;
 	if (pathParams?.id) {
 		await getDatabaseConnection!(requestData);
-		const response = await TransactionCategoryDataModel.deleteOne({
-			_id: pathParams?.id,
-		});
+		const response = await TransactionCategoryTable.deleteById(pathParams?.id);
 		deleteCount = response.deletedCount;
 	}
 	if (deleteCount > 0) {

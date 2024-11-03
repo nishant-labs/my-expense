@@ -8,14 +8,14 @@ export function MyExpenseApp() {
 	const queryClient = useQueryClient();
 
 	useEffect(() => {
-		queryClient.prefetchQuery({
+		void queryClient.prefetchQuery({
 			queryKey: QUERY_KEYS.SOURCE_SETTINGS,
 			meta: {
 				endpoint: ENDPOINTS.SOURCE_SETTINGS,
 			},
 		});
 
-		queryClient.prefetchQuery({
+		void queryClient.prefetchQuery({
 			queryKey: QUERY_KEYS.CATEGORY_SETTINGS,
 			meta: {
 				endpoint: ENDPOINTS.CATEGORY_SETTINGS,
