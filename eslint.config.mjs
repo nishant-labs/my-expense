@@ -5,6 +5,9 @@ import pluginQuery from '@tanstack/eslint-plugin-query';
 import reactHooks from 'eslint-plugin-react-hooks';
 
 export default tsEslint.config(
+	{
+		ignores: ['**/dist/**'],
+	},
 	eslint.configs.recommended,
 	...tsEslint.configs.recommended,
 	{
