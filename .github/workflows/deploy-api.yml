@@ -1,4 +1,4 @@
-name: API Deploy(my-expense)
+name: API Deploy(expense-api)
 
 on:
   push:
@@ -20,7 +20,7 @@ jobs:
 
       # Group Assets together for copy
       - run: mkdir ./api_publish
-      - run: cp -r ./server/dist ./api_publish/
+      - run: cp -r ./server/dist/ ./api_publish/
       - run: cp ./server/package.json ./api_publish/package.json
 
       - name: Deploy
