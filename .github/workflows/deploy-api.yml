@@ -1,4 +1,4 @@
-name: GH Deploy(gh-pages)
+name: API Deploy(my-expense)
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  self-gh-pages:
+  api-build:
     runs-on: ubuntu-latest
     env:
       EXAMPLE: example # environment variable
@@ -16,10 +16,16 @@ jobs:
         with:
           node-version: 23
       - run: npm ci
-      - run: npm run build:client:gh
+      - run: npm run build:server
+
+      # Group Assets together for copy
+      - run: mkdir ./api_publish
+      - run: cp -r ./server/dist ./api_publish/
+      - run: cp ./server/package.json ./api_publish/package.json
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./client/dist
+          publish_dir: ./api_publish
+          publish_branch: expense-api
