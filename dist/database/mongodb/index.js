@@ -1,0 +1,13 @@
+import { MongoDatabaseActions } from './MongoDatabaseActions.js';
+import { FamilyModel } from './models/FamilyModel.js';
+import { TransactionCategoryDataModel } from './models/TransactionCategoryModel.js';
+import { SourceReferenceDataModel } from './models/SourceReferenceModel.js';
+import { SummaryTilesModel } from './models/SummaryTilesModel.js';
+import { TransactionModel } from './models/TransactionsModel.js';
+import { UserModel } from './models/UserModel.js';
+export const FamilyTable = MongoDatabaseActions.of(FamilyModel);
+export const TransactionCategoryTable = MongoDatabaseActions.of(TransactionCategoryDataModel);
+export const SourceReferenceTable = MongoDatabaseActions.of(SourceReferenceDataModel);
+export const SummaryTileTable = MongoDatabaseActions.of(SummaryTilesModel);
+export const TransactionTable = MongoDatabaseActions.of(TransactionModel);
+export const UserTable = MongoDatabaseActions.of(UserModel);
