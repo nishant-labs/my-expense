@@ -39,6 +39,6 @@
     "@types/react-dom": "18.3.6",
     "@types/recoilize": "0.8.3",
     "@vitejs/plugin-react": "4.4.0",
-    "vite": "6.3.0"
+    "vite": "6.3.4"
   }
 }
