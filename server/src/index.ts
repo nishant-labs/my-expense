@@ -5,15 +5,40 @@ import mongoose from 'mongoose';
 import { MONGO_DB_CONNECTION_URL, PORT } from './constants/environment.js';
 import routes from './routes.js';
 
+const databaseConnectionInit = () => {
+	let isInit = false;
+
+	return async (url: string) => {
+		try {
+			if (!isInit) {
+				isInit = true;
+				await mongoose.connect(url, {
+					dbName: 'myexpense',
+					serverApi: { version: '1', strict: true, deprecationErrors: true },
+				});
+				console.log('Pinged your deployment. You successfully connected to MongoDB!');
+			}
+		} catch (e) {
+			isInit = false;
+			console.error('Error: ', e);
+		}
+	};
+};
+
+const createConnection = databaseConnectionInit();
+
 const serverConfig: ServerConfiguration = {
 	basePath: '/api',
 	port: PORT,
-	logger: true,
-	getDatabaseConnection: () => {
+	logger: {
+		enable: true,
+		beautifyJSON: true,
+	},
+	getDatabaseConnection: async () => {
 		if (!MONGO_DB_CONNECTION_URL) {
 			throw Error('MONGO_DB_CONNECTION_URL not defined');
 		}
-		return mongoose.connect(MONGO_DB_CONNECTION_URL);
+		return createConnection(MONGO_DB_CONNECTION_URL);
 	},
 };
 

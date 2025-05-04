@@ -26,7 +26,11 @@ export const sourceSettingsColDefs = (
 	{
 		headerName: 'Action',
 		type: 'rightAligned',
-		minWidth: 140,
+		minWidth: 150,
+		maxWidth: 150,
+		suppressAutoSize: true,
+		suppressSizeToFit: true,
+		sortable: false,
 		cellRenderer: 'rowActionCellRenderer',
 		cellRendererParams: {
 			deleteItem: onDelete,

@@ -1,8 +1,6 @@
 import { useCallback, useMemo, useState } from 'react';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
+import { Row, Col, Button, Flex } from 'antd';
 import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
 import { sourceSettingsColDefs } from '../../../constants/grid/sourceSettingGridColDefs';
 import { settingsGridComponents } from '../../../components/GridCellRenderers';
 import { GridBase } from '../../../components/GridBase';
@@ -15,7 +13,7 @@ export const SourceSettings = () => {
 	const [editId, setEditId] = useState<string | null>(null);
 	const [color, setColor] = useState('#000000');
 	const [newLabel, setNewLabel] = useState('');
-	const [expenseFlag, setExpenseFlag] = useState<boolean | null>(null);
+	const [expenseFlag, setExpenseFlag] = useState<boolean | null>(false);
 
 	const handleClear = useCallback(() => {
 		setEditId(null);
@@ -49,24 +47,23 @@ export const SourceSettings = () => {
 	return (
 		<>
 			<h2>Source Settings</h2>
-			<Row className="mb-2">
-				<Col sm={4}>
+			<Row gutter={2} justify="space-between" wrap={false}>
+				<Col span={4}>
 					<Form.Control
 						placeholder="Enter Label"
 						value={newLabel}
 						onChange={(event) => setNewLabel(event.target.value)}
 					/>
 				</Col>
-				<Col sm={1}>
+				<Col span={4}>
 					<Form.Check
-						// inline
 						onChange={(event) => setExpenseFlag(event.target.checked)}
 						checked={expenseFlag!}
 						label="Expense"
 						type="checkbox"
 					/>
 				</Col>
-				<Col sm={1}>
+				<Col span={4}>
 					<Form.Control
 						type="color"
 						value={color}
@@ -74,19 +71,17 @@ export const SourceSettings = () => {
 						title="Choose your color"
 					/>
 				</Col>
-			</Row>
-			<Row>
-				<Col className="text-end">
-					<Button className="mx-2" disabled={!newLabel || !color} onClick={editId ? handleUpdate : handleSave}>
-						{editId ? 'Update' : 'Add Source'}
-					</Button>
-					<Button variant="outline-secondary" onClick={handleClear}>
-						Clear
-					</Button>
+				<Col>
+					<Flex gap="middle" wrap>
+						<Button type="primary" disabled={!newLabel || !color} onClick={editId ? handleUpdate : handleSave}>
+							{editId ? 'Update' : 'Add Source'}
+						</Button>
+						<Button onClick={handleClear}>Clear</Button>
+					</Flex>
 				</Col>
 			</Row>
 			<Row>
-				<Col>
+				<Col span={24}>
 					<p>{error?.error}</p>
 					<GridBase colDefs={colDefs} rowData={sourceList} components={settingsGridComponents} />
 				</Col>

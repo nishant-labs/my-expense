@@ -1,7 +1,7 @@
 import { FC, useState } from 'react';
 import { ICellRendererParams } from 'ag-grid-community';
 import { PencilSquare } from 'react-bootstrap-icons';
-import { Button, Modal } from 'react-bootstrap';
+import { Modal } from 'antd';
 import { TransactionSelectorInput } from '../TransactionSelectorInput';
 
 import './styles.css';
@@ -42,21 +42,15 @@ export const ListItemWithEditCellRenderer: FC<ListItemWithEditCellRendererProps<
 			)}
 
 			<PencilSquare style={{ float: 'right', cursor: 'pointer', marginBottom: '5px' }} onClick={handleShow} />
-			<Modal show={show} onHide={handleClose}>
-				<Modal.Header closeButton>
-					<Modal.Title>Edit Transactions</Modal.Title>
-				</Modal.Header>
-				<Modal.Body>
-					<TransactionSelectorInput selected={updatedList} onChange={setUpdatedList} />
-				</Modal.Body>
-				<Modal.Footer>
-					<Button variant="secondary" onClick={handleClose}>
-						Close
-					</Button>
-					<Button variant="primary" onClick={handleUpdate}>
-						Save Changes
-					</Button>
-				</Modal.Footer>
+			<Modal
+				title="Edit Transactions"
+				open={show}
+				onOk={handleUpdate}
+				okText="Save Changes"
+				onCancel={handleClose}
+				cancelText="Close"
+			>
+				<TransactionSelectorInput selected={updatedList} onChange={setUpdatedList} />
 			</Modal>
 		</>
 	);

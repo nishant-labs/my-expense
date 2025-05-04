@@ -1,7 +1,6 @@
-import Button from 'react-bootstrap/Button';
+import { Button, Modal, Spin } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
 import Form from 'react-bootstrap/Form';
-import Spinner from 'react-bootstrap/Spinner';
-import Modal from 'react-bootstrap/Modal';
 import { Trash, PencilSquare } from 'react-bootstrap-icons';
 import { ICellRendererParams } from 'ag-grid-community';
 import { useAsyncApiData } from '../../hooks/useAsyncApiData';
@@ -30,7 +29,7 @@ export const RowActionCellRenderer: FC<RowActionCellRendererProps> = ({ deleteIt
 	const [toggleApiState, handleToggle] = useAsyncApiData(toggleAsyncCaller, true);
 
 	if (deleteApiState.loading || toggleApiState.loading) {
-		return <Spinner animation="border" />;
+		return <Spin fullscreen indicator={<LoadingOutlined style={{ fontSize: 48 }} spin />} />;
 	}
 
 	return (
@@ -44,26 +43,22 @@ export const RowActionCellRenderer: FC<RowActionCellRendererProps> = ({ deleteIt
 					onChange={handleToggle}
 				/>
 
-				<Button variant="link" onClick={handleEdit}>
+				<Button type="text" onClick={handleEdit}>
 					<PencilSquare />
 				</Button>
-				<Button variant="link" onClick={() => setIsOpen(true)}>
+				<Button type="text" onClick={() => setIsOpen(true)}>
 					<Trash />
 				</Button>
 			</Form>
-			<Modal show={isOpen} onHide={() => setIsOpen(false)} backdrop="static" keyboard={false}>
-				<Modal.Header closeButton>
-					<Modal.Title>Delete {data.name}</Modal.Title>
-				</Modal.Header>
-				<Modal.Body>Are you sure, want to delete?</Modal.Body>
-				<Modal.Footer>
-					<Button variant="secondary" onClick={() => setIsOpen(false)}>
-						Cancel
-					</Button>
-					<Button variant="primary" onClick={handleDelete}>
-						Delete
-					</Button>
-				</Modal.Footer>
+			<Modal
+				title={`Delete ${data.name}`}
+				open={isOpen}
+				onOk={handleDelete}
+				okText="Delete"
+				onCancel={() => setIsOpen(false)}
+				cancelText="Cancel"
+			>
+				Are you sure, want to delete?
 			</Modal>
 		</div>
 	);
