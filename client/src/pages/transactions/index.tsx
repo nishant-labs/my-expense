@@ -12,7 +12,7 @@ const Transactions = () => {
 		<>
 			<h2>Transactions</h2>
 			<Row align="middle" justify="space-between">
-				<Col span={6}>
+				<Col span={4}>
 					<Row align="middle" justify="space-between">
 						<Col span={11}>
 							<Form.Item>
@@ -38,7 +38,7 @@ const Transactions = () => {
 						</Col>
 					</Row>
 				</Col>
-				<Col span={4}>
+				<Col flex="none" span={4}>
 					<Form.Item>
 						<UploadTransaction />
 					</Form.Item>

@@ -26,7 +26,7 @@ export const SummaryTile: FC<SummaryTilePropsWithBody | SummaryTilePropsWithChil
 		}
 	>
 		{body?.text ? (
-			<Flex align="center" justify="center" vertical style={{ padding: '5.7em' }}>
+			<Flex align="center" justify="center" vertical style={{ padding: '3.7em' }}>
 				<Title level={2}>{body?.text}</Title>
 			</Flex>
 		) : (

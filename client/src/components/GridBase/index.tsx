@@ -45,7 +45,6 @@ export const GridBase: FC<GridBaseProps> = ({
 		>
 			<AgGridReact
 				rowHeight={rowHeight}
-				suppressRowClickSelection
 				suppressCellFocus
 				enableCellTextSelection
 				defaultColDef={defaultColDef}

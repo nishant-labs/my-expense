@@ -1,5 +1,5 @@
 import { FC, useEffect, useMemo, useState } from 'react';
-import { Row, Col, Alert } from 'antd';
+import { Alert, Flex } from 'antd';
 import { SettingOutlined } from '@ant-design/icons';
 import { TransactionHighlights } from '../../../components/TransactionHighlights';
 import { useTransactions } from '../../../hooks/useTransactions';
@@ -60,41 +60,35 @@ export const ExpenseSummary: FC<ExpenseSummaryProps> = ({ year, month }) => {
 	);
 
 	return (
-		<>
-			<Row>
-				<Col span={24}>
-					<Alert
-						type={savedAmount > 0 ? 'info' : 'warning'}
-						message={
-							<div>
-								<span>{savedAmount > 0 ? credit : deficit}</span>
-								<SettingOutlined
-									style={{ float: 'right', cursor: 'pointer' }}
-									onClick={() => {
-										setIsReorderDisabled((toggle) => !toggle);
-									}}
-								/>
-							</div>
-						}
-					/>
-				</Col>
-			</Row>
-			<div>
-				{transactionCategories.length > 0 && (
-					<Orderable
-						isDragDisabled={isReorderDisabled}
-						isDropDisabled={isReorderDisabled}
-						items={transactionCategories}
-						onDragEnd={(updatedList: Array<{ id: string; data: IExpenseSummaryTiles }>) => {
-							setTransactionCategories(updatedList);
-						}}
-					>
-						{({ title, total, transactions }) => (
-							<TransactionHighlights title={title} total={total} transactions={transactions} />
-						)}
-					</Orderable>
-				)}
-			</div>
-		</>
+		<Flex gap={16} vertical>
+			<Alert
+				type={savedAmount > 0 ? 'info' : 'warning'}
+				message={
+					<Flex align="center" justify="space-between">
+						<span>{savedAmount > 0 ? credit : deficit}</span>
+						<SettingOutlined
+							onClick={() => {
+								setIsReorderDisabled((toggle) => !toggle);
+							}}
+						/>
+					</Flex>
+				}
+			/>
+
+			{transactionCategories.length > 0 && (
+				<Orderable
+					isDragDisabled={isReorderDisabled}
+					isDropDisabled={isReorderDisabled}
+					items={transactionCategories}
+					onDragEnd={(updatedList: Array<{ id: string; data: IExpenseSummaryTiles }>) => {
+						setTransactionCategories(updatedList);
+					}}
+				>
+					{({ title, total, transactions }) => (
+						<TransactionHighlights title={title} total={total} transactions={transactions} />
+					)}
+				</Orderable>
+			)}
+		</Flex>
 	);
 };

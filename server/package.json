@@ -16,7 +16,7 @@
 	"dependencies": {
 		"@date-fns/utc": "2.1.0",
 		"dotenv": "16.5.0",
-		"mongoose": "8.13.2",
+		"mongoose": "8.15.1",
 		"node-rest-server": "4.3.2"
 	},
 	"devDependencies": {
