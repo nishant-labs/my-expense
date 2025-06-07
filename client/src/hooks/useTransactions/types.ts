@@ -24,12 +24,12 @@ export interface ITransactionsEnhanced extends ITransactions {
 }
 
 export interface ITransactionsState {
-	[monthYear: string]: Array<ITransactions>;
+	[monthYear: number]: Array<ITransactions>;
 }
 
 export interface ISelectorPayload {
 	[p: string]: SerializableParam;
-	year: string;
+	year: number;
 	month: string;
 }
 

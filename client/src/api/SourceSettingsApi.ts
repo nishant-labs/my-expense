@@ -9,7 +9,7 @@ import { ApiError } from './types';
 import { ENDPOINTS, QUERY_KEYS } from '../constants/queryMapping';
 
 export const useFetchSources = (): UseQueryResult<Array<ITransactionSource>, ApiError> => {
-	return useQuery({
+	return useQuery<Array<ITransactionSource>, ApiError>({
 		queryKey: QUERY_KEYS.SOURCE_SETTINGS,
 		meta: {
 			endpoint: ENDPOINTS.SOURCE_SETTINGS,

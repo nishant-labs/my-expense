@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { Button, TabsProps, Tabs, Select } from 'antd';
+import { TabsProps, Tabs, Select } from 'antd';
 import { LAST_5_YEARS, MONTH_NAMES } from '../../constants';
 import { ExpenseSummary } from './ExpenseSummary';
 
@@ -25,7 +25,7 @@ const Home = () => {
 			monthNames.map(({ id, label, value }) => ({
 				key: id,
 				label,
-				children: <ExpenseSummary month={value as string} year={selectedYear.toString()} />,
+				children: <ExpenseSummary month={value as string} year={selectedYear} />,
 				disabled: selectedYear === year ? parseInt(value as string) > month : false,
 			})),
 		[month, year, selectedYear],

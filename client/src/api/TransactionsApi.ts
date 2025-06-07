@@ -5,11 +5,11 @@ import { ApiError } from './types';
 import { ENDPOINTS, QUERY_KEYS } from '../constants/queryMapping';
 
 export const useFetchTransactionsByMonth = (
-	year: string,
+	year: number,
 	month: string,
 	accountType?: string,
 ): UseQueryResult<Array<ITransactions>, ApiError> => {
-	return useQuery({
+	return useQuery<Array<ITransactions>, ApiError>({
 		queryKey: [...QUERY_KEYS.TRANSACTIONS, year, month],
 		meta: {
 			endpoint: `${ENDPOINTS.TRANSACTIONS}${accountType ?? 'consolidated'}/${year}-${month}`,

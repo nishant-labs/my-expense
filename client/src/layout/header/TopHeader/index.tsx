@@ -3,7 +3,7 @@ import { TOP_MENUS } from '../../../constants/topMenu';
 import { useNavigate } from 'react-router-dom';
 import { MenuInfo } from 'rc-menu/lib/interface';
 
-const { Link, Title } = Typography;
+const { Link } = Typography;
 
 export const TopHeader = () => {
 	const navigate = useNavigate();

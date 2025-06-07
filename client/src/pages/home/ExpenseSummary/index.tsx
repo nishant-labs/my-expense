@@ -10,7 +10,7 @@ import { Orderable } from '../../../components/Orderable/Orderable';
 
 interface ExpenseSummaryProps {
 	month: string;
-	year: string;
+	year: number;
 }
 
 export const ExpenseSummary: FC<ExpenseSummaryProps> = ({ year, month }) => {

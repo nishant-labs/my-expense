@@ -28,13 +28,13 @@ export const CategorySettings = () => {
 	}, []);
 
 	const handleSave = useCallback(() => {
-		onSave(newMatchers, newLabel, color.toHexString(), sourceId, parseInt(budget)).then(() => {
+		onSave(newMatchers, newLabel, color.toHexString(), sourceId, parseInt(budget ?? '')).then(() => {
 			handleClear();
 		});
 	}, [onSave, newMatchers, newLabel, color, sourceId, budget, handleClear]);
 
 	const handleUpdate = useCallback(() => {
-		onUpdate(editId!, newMatchers, newLabel, color.toHexString(), sourceId, parseInt(budget)).then(() => {
+		onUpdate(editId!, newMatchers, newLabel, color.toHexString(), sourceId, parseInt(budget ?? '')).then(() => {
 			handleClear();
 		});
 	}, [onUpdate, editId, newMatchers, newLabel, color, sourceId, budget, handleClear]);
