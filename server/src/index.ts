@@ -32,7 +32,9 @@ const serverConfig: ServerConfiguration = {
 	port: PORT,
 	logger: {
 		enable: true,
-		beautifyJSON: true,
+		name: 'my-expense-api',
+		level: 'info',
+		file: './logs/my-expense-api.log',
 	},
 	getDatabaseConnection: async () => {
 		if (!MONGO_DB_CONNECTION_URL) {
