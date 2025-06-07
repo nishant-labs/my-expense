@@ -13,11 +13,14 @@ export const sourceSettingsColDefs = (
 	{
 		headerName: 'Expense flag',
 		field: 'isExpense',
+		minWidth: 150,
+		maxWidth: 150,
 	},
 	{
 		headerName: 'Chart Color',
 		field: 'chartColor',
-		minWidth: 100,
+		minWidth: 150,
+		maxWidth: 150,
 		cellStyle: (params: CellClassParams) => ({
 			backgroundColor: params.value,
 			color: 'white',

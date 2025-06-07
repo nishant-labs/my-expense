@@ -1,9 +1,8 @@
 import { useCallback, useState } from 'react';
-import { Button, Form, Select, Upload } from 'antd';
+import { Button, Form, Select, Upload, Alert } from 'antd';
 import type { GetProp, UploadFile, UploadProps } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 
-import { Alert } from 'react-bootstrap';
 import { BaseModal } from '../../../../components/BaseModal';
 import { parseCSVFileToTransaction } from '../../../../utils/FileHandler';
 import { useTransactionUploader } from '../../../../api/TransactionsApi';
@@ -78,8 +77,8 @@ export const UploadTransaction = () => {
 				</Form.Item>
 			</Form>
 
-			{isSuccess && <Alert variant="success">Successfully uploaded {accountType} transactions</Alert>}
-			{isError && <Alert variant="error">Something went wrong while uploading transaction, try again later</Alert>}
+			{isSuccess && <Alert type="success" message={`Successfully uploaded ${accountType} transactions`} />}
+			{isError && <Alert type="error" message="Something went wrong while uploading transaction, try again later" />}
 		</BaseModal>
 	);
 };

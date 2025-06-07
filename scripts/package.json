@@ -1,21 +1,19 @@
 {
-  "name": "my-expense",
-  "version": "0.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "start": "run-p start:*",
-    "start:client":"http-server -p $(echo $CLIENT_PORT) ./client >> ./logs/client.log",
-    "start:server": "node --experimental-specifier-resolution=node ./server/index.js >> ./logs/server.log",
-    
-    "build": "node ./postBuildScript.mjs",
-
-    "prepare": "npm install --prefix ./server"
-  },
-  "author": "Nishant Labs",
-  "license": "ISC",
-  "devDependencies": {
-    "npm-run-all": "4.1.5",
-    "http-server": "14.1.1"
-  }
+	"name": "my-expense",
+	"version": "0.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"start": "run-p start:*",
+		"start:client": "http-server -p $(echo $CLIENT_PORT) ./client >> ./logs/client.log",
+		"start:server": "node --experimental-specifier-resolution=node ./server/index.js >> ./logs/server.log",
+		"build": "node ./postBuildScript.mjs",
+		"prepare": "npm install --prefix ./server"
+	},
+	"author": "Nishant Labs",
+	"license": "ISC",
+	"devDependencies": {
+		"npm-run-all": "4.1.5",
+		"http-server": "14.1.1"
+	}
 }

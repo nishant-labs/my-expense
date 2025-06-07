@@ -28,13 +28,15 @@ export const categorySettingsColDefs = (
 	{
 		headerName: 'Budget',
 		field: 'budget',
-		minWidth: 100,
+		minWidth: 150,
+		maxWidth: 150,
 		valueFormatter: ({ value }) => (value ? formatNumberAsCurrency(Number(value), true, 0) : ' '),
 	},
 	{
 		headerName: 'Chart Color',
 		field: 'chartColor',
-		minWidth: 110,
+		minWidth: 150,
+		maxWidth: 150,
 		cellStyle: ({ value }: CellClassParams<ITransactionCategory, string>) => ({
 			backgroundColor: value ?? 'inherit',
 			color: 'white',

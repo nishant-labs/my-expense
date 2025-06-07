@@ -1,6 +1,6 @@
 import { FC, useEffect, useMemo, useState } from 'react';
-import { Row, Col, Alert, Badge } from 'react-bootstrap';
-import { Gear } from 'react-bootstrap-icons';
+import { Row, Col, Alert } from 'antd';
+import { SettingOutlined } from '@ant-design/icons';
 import { TransactionHighlights } from '../../../components/TransactionHighlights';
 import { useTransactions } from '../../../hooks/useTransactions';
 import { IExpenseSummaryTiles } from '../../../hooks/useTransactions/types';
@@ -15,7 +15,7 @@ interface ExpenseSummaryProps {
 
 export const ExpenseSummary: FC<ExpenseSummaryProps> = ({ year, month }) => {
 	const [isReorderDisabled, setIsReorderDisabled] = useState(true);
-	const [transactions] = useTransactions(year, month);
+	const [transactions, { isLoading }] = useTransactions(year, month);
 	const [transactionCategories, setTransactionCategories] = useState<Array<{ id: string; data: IExpenseSummaryTiles }>>(
 		[],
 	);
@@ -44,8 +44,8 @@ export const ExpenseSummary: FC<ExpenseSummaryProps> = ({ year, month }) => {
 		return creditTotal - Math.abs(debitTotal);
 	}, [transactionCategories]);
 
-	if (transactions.length === 0) {
-		return <Alert variant="info">Transaction Missing, please upload for the month</Alert>;
+	if (transactions.length === 0 && !isLoading) {
+		return <Alert type="info" message="Transaction Missing, please upload for the month" />;
 	}
 
 	const credit = (
@@ -61,18 +61,21 @@ export const ExpenseSummary: FC<ExpenseSummaryProps> = ({ year, month }) => {
 
 	return (
 		<>
-			<Row className="mb-3">
-				<Col>
-					<h5>
-						<Badge bg={savedAmount > 0 ? 'info' : 'warning'}>{savedAmount > 0 ? credit : deficit}</Badge>
-					</h5>
-				</Col>
-				<Col>
-					<Gear
-						style={{ float: 'right', cursor: 'pointer' }}
-						onClick={() => {
-							setIsReorderDisabled((toggle) => !toggle);
-						}}
+			<Row>
+				<Col span={24}>
+					<Alert
+						type={savedAmount > 0 ? 'info' : 'warning'}
+						message={
+							<div>
+								<span>{savedAmount > 0 ? credit : deficit}</span>
+								<SettingOutlined
+									style={{ float: 'right', cursor: 'pointer' }}
+									onClick={() => {
+										setIsReorderDisabled((toggle) => !toggle);
+									}}
+								/>
+							</div>
+						}
 					/>
 				</Col>
 			</Row>

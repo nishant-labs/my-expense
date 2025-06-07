@@ -10,7 +10,7 @@ interface ExpenseDetailsProps {
 export const ExpenseDetails: FC<ExpenseDetailsProps> = ({ transactionList }) => (
 	<GridBase
 		rowHeight={25}
-		styles={{ height: '100%' }}
+		styles={{ height: '212px' }}
 		defaultColDef={defaultExpenseDetailsColDefs}
 		colDefs={expenseDetailsColDefs}
 		rowData={transactionList}

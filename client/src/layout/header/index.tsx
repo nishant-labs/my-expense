@@ -1,7 +1,5 @@
 import { TopHeader } from './TopHeader';
 
-const Header = () => {
+export const AppHeader = () => {
 	return <TopHeader />;
 };
-
-export default Header;

@@ -1,6 +1,9 @@
 import { FC } from 'react';
-import Card from 'react-bootstrap/Card';
+import { Button, Card, Flex, Typography } from 'antd';
 import { SummaryTilePropsWithBody, SummaryTilePropsWithChild } from './index.interface';
+import './styles.css';
+
+const { Title } = Typography;
 
 export const SummaryTile: FC<SummaryTilePropsWithBody | SummaryTilePropsWithChild> = ({
 	height = '250px',
@@ -9,21 +12,25 @@ export const SummaryTile: FC<SummaryTilePropsWithBody | SummaryTilePropsWithChil
 	actionText,
 	onClick,
 }) => (
-	<div className="rounded" style={{ height, boxShadow: '#3399F3 5px 5px 5px' }}>
-		<Card className="h-100">
-			{body ? (
-				<Card.Body className="border-bottom text-center">
-					<Card.Title className="text-black-50">{body.title}</Card.Title>
-					<Card.Text className="p-1 display-6">{body.text}</Card.Text>
-				</Card.Body>
-			) : (
-				children
-			)}
-			<Card.Footer className="ms-auto border-0">
-				<Card.Link href="#" onClick={onClick}>
+	<Card
+		className="summary-tile-fill"
+		style={{ height, boxShadow: '#3399F3 5px 5px 5px' }}
+		title={body?.title}
+		size="small"
+		extra={
+			actionText ? (
+				<Button type="link" block onClick={onClick}>
 					{actionText}
-				</Card.Link>
-			</Card.Footer>
-		</Card>
-	</div>
+				</Button>
+			) : null
+		}
+	>
+		{body?.text ? (
+			<Flex align="center" justify="center" vertical style={{ padding: '5.7em' }}>
+				<Title level={2}>{body?.text}</Title>
+			</Flex>
+		) : (
+			children
+		)}
+	</Card>
 );

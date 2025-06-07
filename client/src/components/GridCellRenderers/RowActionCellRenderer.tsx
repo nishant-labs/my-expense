@@ -1,10 +1,8 @@
-import { Button, Modal, Spin } from 'antd';
-import { LoadingOutlined } from '@ant-design/icons';
-import Form from 'react-bootstrap/Form';
-import { Trash, PencilSquare } from 'react-bootstrap-icons';
+import { FC, useCallback, useState } from 'react';
+import { Button, Flex, Form, Modal, Spin, Switch } from 'antd';
+import { DeleteTwoTone, EditTwoTone, LoadingOutlined } from '@ant-design/icons';
 import { ICellRendererParams } from 'ag-grid-community';
 import { useAsyncApiData } from '../../hooks/useAsyncApiData';
-import { FC, useCallback, useState } from 'react';
 import { ApiResponse } from '../../api/types';
 
 interface RowActionCellRendererProps extends ICellRendererParams {
@@ -33,22 +31,17 @@ export const RowActionCellRenderer: FC<RowActionCellRendererProps> = ({ deleteIt
 	}
 
 	return (
-		<div>
-			<Form>
-				<Form.Check
-					style={{ display: 'inline-grid' }}
-					type="switch"
-					name={`category-${data.id}`}
-					checked={data.isEnabled}
-					onChange={handleToggle}
-				/>
-
-				<Button type="text" onClick={handleEdit}>
-					<PencilSquare />
-				</Button>
-				<Button type="text" onClick={() => setIsOpen(true)}>
-					<Trash />
-				</Button>
+		<>
+			<Form size="small" layout="horizontal">
+				<Flex gap="small" align="center" justify="end">
+					<Switch checked={data.isEnabled} onChange={handleToggle} />
+					<Button type="text" onClick={handleEdit}>
+						<EditTwoTone />
+					</Button>
+					<Button type="text" onClick={() => setIsOpen(true)}>
+						<DeleteTwoTone />
+					</Button>
+				</Flex>
 			</Form>
 			<Modal
 				title={`Delete ${data.name}`}
@@ -60,6 +53,6 @@ export const RowActionCellRenderer: FC<RowActionCellRendererProps> = ({ deleteIt
 			>
 				Are you sure, want to delete?
 			</Modal>
-		</div>
+		</>
 	);
 };
