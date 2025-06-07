@@ -9,11 +9,11 @@ const routes: RouteConfiguration = {
 	'/health': pingRouteHandler,
 
 	// Transaction API
-	'/transactions/:accountType/:monthAndYear?': transactionsApiHandlers,
+	'/transactions/:accountType{/:monthAndYear}': transactionsApiHandlers,
 
 	// Settings API
-	'/settings/sources/:id?': sourceApiHandlers,
-	'/settings/categories/:id?': transactionCategoryApiHandlers,
+	'/settings/sources{/:id}': sourceApiHandlers,
+	'/settings/categories{/:id}': transactionCategoryApiHandlers,
 };
 
 export default routes;

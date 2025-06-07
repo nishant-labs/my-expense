@@ -1,4 +1,4 @@
-name: API Deploy(expense-api)
+name: Full App Build(my-expense-all)
 
 on:
   push:
@@ -16,16 +16,19 @@ jobs:
         with:
           node-version: 23
       - run: npm ci
+      - run: npm run build:client
       - run: npm run build:server
 
       # Group Assets together for copy
-      - run: mkdir ./api_publish
-      - run: cp -r ./server/dist/ ./api_publish/
-      - run: cp ./server/package.json ./api_publish/package.json
+      - run: mkdir ./app_publish
+      - run: cp ./scripts/package.json ./app_publish/
+      - run: cp -r ./client/dist ./app_publish/client/
+      - run: cp -r ./server/dist ./app_publish/server/
+      - run: cp ./server/package.json ./app_publish/server/package.json
 
       - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./api_publish
-          publish_branch: expense-api
+          publish_dir: ./app_publish
+          publish_branch: my-expense-all

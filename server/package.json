@@ -7,6 +7,7 @@
 	"bin": "bin/index.js",
 	"scripts": {
 		"dev": "NODE_ENV=development nodemon --exec 'npm run start' -w src -e ts,json",
+		"start:prod": "node --experimental-specifier-resolution=node ./index.js",
 		"start": "npm run build && node --inspect --experimental-specifier-resolution=node ./dist/index.js",
 		"build": "tsc -p tsconfig.server.json",
 		"test": "echo \"Error: no test specified\" && exit 1"
@@ -17,7 +18,7 @@
 		"@date-fns/utc": "2.1.0",
 		"dotenv": "16.5.0",
 		"mongoose": "8.15.1",
-		"node-rest-server": "4.3.2"
+		"node-rest-server": "5.0.0"
 	},
 	"devDependencies": {
 		"nodemon": "3.1.10"
