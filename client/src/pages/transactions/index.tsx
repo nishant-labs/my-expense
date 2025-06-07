@@ -1,46 +1,52 @@
 import { useState } from 'react';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import { LAST_5_YEARS, MONTH_NAMES } from '../../constants';
+import { Select, Form, Row, Col } from 'antd';
+import { CURRENT_MONTH, CURRENT_YEAR, LAST_5_YEARS, MONTH_NAMES } from '../../constants';
 import { TransactionGridByMonth } from './transactionGrid';
-import { FormSelectBase, OptionValueType } from '../../components/FormSelectBase';
 import { UploadTransaction } from './components/UploadTransaction';
 
 const Transactions = () => {
-	const [selectedYear, setSelectedYear] = useState<string>('');
-	const [selectedMonth, setSelectedMonth] = useState<string>('');
-
-	const handleYearSelection = (value: OptionValueType) => {
-		setSelectedMonth('');
-		setSelectedYear(value as string);
-	};
+	const [selectedYear, setSelectedYear] = useState<number>(CURRENT_YEAR.value);
+	const [selectedMonth, setSelectedMonth] = useState<string>(CURRENT_MONTH.value);
 
 	return (
 		<>
 			<h2>Transactions</h2>
-			<Row className="mb-4">
-				<Col>
-					<FormSelectBase
-						ariaLabel="Year selection"
-						selected={selectedYear}
-						options={LAST_5_YEARS}
-						onSelect={handleYearSelection}
-					/>
+			<Row align="middle" justify="space-between">
+				<Col span={4}>
+					<Row align="middle" justify="space-between">
+						<Col span={11}>
+							<Form.Item>
+								<Select
+									placeholder="Year selection"
+									value={selectedYear}
+									options={LAST_5_YEARS}
+									onChange={setSelectedYear}
+									allowClear
+								/>
+							</Form.Item>
+						</Col>
+						<Col span={11}>
+							<Form.Item>
+								<Select
+									placeholder="Month Selection"
+									value={selectedMonth}
+									options={MONTH_NAMES}
+									onChange={setSelectedMonth}
+									allowClear
+								/>
+							</Form.Item>
+						</Col>
+					</Row>
 				</Col>
-				<Col>
-					<FormSelectBase
-						ariaLabel="Month Selection"
-						selected={selectedMonth}
-						options={MONTH_NAMES}
-						onSelect={(value) => setSelectedMonth(value as string)}
-					/>
-				</Col>
-				<Col className="d-grid">
-					<UploadTransaction />
+				<Col flex="none" span={4}>
+					<Form.Item>
+						<UploadTransaction />
+					</Form.Item>
 				</Col>
 			</Row>
+
 			<Row>
-				<Col>
+				<Col span={24}>
 					{selectedYear && selectedMonth && <TransactionGridByMonth month={selectedMonth} year={selectedYear} />}
 				</Col>
 			</Row>

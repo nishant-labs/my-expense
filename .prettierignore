@@ -3,4 +3,4 @@
 **/dist
 **/coverage
 **/node_modules
-**/package*
+**/package-lock.json

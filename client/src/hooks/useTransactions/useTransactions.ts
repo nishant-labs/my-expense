@@ -8,7 +8,7 @@ import { ITransactionSource } from '../useSourceSettings/types';
 import { ITransactionCategory } from '../useCategorySettings/types';
 
 export function useTransactions(
-	year: string,
+	year: number,
 	month: string,
 	accountType?: string,
 ): [Array<ITransactionsEnhanced>, UseQueryResult<ITransactions[], ApiError>] {

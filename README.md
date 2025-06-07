@@ -15,7 +15,7 @@ This is a pet project for self expense management
   1. ReactJS
   2. react-router-dom
   3. ag-grid
-  4. react-bootstrap/bootswatch (bootstrap with theming)
+  4. antd component library
   5. recoil
   6. papaparse(csv parsing)
 

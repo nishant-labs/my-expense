@@ -1,7 +1,5 @@
 import { FC, ReactNode, useCallback, useState } from 'react';
-import { Spinner } from 'react-bootstrap';
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
+import { Spin, Modal, Button } from 'antd';
 
 interface ModalBaseProps {
 	buttonText: string;
@@ -30,24 +28,20 @@ export const BaseModal: FC<ModalBaseProps> = ({
 
 	return (
 		<>
-			<Button variant="primary" size="lg" onClick={handleShow}>
+			<Button type="primary" onClick={handleShow}>
 				{buttonText}
 			</Button>
-
-			<Modal size="lg" backdrop="static" show={show} onHide={handleClose} keyboard={false}>
-				<Modal.Header closeButton>
-					<Modal.Title>{modalTitle}</Modal.Title>
-				</Modal.Header>
-				<Modal.Body>{children}</Modal.Body>
-				<Modal.Footer>
-					{isLoading && <Spinner animation="border" />}
-					<Button variant="secondary" onClick={handleClose}>
-						Close
-					</Button>
-					<Button variant="primary" onClick={handlePrimaryAction}>
-						{primaryButtonText}
-					</Button>
-				</Modal.Footer>
+			<Modal
+				title={modalTitle}
+				open={show}
+				onOk={handlePrimaryAction}
+				okText={primaryButtonText}
+				onCancel={handleClose}
+				cancelText="Close"
+			>
+				<Spin percent={100} spinning={isLoading}>
+					{children}
+				</Spin>
 			</Modal>
 		</>
 	);

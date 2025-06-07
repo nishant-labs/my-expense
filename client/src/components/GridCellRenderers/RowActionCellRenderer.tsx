@@ -1,11 +1,8 @@
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import Spinner from 'react-bootstrap/Spinner';
-import Modal from 'react-bootstrap/Modal';
-import { Trash, PencilSquare } from 'react-bootstrap-icons';
+import { FC, useCallback, useState } from 'react';
+import { Button, Flex, Form, Modal, Spin, Switch } from 'antd';
+import { DeleteTwoTone, EditTwoTone, LoadingOutlined } from '@ant-design/icons';
 import { ICellRendererParams } from 'ag-grid-community';
 import { useAsyncApiData } from '../../hooks/useAsyncApiData';
-import { FC, useCallback, useState } from 'react';
 import { ApiResponse } from '../../api/types';
 
 interface RowActionCellRendererProps extends ICellRendererParams {
@@ -30,41 +27,32 @@ export const RowActionCellRenderer: FC<RowActionCellRendererProps> = ({ deleteIt
 	const [toggleApiState, handleToggle] = useAsyncApiData(toggleAsyncCaller, true);
 
 	if (deleteApiState.loading || toggleApiState.loading) {
-		return <Spinner animation="border" />;
+		return <Spin fullscreen indicator={<LoadingOutlined style={{ fontSize: 48 }} spin />} />;
 	}
 
 	return (
-		<div>
-			<Form>
-				<Form.Check
-					style={{ display: 'inline-grid' }}
-					type="switch"
-					name={`category-${data.id}`}
-					checked={data.isEnabled}
-					onChange={handleToggle}
-				/>
-
-				<Button variant="link" onClick={handleEdit}>
-					<PencilSquare />
-				</Button>
-				<Button variant="link" onClick={() => setIsOpen(true)}>
-					<Trash />
-				</Button>
+		<>
+			<Form size="small" layout="horizontal">
+				<Flex gap="small" align="center" justify="end">
+					<Switch checked={data.isEnabled} onChange={handleToggle} />
+					<Button type="text" onClick={handleEdit}>
+						<EditTwoTone />
+					</Button>
+					<Button type="text" onClick={() => setIsOpen(true)}>
+						<DeleteTwoTone />
+					</Button>
+				</Flex>
 			</Form>
-			<Modal show={isOpen} onHide={() => setIsOpen(false)} backdrop="static" keyboard={false}>
-				<Modal.Header closeButton>
-					<Modal.Title>Delete {data.name}</Modal.Title>
-				</Modal.Header>
-				<Modal.Body>Are you sure, want to delete?</Modal.Body>
-				<Modal.Footer>
-					<Button variant="secondary" onClick={() => setIsOpen(false)}>
-						Cancel
-					</Button>
-					<Button variant="primary" onClick={handleDelete}>
-						Delete
-					</Button>
-				</Modal.Footer>
+			<Modal
+				title={`Delete ${data.name}`}
+				open={isOpen}
+				onOk={handleDelete}
+				okText="Delete"
+				onCancel={() => setIsOpen(false)}
+				cancelText="Cancel"
+			>
+				Are you sure, want to delete?
 			</Modal>
-		</div>
+		</>
 	);
 };

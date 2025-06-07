@@ -1,6 +1,6 @@
 import { lazy } from 'react';
 import { createHashRouter, RouterProvider } from 'react-router-dom';
-import RootLayout from './layout';
+import { AppLayout } from './layout';
 import { ErrorPage } from './pages/error/ErrorPage';
 
 const Home = lazy(() => import('./pages/home'));
@@ -12,7 +12,7 @@ const SourceSettings = lazy(() => import('./pages/settings/SourceSettings'));
 const router = createHashRouter([
 	{
 		path: '/',
-		element: <RootLayout />,
+		element: <AppLayout />,
 		errorElement: <ErrorPage />,
 		// loader: rootLoader,
 		children: [
@@ -26,7 +26,7 @@ const router = createHashRouter([
 				element: <Summary />,
 			},
 			{
-				path: '/manage',
+				path: '/transactions',
 				element: <Transactions />,
 			},
 			{

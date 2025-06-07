@@ -5,7 +5,7 @@ import { useTransactions } from '../../hooks/useTransactions';
 
 interface TransactionGridByMonthProps {
 	month: string;
-	year: string;
+	year: number;
 }
 
 export const TransactionGridByMonth: FC<TransactionGridByMonthProps> = ({ month, year }) => {

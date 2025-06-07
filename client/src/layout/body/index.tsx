@@ -1,16 +1,28 @@
 import { Suspense } from 'react';
-import { Spinner } from 'react-bootstrap';
-import Container from 'react-bootstrap/Container';
 import { Outlet } from 'react-router-dom';
+import { LoadingOutlined } from '@ant-design/icons';
+import { Col, Row, Spin, theme } from 'antd';
 
-const Body = () => {
+export const AppBody = () => {
+	const {
+		token: { colorBgContainer, borderRadiusLG },
+	} = theme.useToken();
+
 	return (
-		<Container className="p-4 h-100" fluid>
-			<Suspense fallback={<Spinner animation="border" />}>
-				<Outlet />
-			</Suspense>
-		</Container>
+		<Row align="middle" wrap={false}>
+			<Col
+				span={24}
+				style={{
+					background: colorBgContainer,
+					padding: 24,
+					borderRadius: borderRadiusLG,
+					minHeight: 'calc(100vh - 135px)',
+				}}
+			>
+				<Suspense fallback={<Spin fullscreen indicator={<LoadingOutlined style={{ fontSize: 48 }} spin />} />}>
+					<Outlet />
+				</Suspense>
+			</Col>
+		</Row>
 	);
 };
-
-export default Body;

@@ -1,9 +1,7 @@
-import 'bootswatch/dist/journal/bootstrap.min.css';
 import './index.css';
 
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import ThemeProvider from 'react-bootstrap/ThemeProvider';
 import { RecoilRoot } from 'recoil';
 import RecoilizeDebugger from 'recoilize';
 import { MyExpenseAppWithLoader } from './App';
@@ -14,11 +12,9 @@ root.render(
 	<React.StrictMode>
 		<RecoilRoot>
 			<RecoilizeDebugger />
-			<ThemeProvider>
-				<QueryProviderWithLoader>
-					<MyExpenseAppWithLoader />
-				</QueryProviderWithLoader>
-			</ThemeProvider>
+			<QueryProviderWithLoader>
+				<MyExpenseAppWithLoader />
+			</QueryProviderWithLoader>
 		</RecoilRoot>
 	</React.StrictMode>,
 );

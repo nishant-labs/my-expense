@@ -1,5 +1,7 @@
+import process from 'node:process';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import eslint from 'vite-plugin-eslint2';
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
@@ -9,6 +11,7 @@ export default defineConfig(({ mode }) => ({
 		react({
 			include: ['**/*.tsx', '**/*.ts'],
 		}),
+		eslint({ lintOnStart: true, include: ['client/src/**/*.tsx', 'client/src/**/*.ts'], cache: false }),
 	],
 	build: {
 		rollupOptions: {

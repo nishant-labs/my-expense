@@ -9,7 +9,7 @@ import { ENDPOINTS, QUERY_KEYS } from '../constants/queryMapping';
 import { ApiError } from './types';
 
 export const useFetchCategories = (): UseQueryResult<Array<ITransactionCategory>, ApiError> => {
-	return useQuery({
+	return useQuery<Array<ITransactionCategory>, ApiError>({
 		queryKey: QUERY_KEYS.CATEGORY_SETTINGS,
 		meta: {
 			endpoint: ENDPOINTS.CATEGORY_SETTINGS,
